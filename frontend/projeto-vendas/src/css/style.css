@@ -1,0 +1,66 @@
+:root {
+        --color--primary:#0B5ED7;
+        --color--navbar:#0C0F16;
+        --color--text: #fff;
+        --coolor--bg-index: #000;
+        }
+
+::-webkit-scrollbar {
+        width: 8px;
+        }
+
+        body {
+        background: var(--coolor--bg-index);
+        }
+
+        ::-webkit-scrollbar-thumb {
+        background: var(--color--primary);
+        }
+
+        .navbar {
+        background: var(--color--navbar);
+        }
+
+        h3 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 2.5rem;
+        color:var(--color--primary);
+        letter-spacing: 0.5px;
+        }
+
+        p {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        font-size: 1rem;
+        color: #e0e0e0;
+        line-height: 1.6;
+        text-align:left;
+        }
+
+        .container {
+        margin: 16rem 0 0 12rem; 
+        color: var(--color--text);
+        }
+
+        .container2 {
+        text-align:left;
+        margin:15rem;
+        color: var(--color--text);
+        }
+
+        .btn {
+        background-color:var(--color--primary);
+        color: var(--color--text);
+        }
+
+        .btn:focus, .btn:active, .btn:focus:active, .btn:visited, .btn:hover {
+        background:var(--color--primary);
+        color: var(--color--text);
+        }
+
+        footer {
+        background: var(--color--navbar);
+        padding: 1rem 4%;
+        margin: 14.9rem 0 0 0;
+        }
