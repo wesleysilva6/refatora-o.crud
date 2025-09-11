@@ -9,27 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class TopicoController extends Controller
 {
-    public function index(Request $request)
-    {
-        return Topico::query()
-            ->withCount('produtos')
-            ->orderByDesc('criado_em')
-            ->paginate(15);
-    }
+public function index(Request $r) {
+  return Topico::where('usuario_id', $r->user()->id)->orderBy('id','desc')->get();
+}
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'nome_topico' => ['required','string','max:255'],
-        ]);
+    public function indexWithProdutos(Request $r) {
+  return Topico::with(['produtos' => fn($q) => $q->orderBy('id','desc')])
+    ->where('usuario_id', $r->user()->id)->orderBy('id_topico','desc')->get();
+}
 
-        $data['usuario_id'] = Auth::id();
-        $data['criado_em']  = now();
-
-        $topico = Topico::create($data);
-
-        return response()->json($topico, 201);
-    }
+public function store(Request $r) {
+  $data = $r->validate(['nome_topico' => ['required','string','max:255']]);
+  $t = Topico::create(['nome_topico'=>$data['nome_topico'],'usuario_id'=>$r->user()->id]);
+  return response()->json($t, 201);
+}
 
     public function show(Topico $topico)
     {
@@ -46,15 +39,10 @@ class TopicoController extends Controller
         return $topico->refresh();
     }
 
-    public function destroy(Topico $topico)
-    {
-        if ($topico->produtos()->exists()) {
-            return response()->json([
-                'message' => 'Não é possível excluir tópico com produtos associados.'
-            ], 409);
-        }
-
-        $topico->delete();
-        return response()->json(['deleted' => true]);
+public function destroy(Request $r, Topico $topico) {
+    abort_unless($topico->usuario_id === $r->user()->id, 403);
+    $topico->produtos()->delete();
+    $topico->delete();
+    return response()->noContent();
     }
 }

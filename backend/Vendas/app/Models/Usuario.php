@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
-
+use Illuminate\Notifications\Notifiable;
 class Usuario extends Authenticatable
 {
-    use HasApiTokens; // <- importante para tokens Sanctum
+    use HasApiTokens, Notifiable; // <- importante para tokens Sanctum
 
     protected $table = 'usuarios';
     protected $fillable = ['nome','email','senha','foto'];
@@ -17,5 +17,15 @@ class Usuario extends Authenticatable
     public function getAuthPassword()
     {
         return $this->senha;
+    }
+
+    public function topicos()
+    { 
+        return $this->hasMany(Topico::class, 'usuario_id'); 
+    }
+
+    public function produtos() 
+    { 
+        return $this->hasMany(Produto::class, 'usuario_id'); 
     }
 }

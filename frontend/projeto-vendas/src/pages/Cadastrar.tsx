@@ -1,0 +1,113 @@
+import { Link, useNavigate } from "react-router-dom";
+import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer"
+import imgCadastro from "../assets/img/fundop.png"
+import { useForm } from "react-hook-form";
+import { useState } from "react";
+import { api } from "../api";
+
+import styles from "./Cadastro.module.css"; // << CSS Module
+
+type Form = { nome: string; email: string; senha: string };
+
+export default function Cadastro() {
+    const navigate = useNavigate();
+    const { register, handleSubmit, reset } = useForm<Form>();
+    const [loading, setLoading] = useState(false);
+    const [showPwd, setShowPwd] = useState(false);
+    const [errorMsg, setErrorMsg] = useState<string | null>(null);
+    const [successMsg, setSuccessMsg] = useState<string | null>(null);
+
+async function onSubmit(v: Form) {
+    try {
+        setErrorMsg(null);
+        setSuccessMsg(null);
+        setLoading(true);
+
+    await api.post("/register", {
+        nome: v.nome,
+        email: v.email,
+        senha: v.senha, // o backend espera 'senha'
+    });
+
+        reset();
+        setSuccessMsg("Cadastro realizado com sucesso!");
+        //igual seu PHP: redireciona p/ login com query
+        setTimeout(() => navigate("/login?cadastro=realizado", { replace: true }), 800);
+    } catch (e: any) {
+    const msg =
+        e?.response?.data?.message ||
+        e?.response?.data?.errors?.email?.[0] ||
+        "Falha ao cadastrar";
+        setErrorMsg(msg);
+    } finally {
+        setLoading(false);
+    }
+}
+
+return (
+    <div className={`min-vh-100 d-flex flex-column ${styles.root}`}>
+    <Header />
+
+    <main className={styles.containerLogin}>
+        <div className="row justify-content-center">
+            <div className={styles.cardLogin}>
+                <div className="m-auto text-center">
+                </div>
+
+                <div className={`card ${styles.card}`}>
+                    <div className="card-header text-white">Cadastrar</div>
+
+            <div className="py-3"> <img src={imgCadastro} alt="Logo" width={200} height={200} className="d-block mx-auto img-fluid" /> </div>
+
+                    <div className="card-body">
+                        <form onSubmit={handleSubmit(onSubmit)} className="spinnerForm" noValidate>
+
+                        <div className="input-group mt-1">
+                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className="bi bi-person-circle" aria-hidden="true" /></span>
+                            <input type="text" className={`form-control ${styles.formControl}`} placeholder="Usuário" required autoComplete="name" 
+                            {...register("nome")} />
+                        </div>
+
+                        <div className="input-group mt-2">
+                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className="bi bi-envelope" aria-hidden="true" /> </span> 
+                            <input type="email" className={`form-control ${styles.formControl}`} placeholder="E-mail" required autoComplete="email" 
+                            {...register("email")} />
+                        </div>
+
+                        <div className="input-group mt-2">
+                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className="bi bi-lock" aria-hidden="true" /> </span>
+                            <input type={showPwd ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Senha" required 
+                            {...register("senha")} />
+                            <button type="button" className={`btn btn-dark ${styles.eyes}`} onClick={() => setShowPwd(s => !s)} 
+                                aria-label={showPwd ? "Ocultar senha" : "Mostrar senha"} >
+                                <i className={`bi ${showPwd ? "bi-eye-slash" : "bi-eye"}`} aria-hidden="true" />
+                            </button>
+                        </div>
+
+                        <button className="btn btn-sm btn-primary mt-2 w-100" type="submit" disabled={loading} aria-busy={loading} >
+                            {loading ? "Cadastrando..." : "Cadastrar"}
+                        </button>
+
+                        <div className="text-left mt-2">
+                            {successMsg && <div className="alert alert-success">{successMsg}</div>}
+                            {errorMsg && <div className="text-danger">{errorMsg}</div>}
+                        </div>
+
+                        <div className="d-flex justify-content-center mt-2">
+                            {loading && ( <div className="spinner-border text-primary" role="status" aria-label="Carregando" /> )}
+                        </div>
+
+                        <div className="text-end text-primary">
+                            <Link to="/login">Já possui login?</Link>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <Footer />
+    </div>
+    );
+}

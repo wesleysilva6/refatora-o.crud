@@ -1,0 +1,49 @@
+/* ===== APENAS estilos da página de Login (escopo local) ===== */
+/* As variáveis (:root), body e scrollbar devem ficar num CSS global (ver passo 3). */
+.root {}
+
+.containerLogin {
+  padding: .8rem;
+}
+
+.cardLogin {
+  padding: 13rem 0 0 0;
+  width: 28rem;
+  margin: 0 auto;             /* centraliza o card */
+}
+
+.card {
+  background: var(--color--navbar);
+}
+
+/* Input group / form controls */
+/* Cadastro.module.css / Login.module.css */
+.inputGroupText {
+  background: var(--color--input);
+  border: 1px solid var(--color--border);
+  color: var(--color--text); /* <- assegura a cor do ícone */
+}
+
+.formControl {
+  color: var(--color--text);
+  background: var(--color--input);
+  border: 1px solid var(--color--border);
+}
+
+.formControl:focus {
+  box-shadow: none;
+  outline: none;
+  background: var(--color--input);
+  color: var(--color--text);
+  border-color: var(--color--border);
+}
+
+.formControl::placeholder {
+  color: rgba(255,255,255,.76);
+}
+
+.eyes {
+  color: var(--color--text);
+  background: var(--color--input);
+  border: 1px solid var(--color--border);
+}

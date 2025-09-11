@@ -1,99 +1,79 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
 use App\Models\Topico;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
 
 class ProdutoController extends Controller
 {
-    public function index(Request $request)
+    public function store(Request $r)
     {
-        $q        = $request->string('q');
-        $topicoId = $request->integer('topico_id');
-
-        $query = Produto::query()
-            ->with('topico')
-            // 🔒 escopo por dono via relação com tópicos
-            ->whereHas('topico', fn($qq) => $qq->where('usuario_id', Auth::id()));
-
-        if ($q->isNotEmpty()) {
-            $query->where('nome_produto', 'like', "%{$q}%");
-        }
-        if ($topicoId) {
-            $query->where('topico_id', $topicoId);
-        }
-
-        return $query->orderByDesc('criado_em')->paginate(15);
-    }
-
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'nome_produto' => ['required','string','max:255'],
-            'quantidade'   => ['required','integer','min:0'],
-            'descricao'    => ['nullable','string'],
-            // 🔒 só permite topico_id que pertença ao usuário
-            'topico_id'    => ['required','integer',
-                Rule::exists('topicos','id_topico')
-                    ->where(fn($q) => $q->where('usuario_id', Auth::id()))
-            ],
-            'preco'        => ['required','numeric'],
-            'imagem'       => ['nullable','string'],
+        $data = $r->validate([
+            'topico_id'    => ['required', 'integer', 'exists:topicos,id'],
+            'nome_produto' => ['required', 'string', 'max:255'],
+            'preco'        => ['required', 'numeric'],
+            'quantidade'   => ['required', 'integer'],
+            'descricao'    => ['nullable', 'string'],
+            'imagem'       => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
-        $data['criado_em'] = now();
+        // Confere se o tópico é do usuário
+        Topico::where('id', $data['topico_id'])
+              ->where('usuario_id', $r->user()->id)
+              ->firstOrFail();
 
-        $produto = Produto::create($data);
+        $path = null;
+        if ($r->hasFile('imagem')) {
+            $path = $r->file('imagem')->store('produtos', 'public'); // storage/app/public/produtos
+        }
+
+        $produto = Produto::create([
+            ...$data,
+            'usuario_id' => $r->user()->id,
+            'imagem'     => $path ? Storage::url($path) : null, // /storage/produtos/xxx.png
+        ]);
 
         return response()->json($produto, 201);
     }
 
-    public function show(Produto $produto)
+    public function update(Request $r, Produto $produto)
     {
-        $this->authorizeProduto($produto);
-        return $produto->load('topico');
-    }
+        abort_unless($produto->usuario_id === $r->user()->id, 403);
 
-    public function update(Request $request, Produto $produto)
-    {
-        $this->authorizeProduto($produto);
-
-        $data = $request->validate([
-            'nome_produto' => ['sometimes','string','max:255'],
-            'quantidade'   => ['sometimes','integer','min:0'],
-            'descricao'    => ['sometimes','nullable','string'],
-            // se trocar de tópico, também precisa ser do dono
-            'topico_id'    => ['sometimes','integer',
-                Rule::exists('topicos','id_topico')
-                    ->where(fn($q) => $q->where('usuario_id', Auth::id()))
-            ],
-            'preco'        => ['sometimes','numeric'],
-            'imagem'       => ['sometimes','nullable','string'],
+        $data = $r->validate([
+            'nome_produto' => ['sometimes', 'string', 'max:255'],
+            'preco'        => ['sometimes', 'numeric'],
+            'quantidade'   => ['sometimes', 'integer'],
+            'descricao'    => ['nullable', 'string'],
+            'imagem'       => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
-        $data['atualizado_em'] = now();
+        if ($r->hasFile('imagem')) {
+            if ($produto->imagem) {
+                $old = str_replace('/storage/', '', $produto->imagem);
+                Storage::disk('public')->delete($old);
+            }
+            $path = $r->file('imagem')->store('produtos', 'public');
+            $data['imagem'] = Storage::url($path);
+        }
 
         $produto->update($data);
-
-        return $produto->refresh()->load('topico');
+        return $produto;
     }
 
-    public function destroy(Produto $produto)
+    public function destroy(Request $r, Produto $produto)
     {
-        $this->authorizeProduto($produto);
-        $produto->delete();
-        return response()->json(['deleted' => true]);
-    }
+        abort_unless($produto->usuario_id === $r->user()->id, 403);
 
-    private function authorizeProduto(Produto $p): void
-    {
-        // 🔒 garante que o produto pertence ao usuário via tópico
-        if (($p->topico?->usuario_id) !== Auth::id()) {
-            abort(403, 'Produto pertence a outro usuário.');
+        if ($produto->imagem) {
+            $old = str_replace('/storage/', '', $produto->imagem);
+            Storage::disk('public')->delete($old);
         }
+
+        $produto->delete();
+        return response()->noContent();
     }
 }

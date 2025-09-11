@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import Footer from "../components/footer/Footer"
+
 import logoHeader from "../assets/img/logo_stexto.png";
 import titleHeader from "../assets/img/fundop2.png";
 import logoCaixa from "../assets/img/caixa_fundop.png";
@@ -13,7 +15,7 @@ export default function Home() {
       <nav className="navbar">
         <div className="container-fluid">
           <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
-            <img src={logoHeader} width={65} height={65} alt="Estoque Aqui" />
+            <img src={logoHeader} width={65} alt="Estoque Aqui" />
             <img src={titleHeader} width={85} height={65} alt="Estoque Aqui" />
           </Link>
         </div>
@@ -37,8 +39,8 @@ export default function Home() {
                     facilitando ainda mais a análise, controle e geração de relatórios personalizados.
                 </p>
                     <div className="d-flex gap-2">
-                        <Link to="/login" className="btn btn-primary">Login</Link>
-                        <Link to="/cadastrar" className="btn btn-outline-primary">Cadastre-se</Link>
+                        <Link to="/login" className="btn">Login</Link>
+                        <Link to="/cadastrar" className="btn">Cadastre-se</Link>
                     </div>
                 </div>
 
@@ -74,9 +76,9 @@ export default function Home() {
     </section>
 
       {/* FOOTER simples (você pode trocar por um componente próprio) */}
-      <footer className="py-3 text-center text-muted">
-        <small>© {new Date().getFullYear()} Estoque Aqui</small>
-      </footer>
+      <>
+        <Footer/>
+      </>
     </div>
   );
 }
