@@ -9,19 +9,37 @@ use Illuminate\Support\Facades\Auth;
 
 class TopicoController extends Controller
 {
-public function index(Request $r) {
-  return Topico::where('usuario_id', $r->user()->id)->orderBy('id','desc')->get();
+public function index(Request $r)
+{
+    // era: orderBy('id','desc')
+    return Topico::where('usuario_id', $r->user()->id)
+        ->orderBy('id_topico', 'desc')
+        ->get();
 }
 
-    public function indexWithProdutos(Request $r) {
-  return Topico::with(['produtos' => fn($q) => $q->orderBy('id','desc')])
-    ->where('usuario_id', $r->user()->id)->orderBy('id_topico','desc')->get();
+public function indexWithProdutos(Request $r)
+{
+    $topicos = Topico::with('produtos')
+        ->where('usuario_id', $r->user()->id)
+        ->orderBy('id_topico', 'desc')
+        // >>> Importante: inclua a coluna real 'id_topico'
+        ->get(['id_topico', 'nome_topico']);
+
+    return response()->json($topicos);
 }
 
-public function store(Request $r) {
-  $data = $r->validate(['nome_topico' => ['required','string','max:255']]);
-  $t = Topico::create(['nome_topico'=>$data['nome_topico'],'usuario_id'=>$r->user()->id]);
-  return response()->json($t, 201);
+public function store(Request $r)
+{
+    $data = $r->validate([
+        'nome_topico' => ['required','string','max:255'],
+    ]);
+
+    $topico = Topico::create([
+        'nome_topico' => $data['nome_topico'],
+        'usuario_id'  => $r->user()->id,
+    ]);
+
+    return response()->json($topico, 201);
 }
 
     public function show(Topico $topico)

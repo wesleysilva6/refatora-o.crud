@@ -1,0 +1,52 @@
+        .navbar {
+        background: var(--color--navbar);
+        }
+
+        .offcanvas-header .btn-close {
+        filter: invert(1);
+        }
+
+        .offcanvas-header {
+        background: #0F121A;
+        border-bottom: 1px solid var(--color--primary);
+        padding: 1rem;
+        }
+
+        .offcanvas-body {
+        background: #05060C;
+        padding: 2rem 1.2rem;
+        font-family: 'Poppins', sans-serif;
+        }
+
+        .offcanvas-body li {
+        list-style: none;
+        width: 100%;
+        }
+
+        .offcanvas-body li a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--color--text);
+        font-size: 1.1rem;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        }
+
+        .offcanvas-body li a i {
+        color: var(--color--primary);
+        font-size: 1.4rem;
+        }
+
+        .offcanvas-body li a:hover {
+        background: #0F121A;
+        }
+
+        .offcanvas-body h5 {
+        color: var(--color--text);
+        font-weight: 600;
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        }
+

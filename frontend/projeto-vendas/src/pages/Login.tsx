@@ -55,7 +55,7 @@ export default function Login() {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", JSON.stringify(data.user ?? {}));
       setToken(data.token);
-      navigate("/produtos", { replace: true });
+      navigate("/home", { replace: true });
     } catch (e: any) {
       const msg = e?.response?.data?.message ?? "Falha ao autenticar";
       setErrorMsg(msg);

@@ -21,13 +21,13 @@ class Topico extends Model
     public const UPDATED_AT = 'atualizado_em';
 
     protected $fillable = [
-        'usuario_id',
         'nome_topico',
+        'usuario_id'
     ];
 
     public function produtos()
     {
-        return $this->hasMany(Produto::class, 'topico_id', 'id_topico');
+    return $this->hasMany(Produto::class, 'topico_id', 'id_topico')->orderBy('id', 'desc'); // id de produtos
     }
 
     public function usuario()
