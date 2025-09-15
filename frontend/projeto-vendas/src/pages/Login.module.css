@@ -1,6 +1,6 @@
 /* ===== APENAS estilos da página de Login (escopo local) ===== */
 /* As variáveis (:root), body e scrollbar devem ficar num CSS global (ver passo 3). */
-.root {}
+
 
 .containerLogin {
   padding: .8rem;

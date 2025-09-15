@@ -7,6 +7,7 @@ import Cadastrar from "./pages/Cadastrar"
 import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Verificar from './pages/Verificar';
+import Resetar from './pages/Resetar';
 import PrivateRoute from "./PrivateRoute";
 
 export default function App() {
@@ -20,13 +21,14 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/verificar" element={<Verificar />} />
+          <Route path="/Resetar" element={<Resetar />} />
 
         {/* privadas */}
         <Route element={<PrivateRoute />}>
           <Route path="/Home" element={<Home />} />
         </Route>
 
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<Index />} />
       </Routes>
     </BrowserRouter>
   );

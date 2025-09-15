@@ -1,0 +1,45 @@
+/* Estilos ESCOPO LOCAL para a página de cadastro */
+
+.containerLogin {
+    padding: .8rem;
+}
+
+.cardLogin {
+    padding: 13rem 0 0 0;
+    width: 28rem;
+    margin: 0 auto;            /* centraliza */
+}
+
+.card {
+    background: var(--color--navbar);
+}
+
+.inputGroupText {
+    background: var(--color--input);
+    border: 1px solid var(--color--border);
+    color: var(--color--text);
+}
+
+.formControl {
+    color: var(--color--text);
+    background: var(--color--input);
+    border: 1px solid var(--color--border);
+}
+
+.formControl:focus {
+    box-shadow: none;
+    outline: none;
+    background: var(--color--input);
+    color: var(--color--text);
+    border-color: var(--color--border);
+}
+
+.formControl::placeholder {
+    color: rgba(255,255,255,.76);
+}
+
+.eyes {
+    color: var(--color--text);
+    background: var(--color--input);
+    border: 1px solid var(--color--border);
+}

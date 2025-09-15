@@ -71,10 +71,6 @@ export default function Login() {
       <main className={styles.containerLogin}>
         <div className="row justify-content-center">
           <div className={styles.cardLogin}>
-            <div className="m-auto text-center">
-              {successMsg && <div className="alert alert-success">{successMsg}</div>}
-              {errorMsg && <div className="text-danger">{errorMsg}</div>}
-            </div>
 
             <div className={`card ${styles.card}`}>
               <div className="card-header text-white">Entrar</div>
@@ -122,9 +118,14 @@ export default function Login() {
                     </button>
                   </div>
 
+                  <div className="m-auto text-left">
+                    {errorMsg && <div className="text-danger">{errorMsg}</div>}
+                  </div>
+
                   <button className="btn btn-sm btn-primary mt-2 w-100" type="submit" disabled={loading} aria-busy={loading}>
                     {loading ? "Entrando..." : "Entrar"}
                   </button>
+
 
                   <div className="d-flex justify-content-between text-primary mt-1">
                     <Link to="/verificar">Esqueceu a senha?</Link>

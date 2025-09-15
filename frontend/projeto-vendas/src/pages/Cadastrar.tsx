@@ -32,7 +32,7 @@ async function onSubmit(v: Form) {
 
         reset();
         setSuccessMsg("Cadastro realizado com sucesso!");
-        //igual seu PHP: redireciona p/ login com query
+
         setTimeout(() => navigate("/login?cadastro=realizado", { replace: true }), 800);
     } catch (e: any) {
     const msg =
@@ -84,15 +84,16 @@ return (
                                 <i className={`bi ${showPwd ? "bi-eye-slash" : "bi-eye"}`} aria-hidden="true" />
                             </button>
                         </div>
+                        
+                        <div className="text-left mt-2">
+                            {successMsg && <div className="text-success">{successMsg}</div>}
+                            {errorMsg && <div className="text-danger">{errorMsg}</div>}
+                        </div>
 
                         <button className="btn btn-sm btn-primary mt-2 w-100" type="submit" disabled={loading} aria-busy={loading} >
                             {loading ? "Cadastrando..." : "Cadastrar"}
                         </button>
 
-                        <div className="text-left mt-2">
-                            {successMsg && <div className="alert alert-success">{successMsg}</div>}
-                            {errorMsg && <div className="text-danger">{errorMsg}</div>}
-                        </div>
 
                         <div className="d-flex justify-content-center mt-2">
                             {loading && ( <div className="spinner-border text-primary" role="status" aria-label="Carregando" /> )}

@@ -189,8 +189,8 @@ return (
             </div>
         </div>
 
-        <div className="d-flex gap-2 mb-3">
-            <button className="btn btn-primary" onClick={() => open(modalTopicoRef.current)}>
+        <div className="topicos">
+            <button className="btn btn-primary m-2" onClick={() => open(modalTopicoRef.current)}>
                 <i className="bi bi-plus-circle" /> Adicionar Tópico
             </button>
             <button className="btn btn-primary" onClick={exportarTudo}>
@@ -201,7 +201,7 @@ return (
             {erro && <div className="alert alert-danger">{erro}</div>}
             {loading && <div className="text-muted">Carregando…</div>}
 
-        <main className="container py-4">
+        <main className="container pb-5 mb-5 mt-3">
 
         {topicos.map((t) => (
             <div key={t.id} className="pb-5 mb-4 mt-3 border-0">

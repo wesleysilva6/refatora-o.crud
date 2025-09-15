@@ -27,9 +27,12 @@ class AuthController extends Controller
 
         $user = Usuario::where('email', $data['email'])->first();
 
-        // senha está na coluna 'senha'
+        if (! $user || ! $data['email'] === $user->email) {
+            return response()->json(['message' => 'Email inválido.'], 401);
+        }
+
         if (! $user || ! Hash::check($data['password'], $user->senha)) {
-            return response()->json(['message' => 'Credenciais inválidas.'], 401);
+            return response()->json(['message' => 'Senha inválida.'], 401);
         }
 
         // Opcional: invalidar tokens antigos
@@ -111,7 +114,7 @@ class AuthController extends Controller
         );
 
         $frontend = config('app.frontend_url', env('FRONTEND_URL', 'http://localhost:5173'));
-        $resetUrl = $frontend . '/redefinir?token=' . $plainToken . '&email=' . urlencode($user->email);
+        $resetUrl = $frontend . '/resetar?token=' . $plainToken . '&email=' . urlencode($user->email);
 
         $html = view('emails.redefinir-senha-phpmailer', [
             'user'     => $user,

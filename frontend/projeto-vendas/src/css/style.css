@@ -1,7 +1,15 @@
 :root {
-        --color-button:#0B5ED7;
-        --color-navbar: #0C0F16;
-        --color-txt-button: #fff
+        --color--background-container:#161A1F;
+        --color--background-modal:#161A1F;
+        --color--table-impar:#20252a;
+        --color--table-par:#161A1F;
+        --color--background:#000;
+        --color--primary:#0B5ED7;
+        --color--border:#393E42;
+        --color--navbar:#0C0F16;
+        --color--input:#20252A;
+        --color--text:#fff;
+        --color--button:#0B5ED7;
 }
 
 ::-webkit-scrollbar {
@@ -9,11 +17,11 @@
         }
 
 ::-webkit-scrollbar-thumb {
-        background: var(--color-button); 
+        background: var(--color--button); 
 }
 
         .navbar {
-        background: var(--color-navbar);
+        background: var(--color--navbar);
         }
 
         h3 {
@@ -27,7 +35,6 @@
         font-family: 'Roboto', sans-serif;
         font-weight: 400;
         font-size: 1rem;
-
         line-height: 1.6;
         text-align:left;
         }
@@ -37,13 +44,13 @@
         }
 
         .btn {
-        background-color: var(--color-button);
-        color: var(--color-txt-button);
+        background-color: var(--color--button);
+        color: var(--color--text);
         }
 
         .btn:focus, .btn:active, .btn:focus:active, .btn:visited, .btn:hover {
-        background: var(--color-button);
-        color: var(--color-txt-button);
+        background: var(--color--button);
+        color: var(--color--text);
         }
 
         footer {
@@ -51,3 +58,41 @@
         padding: 1rem 4%;
         margin: 14.9rem 0 0 0;
         }
+
+        .topicos {
+        margin:7rem 19.4rem 0 0;
+        text-align:end;
+        }
+
+        .container {
+        border: 1px solid red;
+        margin: 18.3rem;
+        }
+
+        .modal-content {
+        border-radius:4rem;
+        }
+
+
+        .table.table-striped {
+        background: var(--color--input);
+        border:2px solid var(--color--primary);
+        border-radius: 1px;
+        overflow: hidden;
+        }
+
+        .table.table-striped thead th {
+        border-bottom: 2px solid var(--color--primary);
+        background:var(--color--primary);
+        color: var(--color--text);
+        }
+
+        .table.table-striped tbody tr:nth-of-type(odd) td {
+        background: var(--color--table-impar); 
+        color: var(--color--text);
+        }
+
+        .table.table-striped tbody tr:nth-of-type(even) td {
+        background: var(--color--table-par); 
+        color: var(--color--text);
+    }
