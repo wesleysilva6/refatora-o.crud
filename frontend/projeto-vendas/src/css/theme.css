@@ -1,6 +1,7 @@
 :root{
   --color--background-container:#161A1F;
   --color--background-modal:#161A1F;
+  --color--background-card:#0a0c0f;
   --color--table-impar:#20252a;
   --color--table-par:#161A1F;
   --color--background:#000;
@@ -9,6 +10,7 @@
   --color--navbar:#0C0F16;
   --color--input:#20252A;
   --color--text:#fff;
+  --colot--black:#000;
 }
 
 ::-webkit-scrollbar{ width:8px; }

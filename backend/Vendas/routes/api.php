@@ -10,6 +10,7 @@ use App\Http\Controllers\TopicoController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SimulacaoController;
 use App\Http\Controllers\VendaController;
+use App\Http\Controllers\PerfilController;
 
 Route::get('/health', fn () => response()->json(['ok' => true]));
 
@@ -41,6 +42,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('produtos',   ProdutoController::class);
     Route::apiResource('simulacoes', SimulacaoController::class) ->parameters(['simulacoes' => 'simulacao']);
     Route::apiResource('vendas',     VendaController::class);
+
+    // Perfil
+    Route::get('/perfil/me',        [PerfilController::class, 'me']);
+    Route::post('/perfil/nome',     [PerfilController::class, 'updateName']);
+    Route::post('/perfil/senha',    [PerfilController::class, 'updatePassword']);
+    Route::post('/perfil/foto',     [PerfilController::class, 'uploadPhoto']);
+    Route::delete('/perfil/foto',   [PerfilController::class, 'deletePhoto']);
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);

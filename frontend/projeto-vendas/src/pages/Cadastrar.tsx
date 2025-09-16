@@ -84,7 +84,7 @@ return (
                                 <i className={`bi ${showPwd ? "bi-eye-slash" : "bi-eye"}`} aria-hidden="true" />
                             </button>
                         </div>
-                        
+
                         <div className="text-left mt-2">
                             {successMsg && <div className="text-success">{successMsg}</div>}
                             {errorMsg && <div className="text-danger">{errorMsg}</div>}
@@ -93,7 +93,6 @@ return (
                         <button className="btn btn-sm btn-primary mt-2 w-100" type="submit" disabled={loading} aria-busy={loading} >
                             {loading ? "Cadastrando..." : "Cadastrar"}
                         </button>
-
 
                         <div className="d-flex justify-content-center mt-2">
                             {loading && ( <div className="spinner-border text-primary" role="status" aria-label="Carregando" /> )}

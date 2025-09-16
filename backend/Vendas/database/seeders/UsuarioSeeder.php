@@ -11,7 +11,7 @@ class UsuarioSeeder extends Seeder {
 public function run(){
     Usuario::updateOrCreate(
         ['email' => 'admin@example.com'],
-        ['nome' => 'Admin', 'senha' => Hash::make('123456'), 'foto' => null]
+        ['nome' => 'Admin', 'senha' => Hash::make('123456'), 'foto' => 'avatars/user.png']
     );
 }
 }

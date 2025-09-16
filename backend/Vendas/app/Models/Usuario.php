@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 class Usuario extends Authenticatable
 {
     use HasApiTokens, Notifiable; // <- importante para tokens Sanctum
@@ -27,5 +28,17 @@ class Usuario extends Authenticatable
     public function produtos() 
     { 
         return $this->hasMany(Produto::class, 'usuario_id'); 
+    }
+
+    protected static function booted()
+    {
+    static::creating(function ($u) {
+        if (empty($u->foto)) $u->foto = 'avatars/user.png';
+    });
+    }
+
+    public function getFotoAttribute($value)
+    {
+        return $value ? \Illuminate\Support\Facades\Storage::url($value) : null;
     }
 }

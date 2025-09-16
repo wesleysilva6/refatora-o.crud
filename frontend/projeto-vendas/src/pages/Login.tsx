@@ -126,7 +126,6 @@ export default function Login() {
                     {loading ? "Entrando..." : "Entrar"}
                   </button>
 
-
                   <div className="d-flex justify-content-between text-primary mt-1">
                     <Link to="/verificar">Esqueceu a senha?</Link>
                     <Link to="/cadastrar">Cadastrar-se</Link>

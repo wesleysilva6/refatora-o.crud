@@ -1,0 +1,103 @@
+        .perfil {
+        font-size: 3rem;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 2.5rem;
+        letter-spacing: 0.5px;
+        }
+
+        #inputFoto {
+        display: none;
+        }
+
+        .custom-file-label {
+        display: inline-block;
+        background: var(--color--primary);
+        color:var(--color--text);
+        padding: 8px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s ease;
+        text-align: center;
+        }
+
+        .custom-file-label:hover {
+        background: #0056b3;
+        }
+
+        #file-name {
+        margin-left: 10px;
+        font-style: italic;
+        color: #555;
+        }
+
+        .img-preview {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ccc;
+        background: rgb(255, 255, 255);
+        }
+
+        .nome {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--color--text);
+        }
+
+        .email {
+        font-family: 'Roboto', sans-serif;
+        font-size: 1.3rem;
+        font-weight: 700;
+        text-align: center;
+        color: var(--color--text);
+        }
+
+        .cardHeader {
+        background: var(--color--background-card);
+        }
+
+        .cardTitle {
+        color: var(--color--black);
+        }
+
+        .cardTop {
+        color: var(--color--black);
+        }
+
+        .cardBody {
+        padding: 1.9rem;
+        background: var(--color--background-card);
+        }
+
+        label {
+        color: var(--color--text);
+        }
+
+        .formControl {
+        color: var(--color--text);
+        background: var(--color--input);
+        border: 1px solid var(--color--border);
+        }
+
+        .formControl::placeholder {
+        color:rgba(255, 255, 255, 0.76); 
+        }
+
+        .formControl:focus {
+        background: var(--color--input);
+        color: var(--color--text);
+        border-color: var(--color--border);
+        box-shadow: none;
+        outline: none;
+        }
+
+        .eyes {
+        color: var(--color--text);
+        background: var(--color--input);
+        border: 1px solid var(--color--border);
+        }

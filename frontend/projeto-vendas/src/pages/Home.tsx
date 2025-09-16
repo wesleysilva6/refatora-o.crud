@@ -198,16 +198,13 @@ return (
             </button>
         </div>
 
-            {erro && <div className="alert alert-danger">{erro}</div>}
-            {loading && <div className="text-muted">Carregando…</div>}
-
-        <main className="container pb-5 mb-5 mt-3">
+        <div className="containerHome">
 
         {topicos.map((t) => (
-            <div key={t.id} className="pb-5 mb-4 mt-3 border-0">
+            <div key={t.id} className="topicoBlock">
                 <h4 className="my-3 text-white">{t.nome_topico}</h4>
 
-            <div className="card-body p-0">
+            <div className="card-body">
                 <div className="table-responsive">
                     <table className="table table-striped align-middle mb-0">
                     <thead>
@@ -263,7 +260,7 @@ return (
                     </table>
                 </div>
 
-                <div className="d-flex gap-2 mt-4">
+                <div className="btn-topico">
                     <button className="btn btn-primary" onClick={() => confirmarRemoverTopico(t)}>
                         <i className="bi bi-trash3" /> Excluir Tópico
                     </button>
@@ -277,7 +274,7 @@ return (
             </div>
             </div>
         ))}
-        </main>
+        </div>
 
       {/* -------- Modais -------- */}
 
@@ -380,7 +377,8 @@ return (
             <button className="btn btn-secondary" onClick={() => close(modalRemoverTopicoRef.current)}>Cancelar</button>
             <button className="btn btn-danger" onClick={removerTopico}>Excluir</button>
           </div>
-        </div></div>
+        </div>
+      </div>
       </div>
 
       {/* Preview imagem */}

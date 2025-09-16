@@ -14,7 +14,7 @@
 
 ::-webkit-scrollbar {
         width: 8px;
-        }
+}
 
 ::-webkit-scrollbar-thumb {
         background: var(--color--button); 
@@ -64,16 +64,6 @@
         text-align:end;
         }
 
-        .container {
-        border: 1px solid red;
-        margin: 18.3rem;
-        }
-
-        .modal-content {
-        border-radius:4rem;
-        }
-
-
         .table.table-striped {
         background: var(--color--input);
         border:2px solid var(--color--primary);
@@ -95,4 +85,24 @@
         .table.table-striped tbody tr:nth-of-type(even) td {
         background: var(--color--table-par); 
         color: var(--color--text);
-    }
+        }
+
+        .containerHome {
+        margin: 3rem 19rem 12rem 14rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        }
+
+        .topicoBlock{
+        background: var(--color--background-container);
+        border: 1px solid var(--color--border);
+        border-radius: 0.8rem;
+        padding: 1rem;
+        margin-bottom: 4rem;
+        }
+
+        .btn-topico {
+        display: flex;
+        gap: 0.5rem;
+        margin: 5rem 0 2rem 0;
+        }

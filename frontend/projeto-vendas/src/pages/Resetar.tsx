@@ -45,7 +45,7 @@ return (
                             <i className="bi bi-lock" aria-hidden="true" />
                         </span>
                         <input type={showPwd ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Digite uma Senha" required autoComplete="current-password" />
-                    <button  type="button" className={`btn btn-dark ${styles.eyes}`} onClick={() => setShowPwd((s) => !s)} aria-label={showPwd ? "Ocultar senha" : "Mostrar senha"}>
+                        <button type="button" className={`btn btn-dark ${styles.eyes}`} onClick={() => setShowPwd((s) => !s)} aria-label={showPwd ? "Ocultar senha" : "Mostrar senha"}>
                         <i className={`bi ${showPwd ? "bi-eye-slash" : "bi-eye"}`} aria-hidden="true" />
                     </button>
                     </div>

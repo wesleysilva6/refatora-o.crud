@@ -5,9 +5,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Cadastrar from "./pages/Cadastrar"
 import Login from "./pages/Login";
-import Home from "./pages/Home";
 import Verificar from './pages/Verificar';
 import Resetar from './pages/Resetar';
+import Home from "./pages/Home";
+import Perfil from "./pages/Perfil"
 import PrivateRoute from "./PrivateRoute";
 
 export default function App() {
@@ -21,11 +22,12 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/verificar" element={<Verificar />} />
-          <Route path="/Resetar" element={<Resetar />} />
+          <Route path="/resetar" element={<Resetar />} />
 
         {/* privadas */}
         <Route element={<PrivateRoute />}>
-          <Route path="/Home" element={<Home />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/perfil" element={<Perfil />} />
         </Route>
 
         <Route path="*" element={<Index />} />
