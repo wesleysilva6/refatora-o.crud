@@ -1,6 +1,7 @@
-:root {
+/* :root {
         --color--background-container:#161A1F;
         --color--background-modal:#161A1F;
+        --color--background-card:#0a0c0f;
         --color--table-impar:#20252a;
         --color--table-par:#161A1F;
         --color--background:#000;
@@ -10,7 +11,13 @@
         --color--input:#20252A;
         --color--text:#fff;
         --color--button:#0B5ED7;
-}
+        --color--placeholder: rgba(255,255,255,.76);
+        --color--eyes: #ffffff;
+        --color--footer:#0C0F16;
+
+        /* LOGIN 
+        --color--cardLogin: #0C0F16;
+} */
 
 ::-webkit-scrollbar {
         width: 8px;
@@ -44,7 +51,6 @@
         }
 
         .btn {
-        background-color: var(--color--button);
         color: var(--color--text);
         }
 
@@ -54,7 +60,7 @@
         }
 
         footer {
-        background:var(--color-navbar);
+        background:var(--color--footer);
         padding: 1rem 4%;
         margin: 14.9rem 0 0 0;
         }
@@ -64,45 +70,3 @@
         text-align:end;
         }
 
-        .table.table-striped {
-        background: var(--color--input);
-        border:2px solid var(--color--primary);
-        border-radius: 1px;
-        overflow: hidden;
-        }
-
-        .table.table-striped thead th {
-        border-bottom: 2px solid var(--color--primary);
-        background:var(--color--primary);
-        color: var(--color--text);
-        }
-
-        .table.table-striped tbody tr:nth-of-type(odd) td {
-        background: var(--color--table-impar); 
-        color: var(--color--text);
-        }
-
-        .table.table-striped tbody tr:nth-of-type(even) td {
-        background: var(--color--table-par); 
-        color: var(--color--text);
-        }
-
-        .containerHome {
-        margin: 3rem 19rem 12rem 14rem;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        }
-
-        .topicoBlock{
-        background: var(--color--background-container);
-        border: 1px solid var(--color--border);
-        border-radius: 0.8rem;
-        padding: 1rem;
-        margin-bottom: 4rem;
-        }
-
-        .btn-topico {
-        display: flex;
-        gap: 0.5rem;
-        margin: 5rem 0 2rem 0;
-        }

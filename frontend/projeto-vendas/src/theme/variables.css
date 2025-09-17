@@ -1,0 +1,91 @@
+/* src/theme/variables.css */
+
+/* LIGHT (default) */
+    :root {
+    color-scheme: light;
+
+    /* COMPONENTS */
+    --color--navbar: #0C0F16;
+    --color--footer: #0C0F16;
+    --color--btn: #0B5ED7;
+
+    /* ICONS */
+    --color--eyes: #000;
+    --color--icons: #000;
+
+    /* INPUTS */
+    --color--input:      #ffffff;
+    --color--text-input: #000;
+    --color--border-input: #393E42;
+    --color--placeholder: rgba(0,0,0,.54);
+
+    /* TÓPICOS */
+    --color--background-topico: #000000;
+    --color--table-topico: #0B5ED7;
+    --color--text-topico: #000;
+    --color--table-impar: #ffffff;
+    --color--table-par:   #808080;
+    --color--icons-topico: #0B5ED7;
+    --color--nome-topico: #fff;
+
+    /* seus tokens */
+    --color--background: #000000;
+    --color--primary:    #0B5ED7;
+
+    --color--border:     #000000;
+
+    --color--text:       #ffffff;
+    --color--cardLogin: #020202;
+
+    /* extras p/ tabelas/containers no claro */
+    --color--background-container: #000000;
+    --color--background-modal:#161A1F;
+    --color--background-card:#1c67d6;
+
+    /* Bootstrap bridge */
+    --bs-body-bg: var(--color--background);
+    --bs-body-color: var(--color--text);
+    --bs-card-bg: var(--color--background-container);
+    --bs-border-color: var(--color--border);
+    --bs-primary: var(--color--primary);
+    }
+
+    /* DARK */
+    :root[data-theme="dark"] {
+    color-scheme: dark;
+
+    /* COMPONENTS */
+    --color--navbar: #0C0F16;
+    --color--footer: #0C0F16;
+
+    /* ICONS */
+    --color--eyes: #ffffff;
+    --color--icons: #ffffff;
+
+    /* INPUTS */
+    --color--input:#20252A;
+    --color--text-input: #ffffff;
+    --color--border-input: #393E42;
+    --color--placeholder: rgba(255,255,255,.76);
+
+    /* TÓPICOS */
+    --color--background-topico: #000000;
+    --color--table-topico: #0B5ED7;
+    --color--text-topico: #ffffff;
+    --color--table-impar:#20252a;
+    --color--table-par:#161A1F;
+    --color--icons-topico: #fff;
+    --color--nome-topico: #fff;
+
+    --color--background:#000;
+    --color--primary:#0B5ED7;
+    --color--text:#fff;
+
+    --color--background-container:#11161c;
+
+    --bs-body-bg: var(--color--background);
+    --bs-body-color: var(--color--text);
+    --bs-card-bg: var(--color--navbar);
+    --bs-border-color: var(--color--border);
+    --bs-primary: var(--color--primary);
+    }

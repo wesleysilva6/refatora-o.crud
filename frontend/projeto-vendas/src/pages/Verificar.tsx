@@ -66,7 +66,7 @@ export default function Verificar() {
                 <form className="spinnerForm" noValidate onSubmit={handleSubmit(onSubmit)}>
                   <div className="input-group mt-2">
                     <span className={`input-group-text ${styles.inputGroupText}`}>
-                      <i className="bi bi-envelope" aria-hidden="true" />
+                      <i className={`bi bi-envelope ${styles.icon}`} aria-hidden="true" />
                     </span>
                     <input
                       type="email"

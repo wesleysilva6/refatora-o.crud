@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Modal } from "bootstrap";
 import { api } from "../api";
-import "./Home.module.css"; // opcional (CSS Module)
 import Sidebar from "../components/Sidebar";
+
+
+// import { AddTopicoModal, AddProdutoModal, ConfirmModal, ImagePreviewModal } from "../components/modals";
+
+import styles from "./Home.module.css"; // opcional (CSS Module) 
 
 type Produto = {
     id: number;
@@ -198,15 +202,15 @@ return (
             </button>
         </div>
 
-        <div className="containerHome">
+        <div className={`containerHome ${styles.containerHome}`}>
 
         {topicos.map((t) => (
-            <div key={t.id} className="topicoBlock">
-                <h4 className="my-3 text-white">{t.nome_topico}</h4>
+            <div key={t.id} className={`${styles.topicoBlock}`}>
+                <h4 className={`${styles.topicoTitle}`}>{t.nome_topico}</h4>
 
-            <div className="card-body">
+            <div className={`card-body`}>
                 <div className="table-responsive">
-                    <table className="table table-striped align-middle mb-0">
+                    <table className={`table table-striped align-middle mb-0 ${styles.table}`}>
                     <thead>
                         <tr>
                         <th>Imagem</th>
@@ -245,13 +249,13 @@ return (
 
                             <td>
                             <button className="btn" onClick={() => abrirEditarProduto(p)}>
-                                <i className="bi bi-pencil-square" />
+                                <i className={`bi bi-pencil-square ${styles.icon}`} />
                             </button>
                             </td>
 
                             <td>
                             <button className="btn" onClick={() => confirmarRemoverProduto(p)}>
-                                <i className="bi bi-trash3" />
+                                <i className={`bi bi-trash3 ${styles.icon}`} />
                             </button>
                             </td>
                         </tr>
@@ -260,7 +264,7 @@ return (
                     </table>
                 </div>
 
-                <div className="btn-topico">
+                <div className={`${styles.btnTopico}`}>
                     <button className="btn btn-primary" onClick={() => confirmarRemoverTopico(t)}>
                         <i className="bi bi-trash3" /> Excluir Tópico
                     </button>
@@ -277,23 +281,6 @@ return (
         </div>
 
       {/* -------- Modais -------- */}
-
-      {/* Novo tópico */}
-      <div className="modal fade" ref={modalTopicoRef} tabIndex={-1}>
-        <div className="modal-dialog"><div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Adicionar Tópico</h5>
-            <button type="button" className="btn-close" onClick={() => close(modalTopicoRef.current)} />
-          </div>
-          <div className="modal-body">
-            <input className="form-control" placeholder="Nome do tópico" value={topicoNome} onChange={e => setTopicoNome(e.target.value)} />
-          </div>
-          <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={() => close(modalTopicoRef.current)}>Cancelar</button>
-            <button className="btn btn-primary" onClick={criarTopico}>Salvar</button>
-          </div>
-        </div></div>
-      </div>
 
       {/* Novo produto */}
       <div className="modal fade" ref={modalProdutoRef} tabIndex={-1}>

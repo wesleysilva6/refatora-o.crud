@@ -12,15 +12,15 @@ export default function Perfil() {
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [sending, setSending] = useState(false);
-    const [alerts, setAlerts] = useState<{ type: "success" | "danger"; text: string }[]>([]);
+    const [texts, setTexts] = useState<{ type: "success" | "danger"; text: string }[]>([]);
     const [loading, setLoading] = useState(false);
     const [showPwd, setShowPwd] = useState(false);
     const [showPwd2, setShowPwd2] = useState(false);
     const [showPwd3, setShowPwd3] = useState(false);
 
     function pushAlert(type: "success" | "danger", text: string) {
-        setAlerts((a) => [...a, { type, text }]);
-        setTimeout(() => setAlerts((a) => a.slice(1)), 3500);
+        setTexts((a) => [...a, { type, text }]);
+        setTimeout(() => setTexts((a) => a.slice(1)), 3500);
     }
 
     // Carrega usuário
@@ -136,19 +136,15 @@ export default function Perfil() {
 return (
     <div className="min-vh-100 d-flex flex-column">
         <Sidebar />
-        <div className="container justify-content-center align-items-center">
-            <div className="card mx-auto" style={{ maxWidth: 700 }}>
+        <div className={`justify-content-center align-items-center ${styles.container}`}>
+            <div className={`card mx-auto ${styles.card}`} style={{ maxWidth: 700 }}>
                 <div className={`card-header ${styles.cardHeader}`}>
                     <h5 className={`card-title mt-2 ${styles.cardTitle}`}>Atualizar Perfil</h5>
                 </div>
             <div className={`text-center mt-2 ${styles.cardTop}`}>Meu Perfil</div>
 
-        {alerts.map((a, i) => (
-        <div key={i} className={`alert alert-${a.type} mx-3 mt-3 py-2`}> {a.text} </div> ))}
-
-        {/* Foto */}
-        <div className="text-center mt-3">
-            <img src={preview ?? "/uploads/user.png"} id="preview" className="img-preview mb-3 rounded-circle" alt="Foto de Perfil" style={{ maxWidth: 200 }} />
+        <div className="mb-2">
+            <img src={preview ?? "/avatars/user.png"} id="preview" className={`mx-auto d-block ${styles.imgPerfil}`} alt="Foto de Perfil" style={{ maxWidth: 200 }} />
         <div className="d-flex align-items-center justify-content-center gap-2">
             <label htmlFor="inputFoto" className="btn btn-primary"> Escolher arquivo </label>
             <button className="btn btn-danger" type="button" onClick={removerFoto} disabled={sending}>
@@ -164,10 +160,12 @@ return (
             </button> )}
         </div>
 
-        <div className="text-center text-white">
-            <div className="nome mt-3">{user?.nome}</div>
-            <div className="email">{user?.email}</div>
-        </div>
+            <div className={`text-center ${styles.infoUser}`}>
+                <strong>
+                    <div className="nome mt-3">{user?.nome}</div>
+                    <div className="email">{user?.email}</div>
+                </strong>
+            </div>
 
         <div className={`card-body ${styles.cardBody}`}>
             <form onSubmit={salvarNome} className="spinnerForm">
@@ -183,33 +181,36 @@ return (
             <hr className="text-primary my-4" />
 
         <form onSubmit={salvarSenha} className="spinnerForm">
-            <label htmlFor="senhaAtual" className="form-label">Senha Atual</label>
+            <label htmlFor="senha" className="form-label">Senha Atual</label>
             <div className="input-group mb-2">
-                <input type={showPwd ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Digite a Senha" required autoComplete="current-password" />
-                    <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd((s) => !s)} aria-label={showPwd ? "Ocultar senha" : "Mostrar senha"} >
-                        <i className={`bi ${showPwd ? "bi-eye-slash" : "bi-eye"}`} aria-hidden="true" />
-                    </button>
+                <input id="senha" name="senha" type={showPwd ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Digite a Senha" required autoComplete="current-password" />
+                <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd(s => !s)} aria-label={showPwd ? "Ocultar senha" : "Mostrar senha"}>
+                    <i className={`bi ${showPwd ? "bi-eye-slash" : "bi-eye"}`} />
+                </button>
             </div>
 
-            <label htmlFor="novaSenha" className="form-label mt-2">Digite uma nova Senha</label>
-                <div className="input-group mb-2">
-                <input type={showPwd2 ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Confirme a Senha" required autoComplete="current-password" />
-                    <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd2((s) => !s)} aria-label={showPwd2 ? "Ocultar senha2" : "Mostrar senha2"} >
-                        <i className={`bi ${showPwd2 ? "bi-eye-slash" : "bi-eye"}`} aria-hidden="true" />
-                    </button>
+            <label htmlFor="nova_senha" className="form-label mt-2">Digite uma nova Senha</label>
+            <div className="input-group mb-2">
+                <input id="nova_senha" name="nova_senha" type={showPwd2 ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Nova Senha" required autoComplete="new-password" />
+                <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd2(s => !s)} aria-label={showPwd2 ? "Ocultar nova senha" : "Mostrar nova senha"} > 
+                    <i className={`bi ${showPwd2 ? "bi-eye-slash" : "bi-eye"}`} /> 
+                </button>
             </div>
 
-            <label htmlFor="confirmarSenha" className="form-label mt-2">Confirmar Nova Senha</label>
+            <label htmlFor="confirmar_senha" className="form-label mt-2">Confirmar Nova Senha</label>
             <div className="input-group mt-2">
-                <input type={showPwd3 ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Confirme a Senha" required autoComplete="current-password" />
-                    <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd3((s) => !s)} aria-label={showPwd3 ? "Ocultar senha3" : "Mostrar senha3"} >
-                        <i className={`bi ${showPwd3 ? "bi-eye-slash" : "bi-eye"}`} aria-hidden="true" />
-                    </button>
+                <input id="confirmar_senha" name="confirmar_senha" type={showPwd3 ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Confirme a Senha" required autoComplete="new-password" />
+                <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd3(s => !s)} aria-label={showPwd3 ? "Ocultar confirmação" : "Mostrar confirmação"} > 
+                    <i className={`bi ${showPwd3 ? "bi-eye-slash" : "bi-eye"}`} />
+                </button>
             </div>
+
+            {texts.map((a, i) => (
+            <div key={i} className={`text-${a.type} mt-1`}> {a.text} </div> ))}
 
             <div className="mt-3">
                 <button type="submit" className="btn btn-primary w-100 mt-1" disabled={sending}>
-                    {sending ? "Salvando..." : "Atualizar Senha"}
+                {sending ? "Salvando..." : "Atualizar Senha"}
                 </button>
             </div>
         </form>

@@ -64,19 +64,19 @@ return (
                         <form onSubmit={handleSubmit(onSubmit)} className="spinnerForm" noValidate>
 
                         <div className="input-group mt-1">
-                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className="bi bi-person-circle" aria-hidden="true" /></span>
+                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className={`bi bi-person-circle ${styles.icon}`} aria-hidden="true" /></span>
                             <input type="text" className={`form-control ${styles.formControl}`} placeholder="Usuário" required autoComplete="name" 
                             {...register("nome")} />
                         </div>
 
                         <div className="input-group mt-2">
-                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className="bi bi-envelope" aria-hidden="true" /> </span> 
+                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className={`bi bi-envelope ${styles.icon}`} aria-hidden="true" /> </span> 
                             <input type="email" className={`form-control ${styles.formControl}`} placeholder="E-mail" required autoComplete="email" 
                             {...register("email")} />
                         </div>
 
                         <div className="input-group mt-2">
-                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className="bi bi-lock" aria-hidden="true" /> </span>
+                            <span className={`input-group-text ${styles.inputGroupText}`}> <i className={`bi bi-lock ${styles.icon}`} aria-hidden="true" /> </span>
                             <input type={showPwd ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Senha" required 
                             {...register("senha")} />
                             <button type="button" className={`btn btn-dark ${styles.eyes}`} onClick={() => setShowPwd(s => !s)} 
@@ -90,7 +90,7 @@ return (
                             {errorMsg && <div className="text-danger">{errorMsg}</div>}
                         </div>
 
-                        <button className="btn btn-sm btn-primary mt-2 w-100" type="submit" disabled={loading} aria-busy={loading} >
+                        <button className={`btn btn-sm w-100 mt-1 ${styles.btnCadastrar}`} type="submit" disabled={loading} aria-busy={loading} >
                             {loading ? "Cadastrando..." : "Cadastrar"}
                         </button>
 

@@ -1,0 +1,44 @@
+        .containerHome {
+        margin: 3rem 19rem 12rem 14rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        }
+
+        .topicoTitle {
+        color: var(--color--nome-topico);
+        margin: 0.4rem;
+        }
+
+        .topicoBlock{
+        background: var(--color--background-topico);
+        border: 1px solid var(--color--border);
+        border-radius: 0.8rem;
+        padding: 1rem;
+        margin-bottom: 4rem;
+        }
+
+        .btnTopico {
+        display: flex;
+        gap: 0.5rem;
+        margin: 5rem 0 2rem 0;
+        }
+
+        .table thead th {
+        background:var(--color--table-topico);
+        border-bottom: 2px solid var(--color--primary);
+        color: var(--color--text);
+        }
+
+        .table tbody tr:nth-of-type(odd) td {
+        background: var(--color--table-impar);
+        color: var(--color--text-topico);
+        }
+
+        .table tbody tr:nth-of-type(even) td {
+        background: var(--color--table-par); 
+        color: var(--color--text-topico);
+        }
+
+        .icon {
+        color: var(--color--icons-topico);
+        }

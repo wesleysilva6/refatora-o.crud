@@ -1,6 +1,7 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { useCallback } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 import logoTexto from "../assets/img/logo_stexto.png";
 import logoFundo from "../assets/img/fundop2.png";
@@ -74,6 +75,12 @@ return (
                 <Link to="/analytics" className="text-white mb-3 fs-5 nav-link">
                     <i className="bi bi-bar-chart-line-fill" /> Estatísticas
                 </Link>
+            </li>
+
+            <li>
+                <div className="ms-auto">
+                    <ThemeToggle />
+                </div>
             </li>
 
             <li>

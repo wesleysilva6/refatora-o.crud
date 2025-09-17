@@ -6,7 +6,9 @@ import titleHeader from "../assets/img/fundop2.png";
 import logoCaixa from "../assets/img/caixa_fundop.png";
 import logoEstoque from "../assets/img/fundop.png";
 
+import styles from "./Index.module.css"; // << CSS Module
 import "../css/style.css";
+import ThemeToggle from "../components/ThemeToggle";
 
 export default function Home() {
   return (
@@ -17,6 +19,9 @@ export default function Home() {
           <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
             <img src={logoHeader} width={65} alt="Estoque Aqui" />
             <img src={titleHeader} width={85} height={65} alt="Estoque Aqui" />
+                            <div className="ms-auto">
+                                <ThemeToggle />
+                            </div>
           </Link>
         </div>
       </nav>
@@ -26,7 +31,7 @@ export default function Home() {
         <div className="container">
             <div className="row align-items-center justify-content-between">
                 <div className="col-md-8">
-                <h3>Seja Bem-Vindo a ESTOQUE AQUI !</h3>
+                <h3 className={`${styles.titleIndex}`}>Seja Bem-Vindo a ESTOQUE AQUI !</h3>
                 <p> Seja bem-vindo ao nosso Sistema de Controle de Estoque, uma plataforma completa, segura e
                     eficiente, desenvolvida para facilitar a gestão de produtos e materiais da sua empresa.
                     Com este sistema, você pode cadastrar, atualizar, excluir e acompanhar em tempo real todas as
@@ -39,8 +44,8 @@ export default function Home() {
                     facilitando ainda mais a análise, controle e geração de relatórios personalizados.
                 </p>
                     <div className="d-flex gap-2">
-                        <Link to="/login" className="btn">Login</Link>
-                        <Link to="/cadastrar" className="btn">Cadastre-se</Link>
+                        <Link to="/login" className="btn btn-primary">Login</Link>
+                        <Link to="/cadastrar" className="btn btn-primary">Cadastre-se</Link>
                     </div>
                 </div>
 

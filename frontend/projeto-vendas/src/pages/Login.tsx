@@ -83,7 +83,7 @@ export default function Login() {
                 <form onSubmit={handleSubmit(onSubmit)} className="spinnerForm" noValidate>
                   <div className="input-group mt-1">
                     <span className={`input-group-text ${styles.inputGroupText}`}>
-                      <i className="bi bi-envelope" aria-hidden="true" />
+                      <i className={`bi bi-envelope ${styles.icon}`} aria-hidden="true" />
                     </span>
                     <input
                       type="email"
@@ -98,7 +98,7 @@ export default function Login() {
 
                   <div className="input-group mt-2">
                     <span className={`input-group-text ${styles.inputGroupText}`}>
-                      <i className="bi bi-lock" aria-hidden="true" />
+                      <i className={`bi bi-lock ${styles.icon}`} aria-hidden="true" />
                     </span>
                     <input
                       type={showPwd ? "text" : "password"}
@@ -122,7 +122,7 @@ export default function Login() {
                     {errorMsg && <div className="text-danger">{errorMsg}</div>}
                   </div>
 
-                  <button className="btn btn-sm btn-primary mt-2 w-100" type="submit" disabled={loading} aria-busy={loading}>
+                  <button className={`btn btn-sm w-100 mt-2 ${styles.btnEntrar}`} type="submit" disabled={loading} aria-busy={loading}>
                     {loading ? "Entrando..." : "Entrar"}
                   </button>
 
