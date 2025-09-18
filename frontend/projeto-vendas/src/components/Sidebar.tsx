@@ -60,7 +60,7 @@ return (
             </li>
 
             <li>
-                <Link to="/simulacao" className="text-white mb-3 fs-5 nav-link">
+                <Link to="/simular" className="text-white mb-3 fs-5 nav-link">
                     <i className="bi bi-box-seam-fill" /> Simular Venda
                 </Link>
             </li>
@@ -78,13 +78,13 @@ return (
             </li>
 
             <li>
-                <div className="ms-auto">
+                <div className="m-2 mb-5">
                     <ThemeToggle />
                 </div>
             </li>
 
             <li>
-                <button type="button" className="text-white mb-3 fs-5 nav-link w-100" onClick={handleLogout}>
+                <button type="button" className="text-primary mb-3 fs-5 nav-link w-100" onClick={handleLogout}>
                     <i className="bi bi-box-arrow-left" /> Sair
                 </button>
             </li>

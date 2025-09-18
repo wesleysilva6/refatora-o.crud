@@ -23,6 +23,7 @@
     --color--background-topico: #000000;
     --color--table-topico: #0B5ED7;
     --color--text-topico: #000;
+    --color--table-border: #0B5ED7;
     --color--table-impar: #ffffff;
     --color--table-par:   #808080;
     --color--icons-topico: #0B5ED7;
@@ -40,7 +41,7 @@
     /* extras p/ tabelas/containers no claro */
     --color--background-container: #000000;
     --color--background-modal:#161A1F;
-    --color--background-card:#1c67d6;
+    --color--background-card:#070707;
 
     /* Bootstrap bridge */
     --bs-body-bg: var(--color--background);
@@ -69,9 +70,10 @@
     --color--placeholder: rgba(255,255,255,.76);
 
     /* TÓPICOS */
-    --color--background-topico: #000000;
+    --color--background-topico: #161A1F;
     --color--table-topico: #0B5ED7;
     --color--text-topico: #ffffff;
+    --color--table-border: #0B5ED7;
     --color--table-impar:#20252a;
     --color--table-par:#161A1F;
     --color--icons-topico: #fff;
@@ -81,7 +83,9 @@
     --color--primary:#0B5ED7;
     --color--text:#fff;
 
+    /* extras p/ tabelas/containers no escuro */
     --color--background-container:#11161c;
+    --color--background-card:#0A0C0F;
 
     --bs-body-bg: var(--color--background);
     --bs-body-color: var(--color--text);

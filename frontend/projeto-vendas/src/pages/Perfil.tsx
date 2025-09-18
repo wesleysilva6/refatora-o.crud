@@ -12,8 +12,8 @@ export default function Perfil() {
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [sending, setSending] = useState(false);
-    const [texts, setTexts] = useState<{ type: "success" | "danger"; text: string }[]>([]);
     const [loading, setLoading] = useState(false);
+    const [texts, setTexts] = useState<{ type: "success" | "danger"; text: string }[]>([]);
     const [showPwd, setShowPwd] = useState(false);
     const [showPwd2, setShowPwd2] = useState(false);
     const [showPwd3, setShowPwd3] = useState(false);
@@ -146,8 +146,8 @@ return (
         <div className="mb-2">
             <img src={preview ?? "/avatars/user.png"} id="preview" className={`mx-auto d-block ${styles.imgPerfil}`} alt="Foto de Perfil" style={{ maxWidth: 200 }} />
         <div className="d-flex align-items-center justify-content-center gap-2">
-            <label htmlFor="inputFoto" className="btn btn-primary"> Escolher arquivo </label>
-            <button className="btn btn-danger" type="button" onClick={removerFoto} disabled={sending}>
+            <label htmlFor="inputFoto" className={`btn btn-primary ${styles.btnEscolher}`}> Escolher arquivo </label>
+            <button className={`btn btn-danger ${styles.btnExcluir}`} type="button" onClick={removerFoto} disabled={sending}>
                 <i className="bi bi-trash3"></i>
             </button>
         </div>
@@ -173,7 +173,7 @@ return (
                 <label htmlFor="editarNome" className="form-label">Editar Nome</label>
                 <input type="text" id="editarNome" name="novo_nome" className={`form-control ${styles.formControl}`} placeholder="Nome do Usuário" value={nome} onChange={(e) => setNome(e.target.value)}/>
             </div>
-                <button type="submit" className="btn btn-primary w-100" disabled={sending}>
+                <button type="submit" className={`btn btn-primary w-100 ${styles.btnAtualizar}`} disabled={sending}>
                     {sending ? "Salvando..." : "Atualizar Nome"}
                 </button>
             </form>
@@ -209,8 +209,8 @@ return (
             <div key={i} className={`text-${a.type} mt-1`}> {a.text} </div> ))}
 
             <div className="mt-3">
-                <button type="submit" className="btn btn-primary w-100 mt-1" disabled={sending}>
-                {sending ? "Salvando..." : "Atualizar Senha"}
+                <button type="submit" className={`btn btn-primary w-100 mt-1 ${styles.btnAtualizar}`} disabled={sending}>
+                    {sending ? "Salvando..." : "Atualizar Senha"}
                 </button>
             </div>
         </form>

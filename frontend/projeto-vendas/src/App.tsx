@@ -10,6 +10,7 @@ import Resetar from './pages/Resetar';
 import Home from "./pages/Home";
 import Perfil from "./pages/Perfil"
 import PrivateRoute from "./PrivateRoute";
+import Simular from './pages/Simular';
 
 export default function App() {
   return (
@@ -28,6 +29,7 @@ export default function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
           <Route path="/perfil" element={<Perfil />} />
+          <Route path="/simular" element={<Simular />} />
         </Route>
 
         <Route path="*" element={<Index />} />

@@ -1,0 +1,81 @@
+
+        .card {
+        background: var(--color--background-card);
+        margin: 10rem 10rem 10rem 10rem;
+        border-radius: 0.7rem;
+        }
+
+        .cardHeader {
+        border-bottom:1px solid var(--color--primary);
+        }
+
+        .formControl {
+        color: var(--color--text-input);
+        background: var(--color--input);
+        border: 1px solid var(--color--border-input);
+        }
+
+        .formControl::placeholder {
+        color: var(--color--placeholder);
+        }
+
+        .formControl:focus {
+        box-shadow: none;
+        outline: none;
+        background: var(--color--input);
+        color: var(--color--text-input);
+        border-color: var(--color--border-input);
+        }
+
+        .formSelect {
+        color: var(--color--text-input);
+        background: var(--color--input);
+        border: 1px solid var(--color--border-input);
+        }
+
+        .formSelect:focus {
+        box-shadow: none;
+        outline: none;
+        background: var(--color--input);
+        color: var(--color--text-input);
+        border-color: var(--color--border-input);
+        }
+
+        .table {
+        background: var(--color--input);
+        border-radius: 0.4rem;
+        overflow: hidden;
+        padding: 20rem;
+        }
+
+        .table thead th {
+        border-bottom: 2px solid var(--color--primary);
+        background:var(--color--primary);
+        color: var(--color--text);
+        }
+
+        .table tbody tr:nth-of-type(odd) td {
+        background: var(--color--table-impar); 
+        color: var(--color--text); 
+        border-bottom: 1px solid var(--color--table-border);    
+        }
+
+        .table tbody tr:nth-of-type(even) td {
+        background: var(--color--table-par); 
+        color: var(--color--text);
+        border-bottom: 1px solid var(--color--table-border);    
+        }
+
+        .btnSimular:hover {
+        background-color: #0a51bb;
+        }
+
+        .btnSimular:focus {
+        background-color: #0a51bb;
+        }
+
+        .inputDisabled {
+        background-color: var(--color--input) !important;
+        color: var(--color--text-input) !important;
+        opacity: 1 !important;
+        }

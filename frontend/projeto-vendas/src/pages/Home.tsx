@@ -193,7 +193,7 @@ return (
             </div>
         </div>
 
-        <div className="topicos">
+        <div className={`${styles.topicos}`}>
             <button className="btn btn-primary m-2" onClick={() => open(modalTopicoRef.current)}>
                 <i className="bi bi-plus-circle" /> Adicionar Tópico
             </button>

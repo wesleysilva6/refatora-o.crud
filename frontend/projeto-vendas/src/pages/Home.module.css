@@ -11,7 +11,6 @@
 
         .topicoBlock{
         background: var(--color--background-topico);
-        border: 1px solid var(--color--border);
         border-radius: 0.8rem;
         padding: 1rem;
         margin-bottom: 4rem;
@@ -23,20 +22,42 @@
         margin: 5rem 0 2rem 0;
         }
 
+        .topicos {
+        margin:7rem 19.4rem 0 0;
+        text-align:end;
+        }
+
+        .topicos button:hover {
+        background: #0a51bb;   
+        }
+
+        .topicos button:focus {
+        background: #0a51bb;   
+        }
+
+        .btnTopico button:hover {
+        background: #0a51bb;    
+        }
+
+        .btnTopico button:focus {
+        background: #0a51bb;    
+        }
+
         .table thead th {
         background:var(--color--table-topico);
-        border-bottom: 2px solid var(--color--primary);
         color: var(--color--text);
         }
 
         .table tbody tr:nth-of-type(odd) td {
         background: var(--color--table-impar);
         color: var(--color--text-topico);
+        border-bottom: 1px solid var(--color--table-border);
         }
 
         .table tbody tr:nth-of-type(even) td {
         background: var(--color--table-par); 
         color: var(--color--text-topico);
+        border-bottom: 1px solid var(--color--table-border);
         }
 
         .icon {
