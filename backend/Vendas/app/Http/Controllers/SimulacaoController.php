@@ -2,98 +2,101 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Produto;
 use App\Models\Simulacao;
-use App\Models\ItemSimulacao;
+use App\Models\SimulacaoItem;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class SimulacaoController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $r)
     {
-        return Simulacao::query()
-            ->where('usuario_id', Auth::id())
-            ->with('itens')
-            ->orderByDesc('criada_em')
-            ->paginate(15);
+        return Simulacao::with('itens')
+            ->where('usuario_id', $r->user()->id)
+            ->orderByDesc('id')
+            ->get();
     }
 
-    public function store(Request $request)
+    public function show(Request $r, Simulacao $simulacao)
     {
-        $data = $request->validate([
-            'cliente' => ['required','string','max:255'],
-            'itens'   => ['required','array','min:1'],
-            'itens.*.produto_id'   => ['nullable','integer'], // no dump a FK é opcional
-            'itens.*.nome_produto' => ['required','string','max:255'],
-            'itens.*.quantidade'   => ['required','integer','min:1'],
-            'itens.*.preco'        => ['required','numeric','min:0'],
-        ]);
-
-        return DB::transaction(function () use ($data) {
-            $sim = Simulacao::create([
-                'usuario_id' => Auth::id(),
-                'cliente'    => $data['cliente'],
-                'criada_em'  => now(),
-                'total'      => 0,
-            ]);
-
-            $total = 0;
-            foreach ($data['itens'] as $item) {
-                $subtotal = $item['quantidade'] * $item['preco'];
-                $total   += $subtotal;
-
-                ItemSimulacao::create([
-                    'id_simulacao' => $sim->id,
-                    'produto_id'   => $item['produto_id'] ?? null,
-                    'nome_produto' => $item['nome_produto'],
-                    'quantidade'   => $item['quantidade'],
-                    'preco'        => $item['preco'],
-                    'subtotal'     => $subtotal,
-                ]);
-            }
-
-            $sim->update(['total' => $total]);
-
-            return $sim->load('itens');
-        });
-    }
-
-    public function show(Simulacao $simulacao)
-    {
-        $this->authorizeOwner($simulacao);
+        abort_unless($simulacao->usuario_id === $r->user()->id, 403);
         return $simulacao->load('itens');
     }
 
-    public function update(Request $request, Simulacao $simulacao)
+    // POST /simulacao/finalizar
+    public function finalizar(Request $r)
     {
-        $this->authorizeOwner($simulacao);
-
-        $data = $request->validate([
-            'cliente' => ['sometimes','string','max:255'],
+        $data = $r->validate([
+            'cliente' => ['required','string','max:255'],
+            'itens'   => ['required','array','min:1'],
+            'itens.*.id'         => ['required','integer','exists:produtos,id'],
+            'itens.*.quantidade' => ['required','integer','min:1'],
         ]);
 
-        $simulacao->update($data);
+        $uid = $r->user()->id;
 
-        return $simulacao->refresh()->load('itens');
+        $simulacao = DB::transaction(function () use ($data, $uid) {
+
+            $total = 0.0;
+            $snapshotItens = [];
+
+            foreach ($data['itens'] as $raw) {
+                $produto = Produto::where('id', $raw['id'])
+                    ->where('usuario_id', $uid)
+                    ->lockForUpdate()
+                    ->firstOrFail();
+
+                $qtd = (int) $raw['quantidade'];
+                if ($qtd > $produto->quantidade) {
+                    abort(422, "Estoque insuficiente para {$produto->nome_produto} (disp: {$produto->quantidade}).");
+                }
+
+                $subtotal = round($produto->preco * $qtd, 2);
+                $total = round($total + $subtotal, 2);
+
+                $snapshotItens[] = [
+                    'produto_id'   => $produto->id,
+                    'nome_produto' => $produto->nome_produto,
+                    'quantidade'   => $qtd,
+                    'preco'        => $produto->preco,
+                    'subtotal'     => $subtotal,
+                ];
+
+                // baixa de estoque
+                $produto->decrement('quantidade', $qtd);
+            }
+
+            $sim = Simulacao::create([
+                'usuario_id' => $uid,
+                'cliente'    => $data['cliente'],
+                'total'      => $total,
+                'status'     => 'finalizada',
+            ]);
+
+            foreach ($snapshotItens as $i) {
+                $i['simulacao_id'] = $sim->id;
+                SimulacaoItem::create($i);
+            }
+
+            return $sim->load('itens');
+        });
+
+        return response()->json($simulacao, 201);
     }
 
-    public function destroy(Simulacao $simulacao)
+    public function destroy(Request $r, Simulacao $simulacao)
     {
-        $this->authorizeOwner($simulacao);
+        abort_unless($simulacao->usuario_id === $r->user()->id, 403);
 
-        return DB::transaction(function () use ($simulacao) {
+        // (Opcional) devolver estoque ao excluir
+        DB::transaction(function () use ($simulacao) {
+            foreach ($simulacao->itens as $item) {
+                Produto::where('id', $item->produto_id)->increment('quantidade', $item->quantidade);
+            }
             $simulacao->itens()->delete();
             $simulacao->delete();
-            return response()->json(['deleted' => true]);
         });
-    }
-
-    private function authorizeOwner(Simulacao $s): void
-    {
-        if ($s->usuario_id !== Auth::id()) {
-            abort(403, 'Simulação pertence a outro usuário.');
-        }
+        return response()->noContent();
     }
 }

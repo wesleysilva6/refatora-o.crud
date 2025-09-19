@@ -22,10 +22,10 @@
     /* TÓPICOS */
     --color--background-topico: #000000;
     --color--table-topico: #0B5ED7;
-    --color--text-topico: #000;
+    --color--text-table: #000;
     --color--table-border: #0B5ED7;
     --color--table-impar: #ffffff;
-    --color--table-par:   #808080;
+    --color--table-par:   #d8d8d8;
     --color--icons-topico: #0B5ED7;
     --color--nome-topico: #fff;
 
@@ -72,7 +72,7 @@
     /* TÓPICOS */
     --color--background-topico: #161A1F;
     --color--table-topico: #0B5ED7;
-    --color--text-topico: #ffffff;
+    --color--text-table: #ffffff;
     --color--table-border: #0B5ED7;
     --color--table-impar:#20252a;
     --color--table-par:#161A1F;

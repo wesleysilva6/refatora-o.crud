@@ -11,6 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SimulacaoController;
 use App\Http\Controllers\VendaController;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\AnalyticsController;
 
 Route::get('/health', fn () => response()->json(['ok' => true]));
 
@@ -50,6 +51,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/perfil/foto',     [PerfilController::class, 'uploadPhoto']);
     Route::delete('/perfil/foto',   [PerfilController::class, 'deletePhoto']);
 
+    // Simulação
+    Route::post('/simulacao/finalizar', [SimulacaoController::class, 'finalizar']); // <- usado pelo React
+    Route::get('/simulacoes',              [SimulacaoController::class, 'index']);
+    Route::get('/simulacoes/{simulacao}',  [SimulacaoController::class, 'show']);
+    Route::delete('/simulacoes/{simulacao}',[SimulacaoController::class, 'destroy']);
+
+    // Historico de Simulações
+
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/analytics', [AnalyticsController::class, 'index']);
 });

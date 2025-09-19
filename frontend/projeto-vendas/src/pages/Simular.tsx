@@ -161,7 +161,7 @@ export default function Simular() {
                     </table>
                 </div>
 
-                <div className="card-footer d-flex flex-column align-items-center mb-4">
+                <div className={`card-footer ${styles.cardFooter}`}>
                     <div className="d-flex justify-content-center gap-3 w-100">
                         <button
                             type="button"
@@ -174,7 +174,8 @@ export default function Simular() {
                             type="button"
                             className={`btn btn-primary ${styles.btnSimular}`}
                             disabled={sending && simulacao.length === 0 && !nomeCliente}
-                            onClick={handleLimparSimulacao} >Limpar a Simulação
+                            onClick={handleLimparSimulacao} >
+                            {sending ? "Limpando..." : "Limpar a Simulação"}
                         </button>
                     </div>
                     <div className="d-flex justify-content-center mt-2 w-100">

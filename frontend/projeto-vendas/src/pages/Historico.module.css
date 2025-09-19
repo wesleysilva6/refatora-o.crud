@@ -1,0 +1,63 @@
+        .card {
+        background: var(--color--background-card);
+        margin: 10rem 10rem 10rem 10rem;
+        border-radius: 0.7rem;
+        }
+
+        .cardHeader {
+        color: var(--color--text);
+        border-bottom:1px solid var(--color--primary);
+        }
+
+        .table {
+        background: var(--color--input);
+        border-radius: 0.4rem;
+        overflow: hidden;
+        padding: 20rem;
+        }
+
+        .table thead th {
+        border-bottom: 2px solid var(--color--primary);
+        background:var(--color--primary);
+        color: var(--color--text);
+        }
+
+        .table tbody tr:nth-of-type(odd) td {
+        background: var(--color--table-impar); 
+        color: var(--color--text-table); 
+        border-bottom: 1px solid var(--color--table-border);    
+        }
+
+        .table tbody tr:nth-of-type(even) td {
+        background: var(--color--table-par); 
+        color: var(--color--text-table);
+        border-bottom: 1px solid var(--color--table-border);    
+        }
+
+        .btnExcluir {
+        background: #e21226;
+        }
+
+        .btnExcluir:hover {
+        background: #e21226;
+        }
+
+        .btnExcluir:focus {
+        background: #e21226;
+        }
+
+        .btnExcluirSimulacoes {
+        background: #0a51bb;
+        }
+
+        .btnExcluirSimulacoes:hover {
+        background: #0a51bb;
+        }
+
+        .btnExcluirSimulacoes:focus {
+        background: #0a51bb;
+        }
+
+        .btnExcluirSimulacoes:focus {
+        background: #0a51bb;
+        }

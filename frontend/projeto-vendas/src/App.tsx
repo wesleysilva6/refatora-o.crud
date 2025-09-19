@@ -11,6 +11,9 @@ import Home from "./pages/Home";
 import Perfil from "./pages/Perfil"
 import PrivateRoute from "./PrivateRoute";
 import Simular from './pages/Simular';
+import Historico from './pages/Historico';
+import Analytics from './pages/Analytics';
+import Vendas from './pages/Vendas';
 
 export default function App() {
   return (
@@ -30,6 +33,9 @@ export default function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/simular" element={<Simular />} />
+          <Route path="/historico" element={<Historico />} />
+          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/vendas" element={<Vendas />} />
         </Route>
 
         <Route path="*" element={<Index />} />

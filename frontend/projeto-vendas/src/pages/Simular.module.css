@@ -79,3 +79,18 @@
         color: var(--color--text-input) !important;
         opacity: 1 !important;
         }
+
+        .cardFooter {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 3rem;
+        }
+
+        .cardFooter button:hover {
+        background-color: #0a51bb;
+        }
+
+        .cardFooter button:focus {
+        background-color: #0a51bb;
+        }

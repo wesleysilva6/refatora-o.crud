@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { api } from "../api";
 
-import styles from "./Cadastro.module.css"; // << CSS Module
+import styles from "./Cadastrar.module.css"; // << CSS Module
 
 type Form = { nome: string; email: string; senha: string };
 
