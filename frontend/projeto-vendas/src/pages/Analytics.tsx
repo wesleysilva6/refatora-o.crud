@@ -42,7 +42,7 @@ export default function Analytics() {
             {
                 label: "Resumo",
                 data: [resumo.total, resumo.valor],
-                backgroundColor: ["#198754", "#ffc107"],
+                backgroundColor: ["#198754", "#faba09ff"],
             },
         ],
     };
