@@ -1,0 +1,106 @@
+:root {
+  --color--background: #f8fbfc;
+  --color--primary: #0B5ED7;
+  --color--navbar: #dbd5d5;
+  --color--text: #fff;
+}
+
+body {
+  background-color: var(--color--background);
+}
+
+/* SIDEBAR */
+.sidebar {
+  background: linear-gradient(180deg, #000814, #001d3d);
+  width: 15rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: var(--color--text);
+  padding: 1.3rem;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+
+.sidebar h2 {
+  font-size: 1.2rem;
+  text-align: center;
+  margin: 1.2rem 0 2rem 0;
+  transition: opacity 0.3s;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color--text);
+  text-decoration: none;
+  margin: 0.8rem 0;
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+  transition: background 0.3s;
+}
+
+.sidebar a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar a.active {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* COLAPSADA */
+.sidebar.collapsed {
+  width: 4.6rem;
+}
+
+.sidebar.collapsed h2 {
+  opacity: 0;
+}
+
+.sidebar-text {
+  transition: opacity 0.3s;
+}
+
+.sidebar.collapsed .sidebar-text {
+  display: none;
+}
+
+/* botão topo */
+#toggleSidebar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+  font-size: 1.4rem;
+}
+
+/* CONTEÚDO */
+.content {
+  margin: 0 0 0 15rem;
+  padding: 1.2rem;
+  transition: margin-left 0.3s;
+  width: 100%;
+  margin-left: 40rem;
+}
+
+/* Quando a sidebar estiver colapsada */
+.content.expanded {
+  margin-left: 301px;
+}
+
+/* CARTÃO E TABELAS */
+.card {
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.table th, .table td {
+  vertical-align: middle;
+}
+
+.rounded-circle {
+  cursor: pointer;
+  object-fit: cover;
+}

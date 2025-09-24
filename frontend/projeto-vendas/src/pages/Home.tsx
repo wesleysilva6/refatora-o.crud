@@ -3,7 +3,6 @@ import { Modal } from "bootstrap";
 import { api } from "../api";
 import Sidebar from "../components/Sidebar";
 
-
 // import { AddTopicoModal, AddProdutoModal, ConfirmModal, ImagePreviewModal } from "../components/modals";
 
 import styles from "./Home.module.css"; // opcional (CSS Module) 

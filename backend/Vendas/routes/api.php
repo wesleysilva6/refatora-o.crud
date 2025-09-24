@@ -55,7 +55,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/simulacao/finalizar', [SimulacaoController::class, 'finalizar']); // <- usado pelo React
     Route::get('/simulacoes',              [SimulacaoController::class, 'index']);
     Route::get('/simulacoes/{simulacao}',  [SimulacaoController::class, 'show']);
-    Route::delete('/simulacoes/{simulacao}',[SimulacaoController::class, 'destroy']);
+    Route::delete('/simulacoes/item/{item}', [SimulacaoController::class, 'destroyItem']);
+    Route::delete('/simulacoes', [SimulacaoController::class, 'destroyAll']);
 
     // Historico de Simulações
 

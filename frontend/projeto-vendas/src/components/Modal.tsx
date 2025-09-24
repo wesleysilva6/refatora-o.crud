@@ -12,8 +12,6 @@ export default function EmailVerificar() {
         instance.show();
     }
 
-    
-
     return (
         <div className="modal fade" id="emailModal" tabIndex={-1} aria-hidden="true" ref={modalRef}>
             <div className="modal-dialog modal-dialog-centered">

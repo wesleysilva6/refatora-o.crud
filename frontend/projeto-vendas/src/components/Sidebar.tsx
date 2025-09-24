@@ -42,7 +42,7 @@ return (
 
             <ul className="list-unstyled w-100">
             <li>
-                <Link to="/vendas" className="text-white mb-3 fs-5 nav-link" >
+                <Link to="/dashboard" className="text-white mb-3 fs-5 nav-link" >
                     <i className="bi bi-receipt" /> Painel de Vendas
                 </Link>
             </li>

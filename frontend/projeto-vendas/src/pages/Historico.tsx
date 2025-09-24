@@ -52,7 +52,7 @@ export default function Historico() {
         setHistorico(historico.filter(item => item.id_item !== id_item));
     }
 
-    async function limparHistorico() {
+    async function destroyAll() {
         await api.delete("/simulacoes");
         setHistorico([]);
     }
@@ -124,8 +124,8 @@ export default function Historico() {
                     <div className="d-flex justify-content-center">
                         <button
                             className={`btn ${styles.btnExcluirSimulacoes}`}
-                            onClick={limparHistorico}
-                            disabled={historico.length === 0} >
+                            onClick={destroyAll}
+                            >
                             Excluir todas as Simulações
                         </button>
                     </div>

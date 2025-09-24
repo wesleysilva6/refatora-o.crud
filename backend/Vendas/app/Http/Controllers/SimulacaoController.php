@@ -64,7 +64,7 @@ class SimulacaoController extends Controller
                 ];
 
                 // baixa de estoque
-                $produto->decrement('quantidade', $qtd);
+                //$produto->decrement('quantidade', $qtd);
             }
 
             $sim = Simulacao::create([
@@ -98,5 +98,27 @@ class SimulacaoController extends Controller
             $simulacao->delete();
         });
         return response()->noContent();
+    }
+
+    public function destroyItem($id)
+    {
+        $item = \App\Models\SimulacaoItem::find($id);
+        if (!$item) {
+            return response()->json(['error' => 'Item não encontrado'], 404);
+        }
+        $item->delete();
+        return response()->json(['success' => true]);
+    }
+
+    public function destroyAll(Request $request)
+    {
+        $userId = $request->user()->id;
+        $simulacoes = \App\Models\Simulacao::where('usuario_id', $userId)->get();
+
+        foreach ($simulacoes as $simulacao) {
+            $simulacao->itens()->delete();
+            $simulacao->delete();
+        }
+        return response()->json(['success' => true]);
     }
 }

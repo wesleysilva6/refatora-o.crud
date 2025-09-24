@@ -56,13 +56,13 @@
 
         .table tbody tr:nth-of-type(odd) td {
         background: var(--color--table-impar); 
-        color: var(--color--text); 
+        color: var(--color--eyes); 
         border-bottom: 1px solid var(--color--table-border);    
         }
 
         .table tbody tr:nth-of-type(even) td {
         background: var(--color--table-par); 
-        color: var(--color--text);
+        color: var(--color--eyes);
         border-bottom: 1px solid var(--color--table-border);    
         }
 

@@ -14,6 +14,7 @@ import Simular from './pages/Simular';
 import Historico from './pages/Historico';
 import Analytics from './pages/Analytics';
 import Vendas from './pages/Vendas';
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
   return (
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/historico" element={<Historico />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/vendas" element={<Vendas />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Route>
 
         <Route path="*" element={<Index />} />
