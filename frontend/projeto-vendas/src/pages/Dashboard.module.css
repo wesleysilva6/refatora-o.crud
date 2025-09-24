@@ -1,0 +1,24 @@
+.card {
+    background: var(--color--card-vendas);
+    color: var(--color--text-card);
+}
+
+.tableCustom {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Para realmente colorir as células (Bootstrap estiliza os <th>/<td>) */
+:global(.table).tableCustom > :not(caption) > * > * {
+    background: var(--color--card-vendas);
+    color: var(--color--text-card);
+}
+
+/* Se usar .table-striped, sobrescreva as listras também */
+:global(.table.table-striped).tableCustom > tbody > tr:nth-of-type(odd) > * {
+    background: #f9fbff;
+}
+
+:global(.table.table-striped).tableCustom > tbody > tr:nth-of-type(even) > * {
+    background: #fff;
+}

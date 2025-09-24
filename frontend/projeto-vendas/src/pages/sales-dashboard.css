@@ -91,16 +91,4 @@ body {
 }
 
 /* CARTÃO E TABELAS */
-.card {
-  border-radius: 0.8rem;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
 
-.table th, .table td {
-  vertical-align: middle;
-}
-
-.rounded-circle {
-  cursor: pointer;
-  object-fit: cover;
-}

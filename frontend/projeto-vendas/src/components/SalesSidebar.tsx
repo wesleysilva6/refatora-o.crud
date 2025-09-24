@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import "../pages/sales-dashboard.css";
+import ThemeToggle from "./ThemeToggle";
 
 type Props = { collapsed?: boolean };
 
@@ -25,19 +26,9 @@ export default function SalesSidebar({ collapsed }: Props) {
         <span className="sidebar-text">Realizar Venda</span>
       </Link>
 
-      <Link to="/dashboard-vendas" className={isActive("/dashboard-vendas") ? "active" : ""}>
+      <Link to="/dashboard" className={isActive("/dashboard") ? "active" : ""}>
         <i className="bi bi-cash-coin" />
         <span className="sidebar-text">Dashboard</span>
-      </Link>
-
-      <Link to="/relatorios" className={isActive("/relatorios") ? "active" : ""}>
-        <i className="bi bi-bar-chart-line" />
-        <span className="sidebar-text">Relatórios</span>
-      </Link>
-
-      <Link to="/estoque" className={isActive("/estoque") ? "active" : ""}>
-        <i className="bi bi-box-seam" />
-        <span className="sidebar-text">Estoque</span>
       </Link>
 
       <Link to="/sistema" className={isActive("/sistema") ? "active" : ""}>
@@ -49,6 +40,10 @@ export default function SalesSidebar({ collapsed }: Props) {
         <i className="bi bi-box-arrow-left" />
         <span className="sidebar-text">Sair</span>
       </Link>
+
+        <div className="m-2 mb-5">
+            <ThemeToggle />
+        </div>
     </aside>
   );
 }

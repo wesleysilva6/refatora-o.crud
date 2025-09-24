@@ -19,9 +19,9 @@ export default function Home() {
           <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
             <img src={logoHeader} width={65} alt="Estoque Aqui" />
             <img src={titleHeader} width={85} height={65} alt="Estoque Aqui" />
-                            <div className="ms-auto">
-                                <ThemeToggle />
-                            </div>
+              <div className="ms-auto">
+                  <ThemeToggle />
+              </div>
           </Link>
         </div>
       </nav>
@@ -43,14 +43,14 @@ export default function Home() {
                     dados do estoque para planilhas Excel, seja de um tópico específico ou de toda a base de dados,
                     facilitando ainda mais a análise, controle e geração de relatórios personalizados.
                 </p>
-                    <div className="d-flex gap-2">
-                        <Link to="/login" className="btn btn-primary">Login</Link>
-                        <Link to="/cadastrar" className="btn btn-primary">Cadastre-se</Link>
+                    <div className={`d-flex gap-2`}>
+                        <Link to="/login" className={`btn btn-primary ${styles.btnLogin}`}>Login</Link>
+                        <Link to="/cadastrar" className={`btn btn-primary ${styles.btnLogin}`}>Cadastre-se</Link>
                     </div>
                 </div>
 
                 <div className="logo col-md-4 d-flex justify-content-end" id="logo">
-                    <img src={logoCaixa} alt="Caixa" className="position-absolute d-none d-md-block" width="250" style={{ marginRight: "-10rem" }} />
+                    <img src={logoCaixa} alt="Caixa" className="position-absolute d-none d-md-block" width="250" style={{ marginTop: "-10rem" }} />
                 </div>
             </div>
         </div>
@@ -62,8 +62,8 @@ export default function Home() {
             <div className="row align-items-center">
                 <div className="text-center mt-5">
                     <h3 className="text-center mt-5">SOBRE</h3>
-                    <img src={logoEstoque} alt="Logo" width="350" className="img-sobre"/>
-                    <p className="mt-3"> <strong>O ESTOQUE AQUI</strong> é um sistema completo de controle de estoque desenvolvido para
+                    <img src={logoEstoque} alt="Logo" width="350" className="img-sobre" style={{ marginLeft: "28rem"}}  />
+                    <p className="m-1"> <strong>O ESTOQUE AQUI</strong> é um sistema completo de controle de estoque desenvolvido para
                         oferecer praticidade, organização e eficiência na gestão de produtos. A plataforma permite que
                         você adicione novos itens ao seu estoque com facilidade, preenchendo informações essenciais como
                         nome do produto, quantidade disponível, descrição detalhada e o horário exato da última atualização.

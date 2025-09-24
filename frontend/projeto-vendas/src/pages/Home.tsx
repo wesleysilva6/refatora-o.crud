@@ -340,7 +340,7 @@ return (
             <button type="button" className="btn-close" onClick={() => close(modalRemoverProdutoRef.current)} />
           </div>
           <div className="modal-body">
-            Tem certeza que deseja remover <strong>{produtoRemover?.nome_produto}</strong>?
+            <strong>Tem certeza de que deseja excluir este produto? Esta ação é irreversível.</strong>
           </div>
           <div className="modal-footer">
             <button className="btn btn-secondary" onClick={() => close(modalRemoverProdutoRef.current)}>Cancelar</button>
@@ -357,8 +357,9 @@ return (
             <button type="button" className="btn-close" onClick={() => close(modalRemoverTopicoRef.current)} />
           </div>
           <div className="modal-body">
-            Excluir o tópico <strong>{topicoSelecionado?.nome_topico}</strong> e todos os seus produtos?
-          </div>
+            <strong>
+              Tem certeza de que deseja excluir este tópico? Ao prosseguir, todos os produtos vinculados a ele também serão permanentemente removidos.</strong>
+            </div>
           <div className="modal-footer">
             <button className="btn btn-secondary" onClick={() => close(modalRemoverTopicoRef.current)}>Cancelar</button>
             <button className="btn btn-danger" onClick={removerTopico}>Excluir</button>
