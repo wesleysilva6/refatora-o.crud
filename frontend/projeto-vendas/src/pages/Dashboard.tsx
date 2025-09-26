@@ -142,7 +142,7 @@ return (
                         {produtosFiltrados.length > 0 ? ( produtosFiltrados.map((produto) => (
                         <tr key={produto.id}>
                             <td>{produto.nome_produto}</td>
-                            <td>R$ {Number(produto.preco).toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</td>
+                            <td>{`R$ ${Number(produto.preco).toFixed(2).replace('.',',')}`}</td>
                             <td>{produto.quantidade}</td>
                             <td> <button className="btn btn-sm btn-primary">Selecionar</button> </td>
                         </tr> )) ) : (

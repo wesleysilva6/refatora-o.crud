@@ -13,14 +13,14 @@ return new class extends Migration {
             // FK para topicos.id_topico (atenção ao nome da coluna e chave)
             $table->unsignedBigInteger('topico_id');
             $table->foreign('topico_id')
-                  ->references('id_topico')->on('topicos')
-                  ->cascadeOnDelete();
+                    ->references('id_topico')->on('topicos')
+                    ->cascadeOnDelete();
 
             // FK para usuarios.id
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')
-                  ->references('id')->on('usuarios')
-                  ->cascadeOnDelete();
+                    ->references('id')->on('usuarios')
+                    ->cascadeOnDelete();
 
             $table->string('nome_produto', 255);
             $table->decimal('preco', 10, 2);

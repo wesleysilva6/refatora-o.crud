@@ -170,7 +170,7 @@ return (
         <div className={`card-body ${styles.cardBody}`}>
             <form onSubmit={salvarNome} className="spinnerForm">
             <div className="mb-3 text-start">
-                <label htmlFor="editarNome" className="form-label">Editar Nome</label>
+                <label htmlFor="editarNome" className="form-label text-white">Editar Nome</label>
                 <input type="text" id="editarNome" name="novo_nome" className={`form-control ${styles.formControl}`} placeholder="Nome do Usuário" value={nome} onChange={(e) => setNome(e.target.value)}/>
             </div>
                 <button type="submit" className={`btn btn-primary w-100 ${styles.btnAtualizar}`} disabled={sending}>
@@ -181,7 +181,7 @@ return (
             <hr className="text-primary my-4" />
 
         <form onSubmit={salvarSenha} className="spinnerForm">
-            <label htmlFor="senha" className="form-label">Senha Atual</label>
+            <label htmlFor="senha" className="form-label text-white">Senha Atual</label>
             <div className="input-group mb-2">
                 <input id="senha" name="senha" type={showPwd ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Digite a Senha" required autoComplete="current-password" />
                 <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd(s => !s)} aria-label={showPwd ? "Ocultar senha" : "Mostrar senha"}>
@@ -189,15 +189,15 @@ return (
                 </button>
             </div>
 
-            <label htmlFor="nova_senha" className="form-label mt-2">Digite uma nova Senha</label>
-            <div className="input-group mb-2">
+            <label htmlFor="nova_senha" className="form-label mt-2 text-white">Digite uma nova Senha</label>
+            <div className="input-group mb-3">
                 <input id="nova_senha" name="nova_senha" type={showPwd2 ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Nova Senha" required autoComplete="new-password" />
                 <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd2(s => !s)} aria-label={showPwd2 ? "Ocultar nova senha" : "Mostrar nova senha"} > 
                     <i className={`bi ${showPwd2 ? "bi-eye-slash" : "bi-eye"}`} /> 
                 </button>
             </div>
 
-            <label htmlFor="confirmar_senha" className="form-label mt-2">Confirmar Nova Senha</label>
+            <label htmlFor="confirmar_senha" className="form-label mb-1 text-white">Confirmar Nova Senha</label>
             <div className="input-group mt-2">
                 <input id="confirmar_senha" name="confirmar_senha" type={showPwd3 ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Confirme a Senha" required autoComplete="new-password" />
                 <button type="button" className={`btn ${styles.eyes}`} onClick={() => setShowPwd3(s => !s)} aria-label={showPwd3 ? "Ocultar confirmação" : "Mostrar confirmação"} > 

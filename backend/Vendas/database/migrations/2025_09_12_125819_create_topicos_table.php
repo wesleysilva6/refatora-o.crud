@@ -13,8 +13,8 @@ return new class extends Migration {
 
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')
-                  ->references('id')->on('usuarios')
-                  ->cascadeOnDelete();
+                    ->references('id')->on('usuarios')
+                    ->cascadeOnDelete();
 
             // timestamps customizados que seus Models usam
             $table->timestamp('criado_em')->useCurrent();

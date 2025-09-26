@@ -15,6 +15,7 @@ import Historico from './pages/Historico';
 import Analytics from './pages/Analytics';
 import Vendas from './pages/Vendas';
 import Dashboard from './pages/Dashboard';
+import Sistema from './pages/Sistema';
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/vendas" element={<Vendas />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/sistema" element={<Sistema />} />
         </Route>
 
         <Route path="*" element={<Index />} />
