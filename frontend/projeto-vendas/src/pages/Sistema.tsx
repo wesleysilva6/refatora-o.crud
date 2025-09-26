@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import SalesSidebar from "../components/SalesSidebar"
-import FuncionariosPanel from "../components/FuncionariosPanel.";
+import FormFuncionario from "../components/FormFuncionario";
 // se você já tem um hook de usuário (foto/nome), use-o aqui:
 
 type TabKey =
@@ -24,14 +24,12 @@ export default function Configuracoes() {
     const [collapsed, setCollapsed] = useState(false);
     const [active, setActive] = useState<TabKey>("sistema");
 
-
-    //carrega aba ativa do localStorage (compatível com seu PHP antigo)
 useEffect(() => {
     const saved = localStorage.getItem("activeTab") as TabKey | null;
     if (saved && TABS.some(t => t.key === saved)) setActive(saved);
 }, []);
 
-    // salva ao trocar
+
 useEffect(() => {
     localStorage.setItem("activeTab", active);
 }, [active]);
@@ -77,7 +75,7 @@ return (
         {active === "vendedores" && (
             <section id="vendedores" className="tab-section">
                 <h4>Funcionários</h4>
-                <FuncionariosPanel/>
+                <FormFuncionario/>
             </section>
         )}
 

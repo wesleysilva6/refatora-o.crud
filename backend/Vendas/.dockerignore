@@ -1,0 +1,9 @@
+.git
+vendor
+node_modules
+public/storage
+storage/*.key
+storage/logs/*
+storage/framework/sessions/*
+storage/framework/views/*
+storage/framework/cache/*
