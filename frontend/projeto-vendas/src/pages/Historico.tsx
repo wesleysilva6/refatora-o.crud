@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import styles from "./Historico.module.css";
 import { api } from "../api";
+import { fmtDate } from '../utils/date';    
 
 type ItemHistorico = {
     id_item: number;
@@ -98,7 +99,7 @@ export default function Historico() {
                                             <td>{linha.nome_produto}</td>
                                             <td>{linha.quantidade}</td>
                                             <td>R$ {linha.preco.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</td>
-                                            <td>{linha.criada_em}</td>
+                                            <td>{fmtDate(linha.criada_em)}</td>
                                             <td>R$ {linha.subtotal.toLocaleString("pt-BR", { minimumFractionDigits: 2 })}</td>
                                             <td>
                                                 <button

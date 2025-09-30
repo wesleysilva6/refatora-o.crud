@@ -12,6 +12,7 @@ use App\Http\Controllers\SimulacaoController;
 use App\Http\Controllers\VendaController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\AnalyticsController;
+Use App\Http\Controllers\FuncionarioController;
 
 Route::get('/health', fn () => response()->json(['ok' => true]));
 
@@ -43,6 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('produtos',   ProdutoController::class);
     Route::apiResource('simulacoes', SimulacaoController::class) ->parameters(['simulacoes' => 'simulacao']);
     Route::apiResource('vendas',     VendaController::class);
+    Route::apiResource('funcionarios', FuncionarioController::class);
 
     // Perfil
     Route::get('/perfil/me',        [PerfilController::class, 'me']);

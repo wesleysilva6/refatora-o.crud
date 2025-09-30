@@ -5,19 +5,15 @@ import FormFuncionario from "../components/FormFuncionario";
 
 type TabKey =
     | "sistema"
-    | "usuarios"
+    | "gestão"
     | "vendedores"
     | "vendas"
-    | "seguranca"
-    | "integracoes";
 
 const TABS: { key: TabKey; label: string }[] = [
     { key: "sistema", label: "Sistema" },
-    { key: "usuarios", label: "Usuários" },
+    { key: "gestão", label: "Gestão de Usuários" },
     { key: "vendedores", label: "Funcionários" },
     { key: "vendas", label: "Vendas" },
-    { key: "seguranca", label: "Segurança" },
-    { key: "integracoes", label: "Integrações" },
 ];
 
 export default function Configuracoes() {
@@ -65,7 +61,7 @@ return (
             </section>
         )}
 
-        {active === "usuarios" && (
+        {active === "gestão" && (
             <section id="usuarios" className="tab-section">
                 <h4>Usuários</h4>
                 <p className="text-muted">Gestão de usuários (em breve).</p>
@@ -83,20 +79,6 @@ return (
             <section id="vendas" className="tab-section">
                 <h4>Vendas</h4>
                 <p className="text-muted">Conteúdo livre de Vendas.</p>
-            </section>
-        )}
-
-        {active === "seguranca" && (
-            <section id="seguranca" className="tab-section">
-                <h4>Segurança</h4>
-                <p className="text-muted">Políticas e configurações de segurança.</p>
-            </section>
-        )}
-
-        {active === "integracoes" && (
-            <section id="integracoes" className="tab-section">
-                <h4>Integrações</h4>
-                <p className="text-muted">APIs e serviços conectados.</p>
             </section>
         )}
 

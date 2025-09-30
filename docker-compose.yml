@@ -5,69 +5,28 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: crud_login
-      MYSQL_ROOT_PASSWORD: 
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 
+      MYSQL_USER: vendas
+      MYSQL_PASSWORD: vendas
+      MYSQL_ROOT_PASSWORD: root
+      TZ: America/Sao_Paulo           # <<< importante
+    command: ["mysqld","--default-time-zone=-03:00"]  # ou use o IANA: America/Sao_Paulo
     ports:
-      - "3307:3306"
+      - "3307:3306"    # <- HOST:CONTAINER
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-proot"]
       interval: 5s
       timeout: 3s
       retries: 20
 
-  backend:
-    build: ./backend/Vendas
-    container_name: vendas-backend
-    working_dir: /var/www
-    volumes:
-      - ./backend/Vendas:/var/www
-    # exponha uma porta HTTP (artisan serve), não a 9000 do FPM
+  pma:
+    image: phpmyadmin:5
+    container_name: vendas-pma
     ports:
-      - "8000:8000"
-    depends_on:
-      db:
-        condition: service_healthy
+      - "8080:80"
     environment:
-      # deixe isso consistente com o serviço db
-      - DB_CONNECTION=mysql
-      - DB_HOST=db
-      - DB_PORT=3306
-      - DB_DATABASE=vendas
-      - DB_USERNAME=vendas
-      - DB_PASSWORD=vendas
-      - APP_ENV=local
-      - APP_DEBUG=true
-    # suba o servidor HTTP do Laravel
-    command: >
-      sh -lc "
-      composer install &&
-      php artisan key:generate || true &&
-      php artisan migrate --force || true &&
-      php artisan serve --host=0.0.0.0 --port=8000
-      "
-
-  frontend:
-    build: ./frontend/projeto-vendas
-    container_name: vendas-frontend
-    working_dir: /app
-    volumes:
-      - ./frontend/projeto-vendas:/app
-      - /app/node_modules            # <-- volume anônimo preserva o node_modules
-    ports:
-      - "5173:5173"
-    environment:
-      - NODE_ENV=development
-      - CHOKIDAR_USEPOLLING=true     # ajuda no Windows
-      - VITE_API_URL=http://localhost:8000/api
-    # garanta instalação das deps antes do dev
-    command: >
-      sh -lc "
-      npm install &&
-      npm run dev -- --host
-      "
-
+      PMA_HOST: db
+      PMA_PORT: 3306
 volumes:
   db_data:

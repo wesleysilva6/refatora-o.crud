@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Modal } from "bootstrap";
 import { api } from "../api";
 import Sidebar from "../components/Sidebar";
+import { fmtDate } from '../utils/date';
 
 // import { AddTopicoModal, AddProdutoModal, ConfirmModal, ImagePreviewModal } from "../components/modals";
 
@@ -62,6 +63,7 @@ export default function Home() {
         setErro(null);
     try {
         const { data } = await api.get<any[]>("/topicos-with-produtos");
+        console.log('topicos API', data);
         const normalized: Topico[] = data.map(t => ({
         id: t.id ?? t.id_topico,            // <<< pega o que existir
         nome_topico: t.nome_topico,
@@ -243,8 +245,8 @@ return (
                             <td>{`R$ ${Number(p.preco).toFixed(2).replace('.',',')}`}</td>
                             <td>{p.quantidade}</td>
                             <td>{p.descricao}</td>
-                            <td>{p.criado_em ?? p.created_at}</td>
-                            <td>{p.atualizado_em ?? p.updated_at}</td>
+                            <td>{fmtDate(p.criado_em || p.created_at || '')}</td>
+                            <td>{fmtDate(p.atualizado_em || p.updated_at || '')}</td>
 
                             <td>
                             <button className="btn" onClick={() => abrirEditarProduto(p)}>
@@ -280,6 +282,23 @@ return (
         </div>
 
       {/* -------- Modais -------- */}
+
+    {/* Novo tópico */}
+      <div className="modal fade" ref={modalTopicoRef} tabIndex={-1}>
+        <div className="modal-dialog"><div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Adicionar Tópico</h5>
+            <button type="button" className="btn-close" onClick={() => close(modalTopicoRef.current)} />
+          </div>
+          <div className="modal-body">
+            <input className="form-control" placeholder="Nome do tópico" value={topicoNome} onChange={e => setTopicoNome(e.target.value)} />
+          </div>
+          <div className="modal-footer">
+            <button className="btn btn-secondary" onClick={() => close(modalTopicoRef.current)}>Cancelar</button>
+            <button className="btn btn-primary" onClick={criarTopico}>Salvar</button>
+          </div>
+        </div></div>
+      </div>
 
       {/* Novo produto */}
       <div className="modal fade" ref={modalProdutoRef} tabIndex={-1}>

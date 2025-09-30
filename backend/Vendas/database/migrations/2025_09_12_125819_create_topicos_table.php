@@ -10,17 +10,10 @@ return new class extends Migration {
         Schema::create('topicos', function (Blueprint $table) {
             $table->bigIncrements('id_topico');                   // PK custom
             $table->string('nome_topico', 255);
-
             $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')
-                    ->references('id')->on('usuarios')
-                    ->cascadeOnDelete();
-
-            // timestamps customizados que seus Models usam
-            $table->timestamp('criado_em')->useCurrent();
-            $table->timestamp('atualizado_em')->nullable()->useCurrentOnUpdate();
-
-            // índices úteis
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->cascadeOnDelete();
+            $table->timestamp('criado_em');
+            $table->timestamp('atualizado_em');
             $table->index(['usuario_id']);
         });
     }

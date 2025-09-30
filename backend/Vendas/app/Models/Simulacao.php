@@ -6,8 +6,8 @@ class Simulacao extends Model
 {
     protected $table = 'simulacoes';
     protected $fillable = ['usuario_id','cliente','total','status'];
-    const CREATED_AT = 'criado_em';
-    const UPDATED_AT = 'atualizado_em';
+    public const CREATED_AT = 'criado_em';
+    public const UPDATED_AT = null;   
 
     public function itens()
     {

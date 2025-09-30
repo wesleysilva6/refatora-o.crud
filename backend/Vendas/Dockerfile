@@ -2,7 +2,9 @@
 FROM php:8.2-fpm
 
 # Instala dependências do sistema e extensões PHP necessárias
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y tzdata \
+    && ln -snf /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime \
+    && echo "America/Sao_Paulo" > /etc/timezone \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
