@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import SalesSidebar from "../components/SalesSidebar"
 import FormFuncionario from "../components/FormFuncionario";
+import GestaoUsuario from "../components/GestaoUsuario";
+
 // se você já tem um hook de usuário (foto/nome), use-o aqui:
 
 type TabKey =
@@ -40,7 +42,7 @@ return (
                 <i className={`bi ${collapsed ? "bi-arrow-bar-right" : "bi-arrow-bar-left"}`} />
             </button>
 
-            <h2>Realizar Venda</h2>
+            <h2>Sistema</h2>
 
         <div className="d-flex align-items-center"></div>
         </div>
@@ -63,14 +65,12 @@ return (
 
         {active === "gestão" && (
             <section id="usuarios" className="tab-section">
-                <h4>Usuários</h4>
-                <p className="text-muted">Gestão de usuários (em breve).</p>
+                <GestaoUsuario/>
             </section>
         )}
 
         {active === "vendedores" && (
             <section id="vendedores" className="tab-section">
-                <h4>Funcionários</h4>
                 <FormFuncionario/>
             </section>
         )}

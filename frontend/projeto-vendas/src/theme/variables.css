@@ -34,6 +34,9 @@
     --color--text-card: #000;
     --color--label: #000000;
 
+    /* MODAL SWEETALERT */
+    --color--modal-sweet:#ffffff;
+
     /* seus tokens */
     --color--background: #000000;
     --color--primary:    #0B5ED7;
@@ -69,9 +72,9 @@
     --color--icons: #ffffff;
 
     /* INPUTS */
-    --color--input:#20252A;
+    --color--input:#171d26;
     --color--text-input: #ffffff;
-    --color--border-input: #393E42;
+    --color--border-input: rgba(255, 255, 255, 0.06);
     --color--placeholder: rgba(255,255,255,.76);
 
     /* TÓPICOS */
@@ -92,6 +95,9 @@
     --color--background:#000;
     --color--primary:#0B5ED7;
     --color--text:#fff;
+
+    /* MODAL SWEETALERT */
+    --color--modal-sweet:#1A202C;
 
     /* extras p/ tabelas/containers no escuro */
     --color--background-container:#11161c;

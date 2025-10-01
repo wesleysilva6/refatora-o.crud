@@ -6,12 +6,14 @@ import "sweetalert2/dist/sweetalert2.min.css";
 export async function confirmacao({
   title,
   text,
+  icon = "warning",
   confirmText = "Confirmar",
   cancelText = "Cancelar",
   confirmColor = "#0d6efd",
   cancelColor = "#6c757d",
 }: {
   title: string;
+  icon: any;
   text?: string;
   confirmText?: string;
   cancelText?: string;
@@ -19,6 +21,7 @@ export async function confirmacao({
   cancelColor?: string;
 }) {
   return Swal.fire({
+    icon,
     title,
     text,
     showCancelButton: true,
@@ -49,10 +52,10 @@ export async function sucessoFuncionarioCard(data: {
                     box-shadow:0 4px 12px rgba(0,0,0,0.2);margin-bottom:18px;">
           <img src="${foto}" alt="Foto" style="width:100%;height:100%;object-fit:cover;">
         </div>
-        <h2 style="margin:0;font-size:22px;font-weight:700;color:#157347;text-align:center;">
+        <h2 style="margin:0;font-size:22px;font-weight:700;color: #157347;text-align:center;">
           ${data.nome}
         </h2>
-        <div style="margin-top:15px;width:100%;font-size:15px;color:#444;line-height:1.6;">
+        <div style="margin-top:15px;width:100%;font-size:13px;color:#444;line-height:1.6;">
           <p style="margin:6px 0;"><strong>Email:</strong> ${data.email ?? "-"}</p>
           <p style="margin:6px 0;"><strong>Telefone:</strong> ${data.telefone ?? "-"}</p>
           <p style="margin:6px 0;"><strong>Cargo:</strong> ${data.cargo ?? "-"}</p>

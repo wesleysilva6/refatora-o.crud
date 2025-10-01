@@ -61,6 +61,40 @@ export default function Vendas() {
                             </div>
                         </div>
                     </div>
+
+                    <div className="col-md-4">
+                        <div className={`card ${styles.card}`}>
+                            <div className={`card-header ${styles.cardHeader}`}>
+                                <h5 className="text-center mt-2">Detalhes da Venda</h5>
+                            </div>
+                            <div className="card-body">
+                                <table className={`table ${styles.tableCustom}`}>
+                                    <thead>
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Quantidade</th>
+                                            <th>Preço Unitário</th>
+                                            <th>Subtotal</th>
+                                            <th>Ações</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div className="d-flex mt-3">
+                                    <div className={`${styles.totalVenda}`}>
+                                        <h5>Total: R$</h5>
+                                    </div>
+                                </div>
+                                    <form action="">
+                                        <button type="button" className="btn btn-primary mt-3 w-100">Finalizar Venda</button>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

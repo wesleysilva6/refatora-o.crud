@@ -35,7 +35,7 @@
   outline: none;
   background: var(--color--input);
   color: var(--color--text-input);
-  border-color: var(--color--border-input);
+    border-color: #e5e7eb;
 }
 
 .formControl::placeholder {

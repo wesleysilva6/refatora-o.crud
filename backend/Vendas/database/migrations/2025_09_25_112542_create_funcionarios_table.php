@@ -12,9 +12,9 @@ return new class extends Migration {
             $table->string('nome', 255);
             $table->enum('cargo', ['Vendedor','Estoquista','Gerente']);
             $table->string('email', 100)->unique();
-            $table->string('telefone', 20)->nullable();
+            $table->string('telefone', 20)->unique()->nullable();
             $table->decimal('salario', 12, 2)->nullable();
-            $table->enum('status', ['ativo','inativo'])->default('ativo');
+            $table->enum('status', ['ativo','inativo','férias'])->default('ativo');
             $table->string('foto', 255)->nullable()->default('avatars/user.png');
             $table->timestamp('data_admissao')->useCurrent();
             $table->timestamp('data_demissao')->nullable();
