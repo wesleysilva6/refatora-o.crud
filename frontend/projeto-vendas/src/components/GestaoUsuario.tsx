@@ -91,6 +91,32 @@ async function toggleStatus(f: Funcionario) {
     toast.fire({ icon: "info", title: "Abrir modal de edição (implantar)" });
 }
 
+async function toggleFerias(f: Funcionario) {
+    const estaDeFerias = f.status === "ferias";
+    const res = await confirmacao({
+        title: estaDeFerias ? "Retornar de Férias" : "Colocar em Férias?",
+        text: estaDeFerias
+            ? `${f.nome} voltará de férias deseja confirmar a ação?`
+            : `Colocar o funcionário ${f.nome} (${f.cargo}) em férias?`,
+        icon: estaDeFerias ? "warning" : "warning",
+        confirmText: estaDeFerias ? "Confirmar Retorno" : "Colocar em Férias",
+        confirmColor: estaDeFerias ? "#198754" : "#198754",
+    });
+    if (!res.isConfirmed) return;
+
+    try {
+    const novo = estaDeFerias ? "ativo" : "ferias";
+    await api.patch(`/funcionarios/${f.id}`, { status: novo }); // ajuste no seu backend
+        setList((old) => old.map((x) => (x.id === f.id ? { ...x, status: novo as Status } : x)));
+        toast.fire({ icon: "success", title: estaDeFerias ? "Retornando de férias" : "Colocado em férias" });
+    } catch (e: any) {
+        toast.fire({
+            icon: "error",
+            title: e?.response?.data?.message ?? "Falha ao atualizar status",
+        });
+    }
+}
+
 return (
     <div className="min-vh-100 d-flex flex-column">
 
@@ -113,6 +139,7 @@ return (
             <option value="">Todos os status</option>
             <option value="ativo">Ativo</option>
             <option value="inativo">Inativo</option>
+            <option value="ferias">Férias</option>
         </select>
 
         <button className={`btn btn-primary ${styles.btn}`} onClick={fetchData} disabled={loading}>
@@ -136,7 +163,12 @@ return (
         ) : (
             <div className={styles.grid}>
                 {visible.map((f) => (
-                    <FuncionarioCard key={f.id} data={f} onToggleStatus={() => toggleStatus(f)} onEdit={() => onEdit(f)} />
+                    <FuncionarioCard 
+                    key={f.id} 
+                    data={f} 
+                    onToggleStatus={() => toggleStatus(f)} 
+                    onEdit={() => onEdit(f)} 
+                    onToggleFerias={() => toggleFerias(f)} />
                 ))}
             </div>
         )}
@@ -149,10 +181,12 @@ return (
         data,
         onToggleStatus,
         onEdit,
+        onToggleFerias,
     }: {
         data: Funcionario;
         onToggleStatus: () => void;
         onEdit: () => void;
+        onToggleFerias: () => void;
         }) {
         const { nome, email, telefone, cargo, status, foto } = data;
 
@@ -173,7 +207,7 @@ return (
 
             <div className={styles.badges}>
                 <span className={`${styles.badge} ${styles[`cargo_${cargo}`]}`}>{cargo}</span>
-                <span className={`${styles.pill} ${status === "ativo" ? styles.ok : styles.muted}`}>{status}</span>
+                <span className={`${styles.pill} ${styles[`status_${status}`]}`}>{status}</span>
             </div>
         </div>
         </div>
@@ -183,7 +217,10 @@ return (
             <i className="bi bi-pencil-square" />
         </button>
 
-        <button className={`btn btn-sm ${styles.iconBtn}`} onClick={onToggleStatus} title={status === "ativo" ? "Demitir" : "Reativar"} > {status === "ativo" ? <i className="bi bi-person-dash" /> : <i className="bi bi-person-check" />}
+        <button className={`btn btn-sm ${styles.iconBtn}`} onClick={onToggleStatus} title={status === "ativo" ? "Demitir" : "Reativar"} > {status === "ativo" ? <i className="bi bi-person-x" /> : <i className="bi bi-person-check" />}
+        </button>
+
+        <button className={`btn btn-sm ${styles.iconBtn}`} onClick={onToggleFerias} title={status === "ferias" ? "Retornar de Férias" : "Colocar de Férias"} > {status === "ferias" ? <i className="bi bi-person-exclamation" /> : <i className="bi bi-person-exclamation" /> } 
         </button>
     </div>
     </div>

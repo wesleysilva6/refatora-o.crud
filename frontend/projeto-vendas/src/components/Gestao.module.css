@@ -14,8 +14,8 @@
     --status-ativo-bg: rgba(16, 185, 129, 0.12);
     --status-inativo: #ff3232;
     --status-inativo-bg: rgba(255, 0, 0, 0.15);
-    --status-ferias: #dd3a ;
-    --status-ferias-bg: rgba(255, 238, 0, 0.15);
+    --status-ferias: #bbb012;
+    --status-ferias-bg: #f8ff3cab;
 }
 
 :root[data-theme="dark"] {
@@ -35,9 +35,18 @@
     --status-ativo-bg: rgba(52, 211, 153, 0.12);
     --status-inativo: #ff3232;
     --status-inativo-bg: rgba(255, 0, 0, 0.15);
-    --status-ferias: rgb(255, 255, 7) ;
+    --status-ferias: rgb(255, 255, 7);
     --status-ferias-bg: rgba(255, 238, 2, 0.15);
 }
+
+/* ====== Cargos ====== */
+.status_ativo { background: var(--status-ativo-bg); color: var(--status-ativo); }
+.status_inativo { background: var(--status-inativo-bg); color: var(--status-inativo); }
+.status_ferias { background: var(--status-ferias-bg); color: var(--status-ferias); }
+
+.cargo_Vendedor { background: var(--cargo-vendedor); }
+.cargo_Estoquista { background: var(--cargo-estoquista); }
+.cargo_Gerente { background: var(--cargo-gerente); }
 
 /* ====== Página ====== */
 .container {
@@ -174,10 +183,6 @@
     border-radius: 999px;
 }
 
-.cargo_Vendedor { background: var(--cargo-vendedor); }
-.cargo_Estoquista { background: var(--cargo-estoquista); }
-.cargo_Gerente { background: var(--cargo-gerente); }
-
 .pill {
     font-size: 12px;
     font-weight: 600;
@@ -191,6 +196,7 @@
     background: var(--status-ativo-bg);
     color: var(--status-ativo);
 }
+
 .ferias {
     background: var(--status-ferias-bg);
     color: var(--status-ferias);

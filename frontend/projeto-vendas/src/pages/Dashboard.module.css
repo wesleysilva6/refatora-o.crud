@@ -3,6 +3,28 @@
     color: var(--color--text-card);
 }
 
+.cardVendasHoje {
+    background: linear-gradient( 45deg, #13493f , #1ca088);
+    padding: 3.6rem;
+}
+
+.box {
+    width: 5rem;
+    height: 4rem;
+    border-radius: 20%;
+    font-size: 3rem;
+}
+
+.cardVendasMensal {
+    background: linear-gradient(45deg, #1D3451, #0b5a9b);
+    padding: 4.5rem;
+}
+
+.cardEstoqueBaixo {
+    background: linear-gradient(45deg, #4b171f, #941c26);
+    padding: 3.6rem;
+}
+
 .tableCustom {
     border-radius: 8px;
     overflow: hidden;

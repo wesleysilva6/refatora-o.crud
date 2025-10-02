@@ -71,28 +71,21 @@ return (
 
     <div className={`row g-3 mb-4`}>
             <div className="col-md-3">
-                <div className={`card p-3 text-center ${styles.card}`}>
-                    <h6>Vendas de Hoje</h6>
+                <div className={`card text-center ${styles.cardVendasHoje}`}>
+                        <h6 className="card-title">Vendas de Hoje</h6>
                     <h4 className="text-success">R$ 1.902,00</h4>
                 </div>
             </div>
 
-        <div className="col-md-2">
-            <div className={`card p-3 text-center ${styles.card}`}>
+        <div className="col-md-4">
+            <div className={`card text-center ${styles.cardVendasMensal}`}>
                 <h6>Vendas do Mês</h6>
-                <h4 className="text-primary">R$ 18.230,00</h4>
-            </div>
-        </div>
-
-        <div className="col-md-2">
-            <div className={`card p-3 text-center ${styles.card}`}>
-                <h6>Produtos Disponíveis</h6>
-                <h4> <i className="bi bi-box" /> {data.total_produtos} </h4>
+                <h4 className="text-primary"></h4>
             </div>
         </div>
 
         <div className="col-md-3">
-            <div className={`card p-3 text-center ${styles.card}`}>
+            <div className={`card text-center ${styles.cardEstoqueBaixo}`}>
                 <h6>Estoque Baixo</h6>
                 <h4>
                     <span>{data.total_unidades}</span> |{" "}
@@ -103,29 +96,8 @@ return (
     </div>
 
         <div className="row g-3">
-            <div className="col-md-5">
-                <div className={`card p-3 ${styles.card}`}>
-                    <h6 className="mb-3">Gerenciar Vendas</h6>
 
-                    <table className={`table ${styles.tableCustom}`}>
-                        <thead>
-                            <tr>
-                                <th>Produto</th>
-                                <th>Preço</th>
-                                <th>Estoque</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead> 
-                        <tbody>
-                            <tr>
-                                <td className="text-muted" colSpan={4}> (Em breve…) </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        <div className="col-md-5">
+        <div className="col-md-6">
             <div className={`card p-3 ${styles.card}`}>
                 <h6 className="mb-3">Estoque - Quantidade de Produtos</h6>
 
@@ -153,6 +125,21 @@ return (
                 </table>
             </div>
         </div>
+
+        <div className="col-md-4">
+            <div className={`card p-3 ${styles.card}}`}>
+                <div className={`card-header ${styles.cardHeader}`}>
+                    <h5 className="card-title">Últimos Alertas</h5>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
         </div>
     </div>
     </div>

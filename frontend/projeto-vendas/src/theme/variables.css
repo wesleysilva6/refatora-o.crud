@@ -76,6 +76,7 @@
     --color--text-input: #ffffff;
     --color--border-input: rgba(255, 255, 255, 0.06);
     --color--placeholder: rgba(255,255,255,.76);
+    --color--input-focus: #e5e7eb;
 
     /* TÓPICOS */
     --color--background-topico: #161A1F;
