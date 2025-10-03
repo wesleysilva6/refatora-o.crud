@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import SalesSidebar from "../components/SalesSidebar";
 import { api } from "../api";
 import styles from "./Dashboard.module.css"
+import Cards from "../components/Cards"
 
 type Produto = {
     id: number;
@@ -45,7 +46,7 @@ useEffect(() => {
             produtos: Array.isArray(dash.produtos) ? dash.produtos : [],
         });
         } catch {
-        // fallback silencioso
+
         }
     })();
 }, []);
@@ -70,29 +71,7 @@ return (
         </div>
 
     <div className={`row g-3 mb-4`}>
-            <div className="col-md-3">
-                <div className={`card text-center ${styles.cardVendasHoje}`}>
-                        <h6 className="card-title">Vendas de Hoje</h6>
-                    <h4 className="text-success">R$ 1.902,00</h4>
-                </div>
-            </div>
-
-        <div className="col-md-4">
-            <div className={`card text-center ${styles.cardVendasMensal}`}>
-                <h6>Vendas do Mês</h6>
-                <h4 className="text-primary"></h4>
-            </div>
-        </div>
-
-        <div className="col-md-3">
-            <div className={`card text-center ${styles.cardEstoqueBaixo}`}>
-                <h6>Estoque Baixo</h6>
-                <h4>
-                    <span>{data.total_unidades}</span> |{" "}
-                    <span className="text-danger"> <i className="bi bi-exclamation-triangle text-warning" /> {data.produtos_estoque_baixo} </span> 
-                </h4>
-            </div>
-        </div>
+        <Cards/>
     </div>
 
         <div className="row g-3">
@@ -127,18 +106,29 @@ return (
         </div>
 
         <div className="col-md-4">
-            <div className={`card p-3 ${styles.card}}`}>
+            <div className={`card p-3 ${styles.card}`}>
                 <div className={`card-header ${styles.cardHeader}`}>
                     <h5 className="card-title">Últimos Alertas</h5>
                 </div>
+                <div className={`card-body ${styles.cardBody}`}>
+                    <div className="mb-3">
+                        <ul className={`list-group ${styles.ul}`}>
+                            <li className={`list-group-item ${styles.li}`}> 
+                                g6
+                            </li>
+
+                            <li className={`list-group-item ${styles.li}`}> 
+                            
+                            </li>
+
+
+
+
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
-
-
-
-
-
-
 
         </div>
     </div>

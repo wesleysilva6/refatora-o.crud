@@ -1,9 +1,37 @@
 import { useEffect, useState } from "react";
 import styles from './Vendas.module.css'
 import SalesSidebar from "../components/SalesSidebar";
+import { api } from "../api";
 
 export default function Vendas() {
-        const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(false);
+    const [produtos, setProdutos] = useState<any[]>([]);
+    const [funcionarios, setFuncionarios] = useState<any[]>([]);
+
+        useEffect(() => {
+            async function carregarProdutos() {
+                const { data } = await api.get("/topicos-with-produtos");
+                const allProdutos = data.flatMap((t: any) =>
+                    (t.produtos || []).map((p: any) => ({
+                        id: p.id,
+                        nome_produto: p.nome_produto,
+                        quantidade: p.quantidade,
+                        preco: p.preco, // Certifique-se que o backend retorna o preço!
+                        topico: t.nome_topico,
+                    }))
+                );
+                setProdutos(allProdutos);
+            }
+            carregarProdutos();
+        }, []);
+
+            useEffect(() => {
+            (async () => {
+                const res = await api.get("/funcionario/vendedor"); // já vem só vendedores
+                const arr = Array.isArray(res.data) ? res.data : (res.data?.data ?? []);
+                setFuncionarios(arr.map((f: any) => ({ id: f.id, nome: f.nome, cargo: f.vendedor })));
+            })();
+            }, []);
 
     return (
         <div className="min-vh-100" style={{ overflowX: "hidden" }}>
@@ -42,9 +70,12 @@ export default function Vendas() {
                                     <div className="mb-3">
                                         <label htmlFor="vendedor" className="form-label">Vendedor</label>
                                         <select id="vendedor" className={`form-select ${styles.formControl}`} required>
-                                            <option value="">Selecione um Vendedor
-
-                                            </option>
+                                            <option value="">Selecione um Vendedor</option>
+                                            {funcionarios.map((f) => (
+                                                <option key={f.id} value={f.id}>
+                                                    {f.nome}
+                                                </option>
+                                            ))}
                                         </select>
                                     </div>
 
@@ -54,6 +85,11 @@ export default function Vendas() {
                                     <label htmlFor="produto" className="form-label">Produto</label>
                                     <select id="produto" className={`form-select ${styles.formControl}`}>
                                         <option value="">Selecione um Produto</option>
+                                            {produtos.map((p) => (
+                                                <option key={p.id} value={p.id}>
+                                                    {p.nome_produto}
+                                                </option>
+                                            ))}
                                     </select>
                                 </div>
 

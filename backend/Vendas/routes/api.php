@@ -60,7 +60,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/simulacoes/item/{item}', [SimulacaoController::class, 'destroyItem']);
     Route::delete('/simulacoes', [SimulacaoController::class, 'destroyAll']);
 
-    // Historico de Simulações
+    // Funcionários
+    Route::get('/funcionario/vendedor', [FuncionarioController::class, 'filtrarVendedores']);
 
     // Logout
     Route::post('/logout', [AuthController::class, 'logout']);

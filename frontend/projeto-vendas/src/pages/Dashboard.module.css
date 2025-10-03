@@ -1,34 +1,26 @@
 .card {
-    background: var(--color--card-vendas);
-    color: var(--color--text-card);
+    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    color: #fff;
 }
 
-.cardVendasHoje {
-    background: linear-gradient( 45deg, #13493f , #1ca088);
-    padding: 3.6rem;
-}
-
-.box {
-    width: 5rem;
-    height: 4rem;
-    border-radius: 20%;
-    font-size: 3rem;
-}
-
-.cardVendasMensal {
-    background: linear-gradient(45deg, #1D3451, #0b5a9b);
-    padding: 4.5rem;
-}
-
-.cardEstoqueBaixo {
-    background: linear-gradient(45deg, #4b171f, #941c26);
-    padding: 3.6rem;
+.cardBody {
+    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    color: #fff;
 }
 
 .tableCustom {
     border-radius: 8px;
     overflow: hidden;
 }
+
+.li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    border: none;
+}
+
 
 /* Para realmente colorir as células (Bootstrap estiliza os <th>/<td>) */
 :global(.table).tableCustom > :not(caption) > * > * {
@@ -43,4 +35,95 @@
 
 :global(.table.table-striped).tableCustom > tbody > tr:nth-of-type(even) > * {
     background: #fff;
+}
+
+/* base do card */
+.cardSales {
+    --card-bg: linear-gradient(180deg, #0b1220, #0e1626);
+    --card-border: rgba(255, 255, 255, 0.555);
+    --card-fg: #e6eefc;
+
+    --accent: #0d6efd;            /* ícone */
+    --accent-bg: rgba(13,110,253,.12);
+
+    --badge-bg: rgba(13,110,253,.18);
+    --badge-fg: #cfe2ff;
+
+    border: 1px solid var(--card-border);
+    background: var(--card-bg);
+    color: var(--card-fg);
+    border-radius: 16px;
+    padding: 18px;
+    height: 100%;
+    box-shadow: 0 6px 20px rgba(0,0,0,.25);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.cardSales:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0,0,0,.32);
+}
+
+.salesHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+.salesTitle {
+    font-size: .95rem;
+    letter-spacing: .3px;
+    opacity: .85;
+}
+
+.salesIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-size: 1.1rem;
+}
+
+.salesValue {
+    font-weight: 700;
+    font-size: 1.65rem;
+    letter-spacing: .2px;
+}
+
+.salesFooter { margin-top: 10px; }
+
+.salesBadge {
+    background: var(--badge-bg) !important;
+    color: var(--badge-fg) !important;
+    border: 1px solid rgba(255,255,255,.06);
+    backdrop-filter: blur(4px);
+}
+
+.cardSales[data-tone="primary"] {
+    --card-bg: linear-gradient(45deg, #1842be, #091030);
+    --accent: #0066ff;
+    --accent-bg: rgba(13,110,253,.12);
+    --badge-bg: rgba(13,110,253,.18);
+    --badge-fg: #cfe2ff;
+}
+
+/* success (verde) */
+.cardSales[data-tone="success"] {
+    --card-bg: linear-gradient(45deg, #108122, #15411d);
+    --accent: #00ff40;
+    --accent-bg: rgba(25,135,84,.14);
+    --badge-bg: rgba(28, 255, 149, 0.18);
+    --badge-fg: #d1f1e1;
+}
+
+/* danger (vermelho) */
+.cardSales[data-tone="danger"] {
+    --card-bg: linear-gradient(45deg, #a31b27, #490b0e);
+    --accent: #ff0019;
+    --accent-bg: rgba(220,53,69,.14);
+    --badge-bg: rgba(220,53,69,.18);
+    --badge-fg: #ffd7db;
 }
