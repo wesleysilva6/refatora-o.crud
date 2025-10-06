@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('topicos', function (Blueprint $table) {
-            $table->bigIncrements('id_topico');                   // PK custom
+            $table->bigIncrements('id_topico');   
             $table->string('nome_topico', 255);
             $table->unsignedBigInteger('usuario_id');
             $table->foreign('usuario_id')->references('id')->on('usuarios')->cascadeOnDelete();

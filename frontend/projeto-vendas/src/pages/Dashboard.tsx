@@ -27,7 +27,7 @@ export default function Dashboard() {
     const [data, setData] = useState<DashboardData>({
     total_produtos: 0,
     total_unidades: 0,
-    produtos_estoque_baixo: 10,
+    produtos_estoque_baixo: 70,
     produtos: [],
 });
 

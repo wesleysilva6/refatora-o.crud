@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('simulacao_itens', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->foreignId('simulacao_id')->constrained('simulacoes')->cascadeOnDelete();
-            $table->foreignId('produto_id')->constrained('produtos');
+            $table->foreignId('produto_id')->constrained('produtos')->cascadeOnDelete();
             $table->string('nome_produto', 255);
             $table->integer('quantidade');
             $table->decimal('preco', 12, 2);

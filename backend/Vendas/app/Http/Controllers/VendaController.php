@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Venda;
 use App\Models\ItemVenda;
+use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,15 @@ class VendaController extends Controller
 
             $total = 0;
             foreach ($data['itens'] as $it) {
+                $produto = Produto::findOrFail($it['produto_id']);
+                if ($produto->quantidade < $it['quantidade']) {
+                    // Aborta a transação se não houver estoque suficiente
+                    
+                    abort(422, "Estoque insuficiente para o produto '{$produto->nome_produto}'. Disponível: {$produto->quantidade}.");
+                }
+
+                $produto->decrement('quantidade', $it['quantidade']);
+
                 $subtotal = $it['quantidade'] * $it['preco_unitario'];
                 $total   += $subtotal;
 

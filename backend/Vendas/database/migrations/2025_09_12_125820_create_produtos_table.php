@@ -9,30 +9,17 @@ return new class extends Migration {
     {
         Schema::create('produtos', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            // FK para topicos.id_topico (atenção ao nome da coluna e chave)
             $table->unsignedBigInteger('topico_id');
-            $table->foreign('topico_id')
-                    ->references('id_topico')->on('topicos')
-                    ->cascadeOnDelete();
-
-            // FK para usuarios.id
+            $table->foreign('topico_id')->references('id_topico')->on('topicos')->cascadeOnDelete();
             $table->unsignedBigInteger('usuario_id');
-            $table->foreign('usuario_id')
-                    ->references('id')->on('usuarios')
-                    ->cascadeOnDelete();
-
+            $table->foreign('usuario_id')->references('id')->on('usuarios')->cascadeOnDelete();
             $table->string('nome_produto', 255);
             $table->decimal('preco', 10, 2);
             $table->integer('quantidade');
             $table->text('descricao')->nullable();
             $table->string('imagem', 255)->nullable();
-
-            // timestamps customizados que seus Models usam
             $table->timestamp('criado_em')->useCurrent();
             $table->timestamp('atualizado_em')->nullable()->useCurrentOnUpdate();
-
-            // índices úteis
             $table->index(['topico_id', 'usuario_id']);
         });
     }

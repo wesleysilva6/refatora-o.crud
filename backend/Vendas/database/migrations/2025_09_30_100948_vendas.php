@@ -10,18 +10,14 @@ return new class extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->foreignId('funcionario_id')->constrained('funcionarios')->cascadeOnDelete();
             $table->string('cliente', 255);
-            $table->integer('total');
+            $table->string('telefone', 50)->nullable();
+            $table->foreignId('funcionario_id')->constrained('funcionarios')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->decimal('total', 10, 2)->default(0);
             $table->timestamp('realizada_em')->useCurrent();
-            $table->string('telefone');
-            $table->index(['funcionario_id']);
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('vendas');
