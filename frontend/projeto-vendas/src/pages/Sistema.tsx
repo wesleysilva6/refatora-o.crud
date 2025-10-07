@@ -2,17 +2,16 @@ import { useEffect, useState } from "react";
 import SalesSidebar from "../components/SalesSidebar"
 import FormFuncionario from "../components/FormFuncionario";
 import GestaoUsuario from "../components/GestaoUsuario";
+import GerenciarVendas from "../components/GerenciarVendas";
 
 // se você já tem um hook de usuário (foto/nome), use-o aqui:
 
 type TabKey =
-    | "sistema"
     | "gestão"
     | "vendedores"
     | "vendas"
 
 const TABS: { key: TabKey; label: string }[] = [
-    { key: "sistema", label: "Sistema" },
     { key: "gestão", label: "Gestão de Usuários" },
     { key: "vendedores", label: "Funcionários" },
     { key: "vendas", label: "Vendas" },
@@ -20,7 +19,7 @@ const TABS: { key: TabKey; label: string }[] = [
 
 export default function Configuracoes() {
     const [collapsed, setCollapsed] = useState(false);
-    const [active, setActive] = useState<TabKey>("sistema");
+    const [active, setActive] = useState<TabKey>("gestão");
 
 useEffect(() => {
     const saved = localStorage.getItem("activeTab") as TabKey | null;
@@ -56,13 +55,6 @@ return (
 
         <div className="container mt-2">
 
-        {active === "sistema" && (
-            <section id="sistema" className="tab-section">
-                <h4>Sistema</h4>
-                <p className="text-muted">Configurações gerais do sistema.</p>
-            </section>
-        )}
-
         {active === "gestão" && (
             <section id="usuarios" className="tab-section">
                 <GestaoUsuario/>
@@ -77,8 +69,7 @@ return (
 
         {active === "vendas" && (
             <section id="vendas" className="tab-section">
-                <h4>Vendas</h4>
-                <p className="text-muted">Conteúdo livre de Vendas.</p>
+                <GerenciarVendas/>
             </section>
         )}
 

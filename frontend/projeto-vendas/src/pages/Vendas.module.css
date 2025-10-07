@@ -33,6 +33,18 @@ label {
   color: var(--color--eyes);
 }
 
+.infoProduto {
+  color: var(--color--eyes);
+}
+
+.btnVendas:hover{
+  background: #0a51bb;
+}
+
+.btnVendas:focus {
+  background: #0a51bb;
+}
+
 /* Para realmente colorir as células (Bootstrap estiliza os <th>/<td>) */
 :global(.table).tableCustom > :not(caption) > * > * {
     background: var(--color--card-vendas);

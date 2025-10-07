@@ -24,7 +24,7 @@ export default function Simular() {
                     id: p.id,
                     nome_produto: p.nome_produto,
                     quantidade: p.quantidade,
-                    preco: p.preco, // Certifique-se que o backend retorna o preço!
+                    preco: p.preco,
                     topico: t.nome_topico,
                 }))
             );
@@ -55,7 +55,6 @@ export default function Simular() {
         ]);
         setQuantidade(1);
         setProdutoSelecionado(null);
-        // NÃO limpe o nome do cliente aqui!
     }
 
     async function handleFinalizarSimulacao(e: React.FormEvent) {
@@ -67,10 +66,8 @@ export default function Simular() {
                 cliente: nomeCliente,
                 itens: simulacao,
             });
-            setSimulacao([]); // Limpa só os produtos
-            // nomeCliente permanece
+            setSimulacao([]);
         } catch (err) {
-            // Trate o erro se necessário
         } finally {
             setSending(false);
         }

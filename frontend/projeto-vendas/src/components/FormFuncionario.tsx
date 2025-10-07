@@ -89,7 +89,7 @@ async function onSubmit(e: React.FormEvent) {
         err?.response?.data?.errors?.[Object.keys(err?.response?.data?.errors || {})[0]]?.[0] ||
         "Falha ao cadastrar funcionário";
         toast.fire({ icon: "error", title: msg });
-    } finally {
+    } finally {                                  
         setSending(false);
     }
 }

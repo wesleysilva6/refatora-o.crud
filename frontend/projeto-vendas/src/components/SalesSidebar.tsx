@@ -36,11 +36,6 @@ export default function SalesSidebar({ collapsed }: Props) {
         <span className="sidebar-text">Configurações</span>
       </Link>
 
-      <Link to="/logout">
-        <i className="bi bi-box-arrow-left" />
-        <span className="sidebar-text">Sair</span>
-      </Link>
-
         <div className="m-2 mb-5">
             <ThemeToggle />
         </div>

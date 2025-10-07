@@ -8,6 +8,7 @@ class Venda extends Model
 {
     protected $table = 'vendas';
     protected $fillable = ['cliente','telefone','funcionario_id','total','realizada_em'];
+    protected $casts = ['realizada_em' => 'datetime', 'total' => 'decimal:2']; 
     public $timestamps = false;
 
     public function funcionario()

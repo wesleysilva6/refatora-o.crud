@@ -9,7 +9,6 @@ import React from "react";
 import App from "./App";
 import "./css/theme.css"
 import './theme/variables.css';
-import './theme/global.css';
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

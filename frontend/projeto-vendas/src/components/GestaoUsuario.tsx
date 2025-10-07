@@ -125,7 +125,6 @@ return (
 
         <div className={styles.filters}>
         <input className={styles.search} placeholder="Pesquisar por nome ou e-mail..." value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key === "Enter" && fetchData()} />
-
         <select className={styles.select} value={cargo} onChange={(e) => setCargo(e.target.value as any)}>
             <option value="">Todos os cargos</option>
             {CARGOS.map((c) => (
@@ -187,7 +186,7 @@ return (
         onToggleStatus: () => void;
         onEdit: () => void;
         onToggleFerias: () => void;
-        }) {
+    }) {
         const { nome, email, telefone, cargo, status, foto } = data;
 
 return (

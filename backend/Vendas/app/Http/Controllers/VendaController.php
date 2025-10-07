@@ -8,15 +8,42 @@ use App\Models\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Carbon;
 class VendaController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $r)
     {
-        return Venda::query()
-            ->with(['funcionario'])
-            ->orderByDesc('realizada_em')
-            ->paginate(15);
+        $perPage = (int) $r->integer('per_page', 10);
+        $q       = trim((string) $r->get('q', ''));
+        $from    = $r->get('from'); // YYYY-MM-DD
+        $to      = $r->get('to');   // YYYY-MM-DD
+
+        $query = Venda::query()
+            ->with(['funcionario:id,nome'])
+            ->orderByDesc('realizada_em');
+
+        if ($from) {
+            try {
+                $ini = Carbon::parse($from)->startOfDay();
+                $query->where('realizada_em', '>=', $ini);
+            } catch (\Throwable $e) {}
+        }
+
+        if ($to) {
+            try {
+                $fim = Carbon::parse($to)->endOfDay();
+                $query->where('realizada_em', '<=', $fim);
+            } catch (\Throwable $e) {}
+        }
+
+        if ($q !== '') {
+            $query->where(function ($sub) use ($q) {
+                $sub->where('cliente', 'like', "%{$q}%")
+                    ->orWhere('telefone', 'like', "%{$q}%");
+            });
+        }
+
+        return $query->paginate($perPage);
     }
 
     public function store(Request $request)

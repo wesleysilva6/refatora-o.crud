@@ -32,8 +32,6 @@ export default function Home() {
     const [topicos, setTopicos] = useState<Topico[]>([]); 
     const [loading, setLoading] = useState(false);
     const [erro, setErro] = useState<string | null>(null);
-
-    // estados de modais
     const [topicoNome, setTopicoNome] = useState("");
     const [topicoSelecionado, setTopicoSelecionado] = useState<Topico | null>(null);
     const [produtoForm, setProdutoForm] = useState<Partial<Produto>>({});

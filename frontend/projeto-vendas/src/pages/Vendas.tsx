@@ -14,7 +14,10 @@ type Produto = {
     quantidade: number;    
 };
 
-type Func = { id: number | string; nome: string };
+type Func = { 
+    id: number | string; 
+    nome: string 
+};
 
 type CarrinhoItem = {
     id: number | string;          // id do produto
@@ -232,21 +235,21 @@ return (
                 </div>
 
                 {produtoSel && (
-                    <div id="detalhesProduto">
+                    <div id="detalhesProduto d-flex">
                     {foto && (
                         <img src={foto} alt={`Foto de ${produtoSel.nome_produto}`} style={{ maxWidth: 240, borderRadius: 8, display: "block", marginBottom: 8 }} onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = "none")} />
                     )}
 
-                    <p className="mb-1">
+                    <p className={`mb-1 ${styles.infoProduto}`}>
                         <strong>Preço: </strong> {fmtBRL(produtoSel.preco)}
                     </p>
 
-                    <p className="mb-1">
+                    <p className={`mb-1 ${styles.infoProduto}`}>
                         <strong>Estoque disponível: </strong> {estoqueDisponivel}
                     </p>
 
                     {produtoSel.descricao && (
-                        <p className="mb-2">
+                        <p className={`mb-2 ${styles.infoProduto}`}>
                             <strong>Descrição: </strong> {produtoSel.descricao}
                         </p>
                     )}
@@ -257,7 +260,7 @@ return (
                             Math.max(1, Math.min(estoqueDisponivel || 1, Number(e.target.value) || 1))
                         ) } className={`form-control ${styles.formControl}`} />
 
-                    <button type="submit" className="btn btn-primary mt-3">
+                    <button type="submit" className={`btn btn-primary mt-3 ${styles.btnVendas}`}>
                         Adicionar ao Carrinho
                     </button>
                 </div>
@@ -325,7 +328,7 @@ return (
                 </table>
             </div>
 
-                <button type="button" onClick={finalizarVenda} className="btn btn-primary mt-3 w-100" disabled={!cliente.trim() || !funcionarioId || carrinho.length === 0} >
+                <button type="button" onClick={finalizarVenda} className={`btn btn-primary mt-3 w-100 ${styles.btnVendas}`} disabled={!cliente.trim() || !funcionarioId || carrinho.length === 0} >
                     Finalizar Venda
                 </button>
                 </div>
