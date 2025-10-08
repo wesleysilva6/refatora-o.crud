@@ -4,8 +4,6 @@ import FormFuncionario from "../components/FormFuncionario";
 import GestaoUsuario from "../components/GestaoUsuario";
 import GerenciarVendas from "../components/GerenciarVendas";
 
-// se você já tem um hook de usuário (foto/nome), use-o aqui:
-
 type TabKey =
     | "gestão"
     | "vendedores"

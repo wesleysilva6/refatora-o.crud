@@ -17,6 +17,10 @@
     --color--border-input: #393E42;
     --color--placeholder: rgba(0,0,0,.54);
 
+    /* MODALS  */
+    --color--background-modalContent: #fdfdfd;
+    --color--text-modal: #000000;
+
     /* TÓPICOS */
     --color--background-topico: #000000;
     --color--table-topico: #0B5ED7;
@@ -75,6 +79,10 @@
     --color--border-input: rgba(255, 255, 255, 0.06);
     --color--placeholder: rgba(255,255,255,.76);
     --color--input-focus: #e5e7eb;
+
+    /* MODALS  */
+    --color--background-modalContent: #1A202C;
+    --color--text-modal: #ffffff;
 
     /* TÓPICOS */
     --color--background-topico: #161A1F;

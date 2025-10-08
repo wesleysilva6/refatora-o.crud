@@ -4,8 +4,20 @@ import Sidebar from "../components/Sidebar";
 
 import styles from "./Simular.module.css";
 
-type Produto = { id: number; nome_produto: string; quantidade: number; preco: number; topico: string };
-type ItemSimulacao = { id: number; nome_produto: string; quantidade: number; preco: number; subtotal: number };
+type Produto = { 
+    id: number; 
+    nome_produto: string; 
+    quantidade: number; 
+    preco: number; 
+    topico: string 
+};
+
+type ItemSimulacao = { id: number; 
+    nome_produto: string; 
+    quantidade: number; 
+    preco: number; 
+    subtotal: number 
+};
 
 export default function Simular() {
     const [produtos, setProdutos] = useState<Produto[]>([]);

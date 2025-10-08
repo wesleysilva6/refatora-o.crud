@@ -1,0 +1,95 @@
+.containerFluid {
+    margin-left: -6.5rem;
+    margin-top: 2rem;
+}
+
+.cardContainer {
+    background: transparent;
+}
+
+.cardBody {
+    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    border-radius: 0.5rem;
+}
+
+.cardFiltrar {
+    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    border-radius: 0.5rem;
+}
+
+.label {
+    color: #fff;
+}
+
+.formControl {
+    color: var(--color--text-input);
+    background: var(--color--input);
+    border: 1px solid var(--color--border-input);
+}
+
+.formControl:focus {
+    box-shadow: none;
+    outline: none;
+    background: var(--color--input);
+    color: var(--color--text-input);
+    border-color: var(--color--input-focus);
+}
+
+.formControl::placeholder {
+    color: var(--color--placeholder);
+}
+
+.cardVendas {
+    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    color: var(--color--text);
+    border-radius: 0.5rem;
+}
+
+.cardVendasPeriodo {
+    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    color: var(--color--text);
+    border-radius: 0.5rem;
+}
+
+.tableResponsive {
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    background: #2d3544;
+    backdrop-filter: blur(4px);
+    overflow: auto;
+    max-height: 520px;
+    color: #fff;
+}
+
+.table :where(th, td) {
+    vertical-align: middle;
+}
+
+.table thead th {
+    position: sticky;        /* header gruda no topo */
+    top: 0;
+    z-index: 1;
+    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    backdrop-filter: blur(2px);
+}
+
+.nowrap { 
+    white-space: nowrap; 
+}
+
+.clientCell {
+    max-width: 260px; 
+}
+
+.clientCell > span {
+    display: inline-block;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.money {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .3px;
+}

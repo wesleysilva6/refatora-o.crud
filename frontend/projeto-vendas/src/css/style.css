@@ -1,33 +1,3 @@
-/* :root {
-        --color--background-container:#161A1F;
-        --color--background-modal:#161A1F;
-        --color--background-card:#0a0c0f;
-        --color--table-impar:#20252a;
-        --color--table-par:#161A1F;
-        --color--background:#000;
-        --color--primary:#0B5ED7;
-        --color--border:#393E42;
-        --color--navbar:#0C0F16;
-        --color--input:#20252A;
-        --color--text:#fff;
-        --color--button:#0B5ED7;
-        --color--placeholder: rgba(255,255,255,.76);
-        --color--eyes: #ffffff;
-        --color--footer:#0C0F16;
-
-        /* LOGIN 
-        --color--cardLogin: #0C0F16;
-} */
-
-::-webkit-scrollbar {
-        width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-        background: var(--color--button); 
-}
-
-
         h3 {
         font-family: 'Poppins', sans-serif;
         font-weight: 700;

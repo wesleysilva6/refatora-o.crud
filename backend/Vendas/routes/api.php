@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard', DashboardController::class);
     Route::get('/dashboard/metrics', [DashboardController::class, 'metrics']);
 
-        Route::get('/vendas', [VendaController::class, 'index']);
+    Route::get('/vendas', [VendaController::class, 'index']);
 
     // Dados para a Home (GET somente)
     Route::get('/home',                [TopicoController::class, 'indexWithProdutos']);

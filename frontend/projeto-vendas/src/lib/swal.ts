@@ -41,7 +41,7 @@ export async function sucessoFuncionarioCard(data: {
   status?: string;
   foto?: string; // URL pública
 }) {
-  const foto = data.foto ?? "/uploads/user.png";
+  const foto = data.foto ?? "/avatars/user.png";
   return Swal.fire({
     title: "Funcionário cadastrado",
     html: `

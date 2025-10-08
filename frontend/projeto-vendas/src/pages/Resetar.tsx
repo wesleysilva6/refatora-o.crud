@@ -42,7 +42,7 @@ return (
                 <form className="spinnerForm" noValidate>
                     <div className="input-group mt-1">
                         <span className={`input-group-text ${styles.inputGroupText}`}>
-                            <i className="bi bi-lock" aria-hidden="true" />
+                            <i className={`bi bi-lock ${styles.icon}`} aria-hidden="true" />
                         </span>
                         <input type={showPwd ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Digite uma Senha" required autoComplete="current-password" />
                         <button type="button" className={`btn btn-dark ${styles.eyes}`} onClick={() => setShowPwd((s) => !s)} aria-label={showPwd ? "Ocultar senha" : "Mostrar senha"}>
@@ -52,7 +52,7 @@ return (
 
                     <div className="input-group mt-2">
                         <span className={`input-group-text ${styles.inputGroupText}`}>
-                            <i className="bi bi-lock" aria-hidden="true" />
+                            <i className={`bi bi-lock ${styles.icon}`} aria-hidden="true" />
                         </span>
                         <input type={showPwd2 ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Confirme a Senha" required autoComplete="current-password" />
                     <button type="button" className={`btn btn-dark ${styles.eyes}`} onClick={() => setShowPwd2((s) => !s)} aria-label={showPwd2 ? "Ocultar senha2" : "Mostrar senha2"} >

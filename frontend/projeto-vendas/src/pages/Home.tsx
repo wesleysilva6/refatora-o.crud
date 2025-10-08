@@ -1,215 +1,149 @@
 import { useEffect, useRef, useState } from "react";
-import { Modal } from "bootstrap";
 import { api } from "../api";
 import Sidebar from "../components/Sidebar";
-import { fmtDate } from '../utils/date';
+import { fmtDate } from "../utils/date";
+import ModalsHub, { type Produto as ProdutoBase, type Topico as TopicoBase, } from "../components/ModalsHub";
+import styles from "./Home.module.css";
 
-// import { AddTopicoModal, AddProdutoModal, ConfirmModal, ImagePreviewModal } from "../components/modals";
+type Produto = ProdutoBase;
+type Topico = TopicoBase & { produtos: Produto[] };
 
-import styles from "./Home.module.css"; // opcional (CSS Module) 
-
-type Produto = {
-    id: number;
-    nome_produto: string;
-    preco: number;
-    quantidade: number;
-    descricao?: string | null;
-    imagem?: string | null;
-    criado_em?: string; 
-    atualizado_em?: string;
-    created_at?: string;
-    updated_at?: string;
-    topico_id: number;
-};
-
-    type Topico = { 
-    id: number; 
-    nome_topico: string; 
-    produtos: Produto[] 
-};
+/** helper p/ dinheiro */
+    const fmtBRL = (v: number | string | null | undefined) => {
+    const n = Number(v ?? 0);
+    return new Intl.NumberFormat("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+        minimumFractionDigits: 2,
+    }).format(n);
+    };
 
 export default function Home() {
-    const [topicos, setTopicos] = useState<Topico[]>([]); 
+    const [topicos, setTopicos] = useState<Topico[]>([]);
     const [loading, setLoading] = useState(false);
     const [erro, setErro] = useState<string | null>(null);
-    const [topicoNome, setTopicoNome] = useState("");
-    const [topicoSelecionado, setTopicoSelecionado] = useState<Topico | null>(null);
-    const [produtoForm, setProdutoForm] = useState<Partial<Produto>>({});
-    const [produtoEditando, setProdutoEditando] = useState<Produto | null>(null);
-    const [imgPreview, setImgPreview] = useState<string | null>(null);
 
-    // refs de modais
-    const modalTopicoRef = useRef<HTMLDivElement>(null);
-    const modalProdutoRef = useRef<HTMLDivElement>(null);
-    const modalEditarRef = useRef<HTMLDivElement>(null);
-    const modalImagemRef = useRef<HTMLDivElement>(null);
-    const modalRemoverProdutoRef = useRef<HTMLDivElement>(null);
-    const modalRemoverTopicoRef = useRef<HTMLDivElement>(null);
-
-    function open(el: HTMLElement | null) {
-        if (!el) return;
-        Modal.getOrCreateInstance(el).show();
-    }   
-
-    function close(el: HTMLElement | null) {
-        if (!el) return;
-        Modal.getOrCreateInstance(el).hide();
-    }
+    // Hub de modais (API imperativa)
+    const modalsRef = useRef<ModalsHandle>(null);
 
     async function carregar() {
         setLoading(true);
         setErro(null);
-    try {
+        try {
         const { data } = await api.get<any[]>("/topicos-with-produtos");
-        console.log('topicos API', data);
-        const normalized: Topico[] = data.map(t => ({
-        id: t.id ?? t.id_topico,            // <<< pega o que existir
-        nome_topico: t.nome_topico,
-        produtos: Array.isArray(t.produtos) ? t.produtos : [],
+        const normalized: Topico[] = (data ?? []).map((t) => ({
+            id: t.id ?? t.id_topico,
+            nome_topico: t.nome_topico,
+            produtos: Array.isArray(t.produtos) ? t.produtos : [],
         }));
-    setTopicos(normalized);
-    } catch (e: any) {
+        setTopicos(normalized);
+        } catch (e: any) {
         setErro(e?.response?.data?.message ?? "Falha ao carregar");
-    } finally {
+        } finally {
         setLoading(false);
+        }
     }
+    useEffect(() => {
+        carregar();
+    }, []);
+
+    // handlers usados pelo ModalsHub
+    const onCriarTopico = async (nome: string) => {
+        await api.post("/topicos", { nome_topico: nome });
+        await carregar();
+    };
+
+    const onSalvarProdutoNovo = async (fd: FormData) => {
+        await api.post("/produtos", fd, {
+        headers: { "Content-Type": "multipart/form-data" },
+        });
+        await carregar();
+    };
+
+    const onSalvarEdicaoProduto = async (fd: FormData, produtoId: number) => {
+        await api.post(`/produtos/${produtoId}?_method=PUT`, fd, {
+        headers: { "Content-Type": "multipart/form-data" },
+        });
+        await carregar();
+    };
+
+    const onRemoverProduto = async (produtoId: number) => {
+        await api.delete(`/produtos/${produtoId}`);
+        await carregar();
+    };
+
+    const onRemoverTopico = async (topicoId: number) => {
+        await api.delete(`/topicos/${topicoId}`);
+        await carregar();
+    };
+
+    // atalhos para abrir modais
+    const abrirCriarTopico = () => modalsRef.current?.openTopico();
+    const abrirNovoProduto = (t: Topico) => modalsRef.current?.openNovoProduto(t);
+    const abrirEditarProduto = (p: Produto) =>
+        modalsRef.current?.openEditarProduto(p);
+    const confirmarRemoverProduto = (p: Produto) =>
+        modalsRef.current?.openRemoverProduto(p.id);
+    const confirmarRemoverTopico = (t: Topico) =>
+        modalsRef.current?.openRemoverTopico(t.id);
+    const abrirImagem = (url: string) => modalsRef.current?.openImagem(url);
+
+
+async function exportarTudo() {
+    const res = await api.get(`/exports/produtos`, { responseType: "blob" });
+    const url = URL.createObjectURL(res.data);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `estoque_${new Date()
+        .toISOString()
+        .slice(0, 19)
+        .replace(/[:T]/g, "-")}.xlsx`;
+    a.click();
+    URL.revokeObjectURL(url);
 }
 
-    useEffect(() => { carregar(); }, []);
-
-    // criar tópico
-    async function criarTopico() {
-        if (!topicoNome.trim()) return;
-        await api.post("/topicos", { nome_topico: topicoNome });
-        setTopicoNome("");
-        close(modalTopicoRef.current);
-        carregar();
-    }
-
-    // abrir modal de produto (novo)
-    function abrirNovoProduto(t: Topico) {
-        setTopicoSelecionado(t);
-        setProdutoForm({ topico_id: t.id, nome_produto: "", preco: 0, quantidade: 1, descricao: "" });
-        open(modalProdutoRef.current);
-    }
-
-    // salvar produto novo
-    async function salvarProdutoNovo(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        if (!topicoSelecionado?.id) {
-            alert("Selecione um tópico válido.");
-            return;
-        }   
-
-    const fd = new FormData(e.currentTarget); // já tem topico_id pelo hidden
-        await api.post("/produtos", fd, {
-        headers: { "Content-Type": "multipart/form-data" }
+async function exportarTopico(t: Topico) {
+    const res = await api.get(`/exports/topicos/${t.id}`, {
+        responseType: "blob",
     });
-        close(modalProdutoRef.current);
-        carregar();
-    }
-
-    // abrir editar produto
-    function abrirEditarProduto(p: Produto) {
-        setProdutoEditando(p);
-        open(modalEditarRef.current);
-    }
-
-    // salvar edição
-    async function salvarEdicaoProduto(e: React.FormEvent<HTMLFormElement>) {
-        e.preventDefault();
-        if (!produtoEditando) return;
-
-        const fd = new FormData(e.currentTarget);
-        await api.post(`/produtos/${produtoEditando.id}?_method=PUT`, fd, { headers: { "Content-Type": "multipart/form-data" } });
-        close(modalEditarRef.current);
-        setProdutoEditando(null);
-        carregar();
-    }
-
-    // remover produto
-    const [produtoRemover, setProdutoRemover] = useState<Produto | null>(null);
-    function confirmarRemoverProduto(p: Produto) {
-        setProdutoRemover(p);
-        open(modalRemoverProdutoRef.current);
-    }
-
-    async function removerProduto() {
-        if (!produtoRemover) return;
-            await api.delete(`/produtos/${produtoRemover.id}`);
-            close(modalRemoverProdutoRef.current);
-        setProdutoRemover(null);
-        carregar();
-    }
-
-    // remover tópico (com produtos)
-    function confirmarRemoverTopico(t: Topico) {
-        setTopicoSelecionado(t);
-        open(modalRemoverTopicoRef.current);
-    }
-
-    async function removerTopico() {
-        if (!topicoSelecionado) return;
-            await api.delete(`/topicos/${topicoSelecionado.id}`);
-            close(modalRemoverTopicoRef.current);
-        setTopicoSelecionado(null);
-        carregar();
-    }
-
-    // preview imagem
-    function abrirImagem(url: string) {
-        setImgPreview(url);
-        open(modalImagemRef.current);
-    }
-
-    // exportar: baixa via blob (mantém Authorization)
-    async function exportarTudo() {
-        const res = await api.get(`/exports/produtos`, { responseType: "blob" });
-        const url = URL.createObjectURL(res.data);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `estoque_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.xlsx`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
-
-    async function exportarTopico(t: Topico) {
-        const res = await api.get(`/exports/topicos/${t.id}`, { responseType: "blob" });
-        const url = URL.createObjectURL(res.data);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `topico_${t.id}.xlsx`;
-        a.click();
-        URL.revokeObjectURL(url);
-    }
+    const url = URL.createObjectURL(res.data);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `topico_${t.id}.xlsx`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
 
 return (
     <div className="min-vh-100 d-flex flex-column">
         <Sidebar />
-        <div className="d-flex justify-content-center mt-4">
-            <div className="alert alert-primary text-center w-50">
-                Seja Muito Bem-Vindo(a) ao seu Sistema de ESTOQUE!
-            </div>
-        </div>
 
-        <div className={`${styles.topicos}`}>
-            <button className="btn btn-primary m-2" onClick={() => open(modalTopicoRef.current)}>
-                <i className="bi bi-plus-circle" /> Adicionar Tópico
-            </button>
-            <button className="btn btn-primary" onClick={exportarTudo}>
-                <i className="bi bi-box-arrow-in-up-right" /> Exportar Tabelas
-            </button>
+    <div className="d-flex justify-content-center mt-4">
+        <div className="alert alert-primary text-center w-50">
+            Seja Muito Bem-Vindo(a) ao seu Sistema de ESTOQUE!
         </div>
+    </div>
 
-        <div className={`containerHome ${styles.containerHome}`}>
+    <div className={styles.topicos}>
+        <button className="btn btn-primary m-2" onClick={abrirCriarTopico}>
+            <i className="bi bi-plus-circle" /> Adicionar Tópico
+        </button>
+        <button className="btn btn-primary" onClick={exportarTudo}>
+            <i className="bi bi-box-arrow-in-up-right" /> Exportar Tabelas
+        </button>
+    </div>
+
+    <div className={`containerHome ${styles.containerHome}`}>
+        {erro && <div className="alert alert-danger">{erro}</div>}
+        {loading && <div className="text-muted">Carregando…</div>}
 
         {topicos.map((t) => (
-            <div key={t.id} className={`${styles.topicoBlock}`}>
-                <h4 className={`${styles.topicoTitle}`}>{t.nome_topico}</h4>
+        <div key={t.id} className={styles.topicoBlock}>
+            <h4 className={styles.topicoTitle}>{t.nome_topico}</h4>
 
-            <div className={`card-body`}>
-                <div className="table-responsive">
-                    <table className={`table table-striped align-middle mb-0 ${styles.table}`}>
+            <div className="card-body">
+            <div className="table-responsive">
+                <table className={`table table-striped align-middle mb-0 ${styles.table ?? ""}`} >
                     <thead>
                         <tr>
                         <th>Imagem</th>
@@ -225,172 +159,70 @@ return (
                     </thead>
 
                     <tbody>
-                        {t.produtos.map((p) => (
+                        {(t.produtos ?? []).map((p) => (
                         <tr key={p.id}>
                             <td>
                             {p.imagem ? (
-                                <img
-                                src={p.imagem}
-                                width={60}
-                                height={60}
-                                style={{ objectFit: "cover", borderRadius: 8, cursor: "pointer" }}
-                                onClick={() => abrirImagem(p.imagem!)}
-                                />
-                            ) : <span className="text-muted">—</span>}
-                            </td>
+                                <img src={p.imagem} width={60} height={60} style={{objectFit: "cover",borderRadius: 8,cursor: "pointer", }} onClick={() => abrirImagem(p.imagem!)} />
+                            ) : (
+                                <span className="text-muted">—</span>
+                            )}
+                        </td>
 
-                            <td>{p.nome_produto}</td>
-                            <td>{`R$ ${Number(p.preco).toFixed(2).replace('.',',')}`}</td>
-                            <td>{p.quantidade}</td>
-                            <td>{p.descricao}</td>
-                            <td>{fmtDate(p.criado_em || p.created_at || '')}</td>
-                            <td>{fmtDate(p.atualizado_em || p.updated_at || '')}</td>
+                        <td>{p.nome_produto}</td>
+                        <td>{fmtBRL(p.preco)}</td>
+                        <td>{p.quantidade}</td>
+                        <td>{p.descricao ?? "—"}</td>
+                        <td>{fmtDate(p.criado_em)}</td>
+                        <td>{fmtDate(p.atualizado_em)}</td>
 
-                            <td>
-                            <button className="btn" onClick={() => abrirEditarProduto(p)}>
-                                <i className={`bi bi-pencil-square ${styles.icon}`} />
+                        <td>
+                            <button className="btn" onClick={() => abrirEditarProduto(p)} title="Editar" >
+                                <i className={`bi bi-pencil-square ${styles.icon ?? ""}`} />
                             </button>
-                            </td>
+                        </td>
 
-                            <td>
-                            <button className="btn" onClick={() => confirmarRemoverProduto(p)}>
-                                <i className={`bi bi-trash3 ${styles.icon}`} />
+                        <td>
+                            <button className="btn" onClick={() => confirmarRemoverProduto(p)} title="Excluir" >
+                                <i className={`bi bi-trash3 ${styles.icon ?? ""}`} />
                             </button>
+                        </td>
+                    </tr>
+                    ))}
+                    {(t.produtos ?? []).length === 0 && (
+                        <tr>
+                            <td colSpan={9} className="text-center text-muted py-4">
+                                Nenhum produto neste tópico.
                             </td>
                         </tr>
-                        ))}
-                    </tbody>
-                    </table>
-                </div>
+                    )}
+                </tbody>
+                </table>
+            </div>
 
-                <div className={`${styles.btnTopico}`}>
-                    <button className="btn btn-primary" onClick={() => confirmarRemoverTopico(t)}>
-                        <i className="bi bi-trash3" /> Excluir Tópico
-                    </button>
-                    <button className="btn btn-primary" onClick={() => abrirNovoProduto(t)}>
-                        <i className="bi bi-plus-circle" /> Adicionar Produto
-                    </button>
-                    <button className="btn btn-primary" onClick={() => exportarTopico(t)}>
-                        <i className="bi bi-box-arrow-in-up-right" /> Exportar Tabela
-                    </button>
-                </div>
+            <div className={styles.btnTopico}>
+                <button className="btn btn-primary" onClick={() => confirmarRemoverTopico(t)} >
+                    <i className="bi bi-trash3" /> Excluir Tópico
+                </button>
+                <button className="btn btn-primary" onClick={() => abrirNovoProduto(t)} >
+                    <i className="bi bi-plus-circle" /> Adicionar Produto
+                </button>
+                <button className="btn btn-primary" onClick={() => exportarTopico(t)} >
+                    <i className="bi bi-box-arrow-in-up-right" /> Exportar Tabela
+                </button>
             </div>
-            </div>
+        </div>
+        </div>
         ))}
-        </div>
-
-      {/* -------- Modais -------- */}
-
-    {/* Novo tópico */}
-      <div className="modal fade" ref={modalTopicoRef} tabIndex={-1}>
-        <div className="modal-dialog"><div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Adicionar Tópico</h5>
-            <button type="button" className="btn-close" onClick={() => close(modalTopicoRef.current)} />
-          </div>
-          <div className="modal-body">
-            <input className="form-control" placeholder="Nome do tópico" value={topicoNome} onChange={e => setTopicoNome(e.target.value)} />
-          </div>
-          <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={() => close(modalTopicoRef.current)}>Cancelar</button>
-            <button className="btn btn-primary" onClick={criarTopico}>Salvar</button>
-          </div>
-        </div></div>
-      </div>
-
-      {/* Novo produto */}
-      <div className="modal fade" ref={modalProdutoRef} tabIndex={-1}>
-        <div className="modal-dialog modal-lg"><div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Adicionar Produto</h5>
-            <button type="button" className="btn-close" onClick={() => close(modalProdutoRef.current)} />
-          </div>
-          <form onSubmit={salvarProdutoNovo}>
-            <div className="modal-body">
-              <div className="row g-2">
-                <div className="col-md-6"><input name="nome_produto" required className="form-control" placeholder="Produto" /></div>
-                <div className="col-md-3"><input name="preco" required type="number" step="0.01" className="form-control" placeholder="Preço" /></div>
-                <div className="col-md-3"><input name="quantidade" required type="number" className="form-control" placeholder="Quantidade" /></div>
-                <input type="hidden" name="topico_id" value={topicoSelecionado?.id ?? ''} />
-                <div className="col-12"><textarea name="descricao" className="form-control" placeholder="Descrição" /></div>
-                <div className="col-12"><input name="imagem" type="file" accept="image/*" className="form-control" /></div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button className="btn btn-secondary" type="button" onClick={() => close(modalProdutoRef.current)}>Cancelar</button>
-              <button className="btn btn-primary" type="submit">Salvar</button>
-            </div>
-          </form>
-        </div></div>
-      </div>
-
-      {/* Editar produto */}
-      <div className="modal fade" ref={modalEditarRef} tabIndex={-1}>
-        <div className="modal-dialog modal-lg"><div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Editar Produto</h5>
-            <button type="button" className="btn-close" onClick={() => close(modalEditarRef.current)} />
-          </div>
-          <form onSubmit={salvarEdicaoProduto}>
-            <div className="modal-body">
-              <div className="row g-2">
-                <div className="col-md-6"><input name="nome_produto" defaultValue={produtoEditando?.nome_produto} className="form-control" /></div>
-                <div className="col-md-3"><input name="preco" type="number" step="0.01" defaultValue={produtoEditando?.preco} className="form-control" /></div>
-                <div className="col-md-3"><input name="quantidade" type="number" defaultValue={produtoEditando?.quantidade} className="form-control" /></div>
-                <div className="col-12"><textarea name="descricao" defaultValue={produtoEditando?.descricao ?? ''} className="form-control" /></div>
-                <div className="col-12"><input name="imagem" type="file" accept="image/*" className="form-control" /></div>
-              </div>
-            </div>
-            <div className="modal-footer">
-              <button className="btn btn-secondary" type="button" onClick={() => close(modalEditarRef.current)}>Cancelar</button>
-              <button className="btn btn-primary" type="submit">Salvar</button>
-            </div>
-          </form>
-        </div></div>
-      </div>
-
-      {/* Remover produto */}
-      <div className="modal fade" ref={modalRemoverProdutoRef} tabIndex={-1}>
-        <div className="modal-dialog"><div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Remover Produto</h5>
-            <button type="button" className="btn-close" onClick={() => close(modalRemoverProdutoRef.current)} />
-          </div>
-          <div className="modal-body">
-            <strong>Tem certeza de que deseja excluir este produto? Esta ação é irreversível.</strong>
-          </div>
-          <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={() => close(modalRemoverProdutoRef.current)}>Cancelar</button>
-            <button className="btn btn-danger" onClick={removerProduto}>Remover</button>
-          </div>
-        </div></div>
-      </div>
-
-      {/* Remover tópico */}
-      <div className="modal fade" ref={modalRemoverTopicoRef} tabIndex={-1}>
-        <div className="modal-dialog"><div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Excluir Tópico</h5>
-            <button type="button" className="btn-close" onClick={() => close(modalRemoverTopicoRef.current)} />
-          </div>
-          <div className="modal-body">
-            <strong>
-              Tem certeza de que deseja excluir este tópico? Ao prosseguir, todos os produtos vinculados a ele também serão permanentemente removidos.</strong>
-            </div>
-          <div className="modal-footer">
-            <button className="btn btn-secondary" onClick={() => close(modalRemoverTopicoRef.current)}>Cancelar</button>
-            <button className="btn btn-danger" onClick={removerTopico}>Excluir</button>
-          </div>
-        </div>
-      </div>
-      </div>
-
-      {/* Preview imagem */}
-      <div className="modal fade" ref={modalImagemRef} tabIndex={-1}>
-        <div className="modal-dialog modal-dialog-centered"><div className="modal-content">
-          <img src={imgPreview ?? ''} alt="preview" style={{ maxHeight: '80vh', objectFit: 'contain' }} />
-        </div></div>
-      </div>
     </div>
-  );
+
+    <ModalsHub
+        ref={modalsRef}
+        onCriarTopico={onCriarTopico}
+        onSalvarProdutoNovo={onSalvarProdutoNovo}
+        onSalvarEdicaoProduto={onSalvarEdicaoProduto}
+        onRemoverProduto={onRemoverProduto}
+        onRemoverTopico={onRemoverTopico} />
+    </div>
+);
 }
