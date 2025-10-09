@@ -26,4 +26,22 @@
 
 .modalText {
     color: var(--color--text-modal);
+}   
+
+.btnSalvar:hover,
+.btnSalvar:focus,
+.btnSalvar:active:focus {
+    background: #0a51bb;    
+}   
+
+.btnCancelar:hover, 
+.btnCancelar:focus,
+.btnCancelar:active:focus {
+    background: #4b5157;
+}
+
+.btnExcluir:hover,
+.btnExcluir:focus,
+.btnExcluir:active:focus {
+    background: #ac2331;
 }

@@ -1,6 +1,6 @@
 /* LIGHT (default) */
     :root {
-    background-color: #e9e9e9;
+    background-color: #f8fafc;
 
     /* COMPONENTS */
     --color--navbar: #0C0F16;
@@ -18,7 +18,7 @@
     --color--placeholder: rgba(0,0,0,.54);
 
     /* MODALS  */
-    --color--background-modalContent: #fdfdfd;
+    --color--background-modalContent: #ffffff;
     --color--text-modal: #000000;
 
     /* TÓPICOS */
@@ -36,9 +36,6 @@
     --color--text-card: #000;
     --color--label: #000000;
 
-    /* MODAL SWEETALERT */
-    --color--modal-sweet:#ffffff;
-
     /* seus tokens */
     --color--background: #000000;
     --color--primary:    #0B5ED7;
@@ -51,7 +48,7 @@
     /* extras p/ tabelas/containers no claro */
     --color--background-container: #000000;
     --color--background-modal:#161A1F;
-    --color--background-card:#070707;
+    --color--background-card:#0f1011;
 
     /* Bootstrap bridge */
     --bs-body-bg: var(--color--background);
@@ -103,12 +100,9 @@
     --color--primary:#0B5ED7;
     --color--text:#fff;
 
-    /* MODAL SWEETALERT */
-    --color--modal-sweet:#1A202C;
-
     /* extras p/ tabelas/containers no escuro */
     --color--background-container:#11161c;
-    --color--background-card:#0A0C0F;
+    --color--background-card:#0f1011;
 
     --bs-body-bg: var(--color--background);
     --bs-body-color: var(--color--text);

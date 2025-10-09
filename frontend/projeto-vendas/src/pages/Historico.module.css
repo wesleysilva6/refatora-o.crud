@@ -38,26 +38,18 @@
         background: #e21226;
         }
 
-        .btnExcluir:hover {
-        background: #e21226;
-        }
-
-        .btnExcluir:focus {
-        background: #e21226;
+        .btnExcluir:hover, 
+        .btnExcluir:focus,
+        .btnExcluir:active:focus {
+        background: #ac2331;
         }
 
         .btnExcluirSimulacoes {
-        background: #0a51bb;
+        background: #0B5ED7;
         }
 
-        .btnExcluirSimulacoes:hover {
-        background: #0a51bb;
-        }
-
-        .btnExcluirSimulacoes:focus {
-        background: #0a51bb;
-        }
-
-        .btnExcluirSimulacoes:focus {
+        .btnExcluirSimulacoes:hover,
+        .btnExcluirSimulacoes:focus,
+        .btnExcluirSimulacoes:active:focus {
         background: #0a51bb;
         }

@@ -1,3 +1,9 @@
 .titleIndex {
     color: var(--color--primary);
 }
+
+.btnLogin:hover,
+.btnLogin:focus,
+.btnLogin:active:focus { 
+    background: #0a51bb;
+}

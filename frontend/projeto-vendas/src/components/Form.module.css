@@ -27,3 +27,9 @@ label {
 .card {
     background: var(--color--modal-sweet);
 }
+
+.btnCadastrar:hover, 
+.btnCadastrar:focus, 
+.btnCadastrar:active:focus {
+    background: #0a51bb;
+}

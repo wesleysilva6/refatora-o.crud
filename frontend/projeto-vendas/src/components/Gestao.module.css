@@ -94,6 +94,12 @@
     border-radius: 10px;
 }
 
+.btn:hover, 
+.btn:focus, 
+.btn:active:focus {
+    background: #0a51bb;
+}
+
 /* ====== Grid de cards ====== */
 .grid {
     display: grid;
@@ -230,6 +236,7 @@
     height: 112px;
     animation: pulse 1.2s ease-in-out infinite;
 }
+
 @keyframes pulse {
     0% { opacity: .9; }
     50% { opacity: .6; }

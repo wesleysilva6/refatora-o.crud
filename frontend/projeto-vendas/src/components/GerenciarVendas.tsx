@@ -92,7 +92,7 @@ return (
             </div>
 
             <div className="col-sm-12 col-md-2 d-flex align-items-end gap-2">
-                <button className="btn btn-primary w-100" onClick={() => carregar(true)}>
+                <button className={`btn btn-primary w-100 ${styles.btnFiltrar}`} onClick={() => carregar(true)}>
                     Aplicar filtros
                 </button>
             </div>

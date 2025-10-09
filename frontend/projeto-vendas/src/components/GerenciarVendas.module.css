@@ -17,6 +17,12 @@
     border-radius: 0.5rem;
 }
 
+.btnFiltrar:hover,
+.btnFiltrar:focus,
+.btnFiltrar:active:focus {
+    background: #0a51bb;
+}
+
 .label {
     color: #fff;
 }

@@ -10,14 +10,12 @@ class FuncionarioController extends Controller
 {
     public function filtrarVendedores(Request $r) 
     {
-            $query = \App\Models\Funcionario::query()
+        $query = \App\Models\Funcionario::query()
         ->select('id','nome','cargo')
         ->orderBy('nome');
-        // só vendedores
         $query->where('cargo', 'Vendedor');
-        // opcional: só ativos
         $query->where('status', 'ativo');
-    return $query->get();
+        return $query->get();
     }
 
     // GET /funcionarios

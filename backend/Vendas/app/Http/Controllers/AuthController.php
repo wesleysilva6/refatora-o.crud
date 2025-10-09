@@ -13,11 +13,6 @@ use Carbon\Carbon;
 
 class AuthController extends Controller
 {
-    /**
-     * POST /api/login
-     * Body: { email, password }
-     * Retorna: { token, user }
-     */
     public function login(Request $request)
     {
         $data = $request->validate([
@@ -35,9 +30,6 @@ class AuthController extends Controller
             return response()->json(['message' => 'Senha inválida.'], 401);
         }
 
-        // Opcional: invalidar tokens antigos
-        // $user->tokens()->delete();
-
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -51,9 +43,6 @@ class AuthController extends Controller
         ]);
     }
 
-    /**
-     * POST /api/logout (auth:sanctum)
-     */
     public function logout(Request $request)
     {
         $request->user()?->currentAccessToken()?->delete();
@@ -61,10 +50,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'ok']);
     }
 
-    /**
-     * POST /api/register
-     * Body: { nome, email, senha }
-     */
     public function register(Request $request)
     {
         $data = $request->validate([
@@ -90,11 +75,6 @@ class AuthController extends Controller
         ], 201);
     }
 
-    /**
-     * POST /api/password/forgot
-     * Body: { email }
-     * Envia link com token via e-mail (PHPMailer)
-     */
     public function forgot(Request $request, PHPMailerService $mailer)
     {
         $data = $request->validate([
@@ -126,10 +106,6 @@ class AuthController extends Controller
         return response()->json(['ok' => true]);
     }
 
-    /**
-     * POST /api/password/reset
-     * Body: { email, token, password }
-     */
     public function reset(Request $request)
     {
         $data = $request->validate([

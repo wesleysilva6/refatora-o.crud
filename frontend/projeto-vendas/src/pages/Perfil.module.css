@@ -38,15 +38,21 @@
         margin: 0 0 1.5rem 0;
         }
 
-        .btnExcluir:hover {
-        background: #e21226;
+        .btnExcluir:hover,
+        .btnExcluir:focus,
+        .btnExcluir:active:focus {
+        background: #ac2331;
         }
 
-        .btnEscolher:hover {
+        .btnEscolher:hover, 
+        .btnEscolher:focus, 
+        .btnEscolher:active:focus {
         background: #0a51bb;
         }
 
-        .btnAtualizar:hover {
+        .btnAtualizar:hover, 
+        .btnAtualizar:focus, 
+        .btnAtualizar:active:focus {
         background: #0a51bb;
         }
 

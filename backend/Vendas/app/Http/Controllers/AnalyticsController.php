@@ -8,16 +8,15 @@ class AnalyticsController extends Controller
 {
     public function index(Request $request)
     {
-        $usuario_id = $request->user()->id; // Sanctum
+        $usuario_id = $request->user()->id; 
 
-        // Simulações por dia (usa 'criado_em', não 'criada_em')
         $dias = [];
         $qtds = [];
         $rows = DB::table('simulacoes')
             ->selectRaw("DATE_FORMAT(criado_em, '%d/%m') as dia, COUNT(*) as qtd")
             ->where('usuario_id', $usuario_id)
             ->groupBy('dia')
-            ->orderByRaw("MIN(criado_em)") // garante ordenação cronológica
+            ->orderByRaw("MIN(criado_em)")
             ->get();
 
         foreach ($rows as $r) {
@@ -25,7 +24,6 @@ class AnalyticsController extends Controller
             $qtds[] = (int) $r->qtd;
         }
 
-        // Resumo geral (usa 'simulacao_id', não 'id_simulacao')
         $resumo = DB::table('simulacao_itens as it')
             ->join('simulacoes as s', 'it.simulacao_id', '=', 's.id')
             ->where('s.usuario_id', $usuario_id)

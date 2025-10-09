@@ -8,9 +8,30 @@
     color: #fff;
 }
 
-.tableCustom {
-    border-radius: 8px;
-    overflow: hidden;
+.formControl {
+    color: var(--color--text-input);
+    background: var(--color--input);
+    border: 1px solid var(--color--border-input);
+}
+
+.formControl:focus {
+    box-shadow: none;
+    outline: none;
+    background: var(--color--input);
+    color: var(--color--text-input);
+    border-color: var(--color--input-focus);
+}
+
+.formControl::placeholder {
+    color: var(--color--placeholder);
+}
+
+.table thead th {
+    position: sticky;        /* header gruda no topo */
+    top: 0;
+    z-index: 1;
+    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    backdrop-filter: blur(2px);
 }
 
 .li {
@@ -19,22 +40,6 @@
     align-items: center;
     background: transparent;
     border: none;
-}
-
-
-/* Para realmente colorir as células (Bootstrap estiliza os <th>/<td>) */
-:global(.table).tableCustom > :not(caption) > * > * {
-    background: var(--color--card-vendas);
-    color: var(--color--text-card);
-}
-
-/* Se usar .table-striped, sobrescreva as listras também */
-:global(.table.table-striped).tableCustom > tbody > tr:nth-of-type(odd) > * {
-    background: #f9fbff;
-}
-
-:global(.table.table-striped).tableCustom > tbody > tr:nth-of-type(even) > * {
-    background: #fff;
 }
 
 /* base do card */

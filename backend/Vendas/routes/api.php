@@ -19,8 +19,8 @@ Route::get('/health', fn () => response()->json(['ok' => true]));
 // ---------- PÚBLICAS ----------
 Route::post('/login',            [AuthController::class, 'login']);
 Route::post('/register',         [AuthController::class, 'register']);
-Route::post('/password/forgot',  [AuthController::class, 'forgot']); // envia e-mail com link
-Route::post('/password/reset',   [AuthController::class, 'reset']);  // altera a senha
+Route::post('/password/forgot',  [AuthController::class, 'forgot']);
+Route::post('/password/reset',   [AuthController::class, 'reset']); 
 
 // ---------- PROTEGIDAS ----------
 Route::middleware('auth:sanctum')->group(function () {
@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Dados para a Home (GET somente)
     Route::get('/home',                [TopicoController::class, 'indexWithProdutos']);
-    Route::get('/topicos-with-produtos',[TopicoController::class, 'indexWithProdutos']); // alias opcional
+    Route::get('/topicos-with-produtos',[TopicoController::class, 'indexWithProdutos']);
 
     // Exportações
     Route::get('/exports/produtos',            [ExportController::class, 'allProdutosDoUsuario']);
@@ -57,7 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/perfil/foto',   [PerfilController::class, 'deletePhoto']);
 
     // Simulação
-    Route::post('/simulacao/finalizar', [SimulacaoController::class, 'finalizar']); // <- usado pelo React
+    Route::post('/simulacao/finalizar', [SimulacaoController::class, 'finalizar']);
     Route::get('/simulacoes',              [SimulacaoController::class, 'index']);
     Route::get('/simulacoes/{simulacao}',  [SimulacaoController::class, 'show']);
     Route::delete('/simulacoes/item/{item}', [SimulacaoController::class, 'destroyItem']);

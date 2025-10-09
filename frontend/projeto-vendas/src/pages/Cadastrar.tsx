@@ -8,11 +8,11 @@ import { api } from "../api";
 
 import styles from "./Cadastrar.module.css"; // << CSS Module
 
-type Form = { nome: string; email: string; senha: string };
+type Form = { nome: string; email: string; senha: string, confirmar_senha: string };
 
 export default function Cadastro() {
     const navigate = useNavigate();
-    const { register, handleSubmit, reset } = useForm<Form>();
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<Form>();
     const [loading, setLoading] = useState(false);
     const [showPwd, setShowPwd] = useState(false);
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -27,7 +27,7 @@ async function onSubmit(v: Form) {
     await api.post("/register", {
         nome: v.nome,
         email: v.email,
-        senha: v.senha, // o backend espera 'senha'
+        senha: v.senha,
     });
 
         reset();
@@ -62,28 +62,37 @@ return (
 
                     <div className="card-body">
                         <form onSubmit={handleSubmit(onSubmit)} className="spinnerForm" noValidate>
-
                         <div className="input-group mt-1">
                             <span className={`input-group-text ${styles.inputGroupText}`}> <i className={`bi bi-person-circle ${styles.icon}`} aria-hidden="true" /></span>
                             <input type="text" className={`form-control ${styles.formControl}`} placeholder="Usuário" required autoComplete="name" 
-                            {...register("nome")} />
+                            {...register("nome", { required: "O nome é obrigatório" })} />
                         </div>
+                        {errors.nome && <div className="text-danger text-sm mt-1">{errors.nome.message}</div>}
 
                         <div className="input-group mt-2">
                             <span className={`input-group-text ${styles.inputGroupText}`}> <i className={`bi bi-envelope ${styles.icon}`} aria-hidden="true" /> </span> 
                             <input type="email" className={`form-control ${styles.formControl}`} placeholder="E-mail" required autoComplete="email" 
-                            {...register("email")} />
+                            {...register("email", { required: "O e-mail é obrigatório", pattern: { value: /^\S+@\S+$/i, message: "Formato de e-mail inválido" } })} />
                         </div>
+                        {errors.email && <div className="text-danger text-sm mt-1">{errors.email.message}</div>}
 
                         <div className="input-group mt-2">
                             <span className={`input-group-text ${styles.inputGroupText}`}> <i className={`bi bi-lock ${styles.icon}`} aria-hidden="true" /> </span>
                             <input type={showPwd ? "text" : "password"} className={`form-control ${styles.formControl}`} placeholder="Senha" required 
-                            {...register("senha")} />
+                            {...register("senha", {
+                                required: "A senha é obrigatória",
+                                minLength: { value: 8, message: "A senha deve ter no mínimo 8 caracteres" },
+                                validate: {
+                                    uppercase: v => /[A-Z]/.test(v) || "A senha deve conter uma letra maiúscula",
+                                    specialChar: v => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(v) || "A senha deve conter um caractere especial",
+                                }
+                            })} />
                             <button type="button" className={`btn btn-dark ${styles.eyes}`} onClick={() => setShowPwd(s => !s)} 
                                 aria-label={showPwd ? "Ocultar senha" : "Mostrar senha"} >
                                 <i className={`bi ${showPwd ? "bi-eye-slash" : "bi-eye"}`} aria-hidden="true" />
                             </button>
                         </div>
+                        {errors.senha && <div className="text-danger text-sm mt-1">{errors.senha.message}</div>}
 
                         <div className="text-left mt-2">
                             {successMsg && <div className="text-success">{successMsg}</div>}

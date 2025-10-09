@@ -27,19 +27,15 @@
         text-align:end;
         }
 
-        .topicos button:hover {
+        .topicos button:hover,
+        .topicos button:focus,
+        .topicos button:active:focus {
         background: #0a51bb;   
         }
 
-        .topicos button:focus {
-        background: #0a51bb;   
-        }
-
-        .btnTopico button:hover {
-        background: #0a51bb;    
-        }
-
-        .btnTopico button:focus {
+        .btnTopico button:hover,
+        .btnTopico button:focus, 
+        .btnTopico button:active:focus {
         background: #0a51bb;    
         }
 

@@ -12,7 +12,6 @@ export default function Perfil() {
     const [file, setFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [sending, setSending] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [texts, setTexts] = useState<{ type: "success" | "danger"; text: string }[]>([]);
     const [showPwd, setShowPwd] = useState(false);
     const [showPwd2, setShowPwd2] = useState(false);
@@ -110,6 +109,18 @@ export default function Perfil() {
         pushAlert("danger", "As novas senhas digitadas não coincidem.");
         return;
         }
+        if (nova_senha.length < 8) {
+            pushAlert("danger", "A nova senha deve ter no mínimo 8 caracteres.");
+            return;
+        }
+        if (!/[A-Z]/.test(nova_senha)) {
+            pushAlert("danger", "A nova senha deve conter pelo menos uma letra maiúscula.");
+            return;
+        }
+        if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(nova_senha)) {
+            pushAlert("danger", "A nova senha deve conter pelo menos um caractere especial.");
+            return;
+        }
 
         setSending(true);
         try {
@@ -153,11 +164,12 @@ return (
         </div>
 
             <input type="file" id="inputFoto" accept="image/*" className="d-none" onChange={(e) => setFile(e.target.files?.[0] ?? null)} />
-
-        {file && (
-            <button className="btn btn-primary mt-3" type="button" onClick={enviarFoto} disabled={sending}>
-                {sending ? "Salvando..." : "Salvar Foto"}
-            </button> )}
+            <div className="d-flex align-items-center justify-content-center">
+            {file && (
+                <button className="btn btn-primary mt-3" type="button" onClick={enviarFoto} disabled={sending}>
+                    {sending ? "Salvando..." : "Salvar Foto"}
+                </button> )}
+            </div>
         </div>
 
             <div className={`text-center ${styles.infoUser}`}>

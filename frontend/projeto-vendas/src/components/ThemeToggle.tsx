@@ -9,7 +9,6 @@ return (
             <i className={`bi ${resolved === "dark" ? "bi-sun" : "bi-moon"}`} />
         </button>
 
-        {/* Menu opcional para escolher System / Light / Dark */}
         <select className="form-select form-select-sm" style={{ width: 120 }} value={theme} onChange={(e) => setTheme(e.target.value as any)}>
             <option value="system">Sistema</option>
             <option value="light">Claro</option>

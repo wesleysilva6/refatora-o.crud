@@ -25,7 +25,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem("theme", theme);
     }, [theme, resolved]);
 
-  // reatividade ao mudar preferência do SO quando estiver em "system"
     useEffect(() => {
         const mql = window.matchMedia("(prefers-color-scheme: dark)");
         const onChange = () => { if (theme === "system") { 

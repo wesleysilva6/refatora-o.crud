@@ -52,6 +52,8 @@
   background: var(--color--btn);
 }
 
-.btnCadastrar:hover {
+.btnCadastrar:hover, 
+.btnCadastrar:focus, 
+.btnCadastrar:active:focus {
   background: #0a51bb;
 }

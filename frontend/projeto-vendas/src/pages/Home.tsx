@@ -8,7 +8,6 @@ import styles from "./Home.module.css";
 type Produto = ProdutoBase;
 type Topico = TopicoBase & { produtos: Produto[] };
 
-/** helper p/ dinheiro */
     const fmtBRL = (v: number | string | null | undefined) => {
     const n = Number(v ?? 0);
     return new Intl.NumberFormat("pt-BR", {

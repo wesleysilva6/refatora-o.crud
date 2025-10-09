@@ -63,17 +63,15 @@ async function onSubmit(e: React.FormEvent) {
         headers: { "Content-Type": "multipart/form-data" },
     });
 
-        // card bonito de sucesso
         await sucessoFuncionarioCard({
         nome: data?.nome ?? nome,
         email: data?.email ?? email,
         telefone: data?.telefone ?? telefone,
         cargo: data?.cargo ?? cargo,
         status: data?.status ?? status,
-        foto: data?.foto, // precisa ser URL pública do backend
+        foto: data?.foto, 
     });
 
-        // limpa o formulário
         setNome("");
         setCargo("Estoquista");
         setEmail("");
@@ -144,7 +142,7 @@ return (
             <input id="fotoFuncionario" type="file" className="form-control" accept="image/*" onChange={(e) => setFoto(e.target.files?.[0] ?? null)} />
         </div>
 
-        <button type="submit" className="btn btn-primary" disabled={sending}>
+        <button type="submit" className={`btn btn-primary ${styles.btnCadastrar}`} disabled={sending}>
             {sending ? "Cadastrando..." : "Cadastrar Funcionário"}
         </button>
     </form>

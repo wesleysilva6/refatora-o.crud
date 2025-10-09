@@ -37,11 +37,9 @@ label {
   color: var(--color--eyes);
 }
 
-.btnVendas:hover{
-  background: #0a51bb;
-}
-
-.btnVendas:focus {
+.btnVendas:hover, 
+.btnVendas:focus, 
+.btnVendas:active:focus {
   background: #0a51bb;
 }
 
