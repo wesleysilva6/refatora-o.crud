@@ -18,14 +18,11 @@ class FuncionarioController extends Controller
         return $query->get();
     }
 
-    // GET /funcionarios
     public function index(Request $r)
     {
-        // se quiser por-usuário, acrescente coluna usuario_id na tabela
         return Funcionario::orderBy('id', 'desc')->get();
     }
 
-    // GET /funcionarios/{funcionario}
     public function show(Funcionario $funcionario)
     {
         return $funcionario;
@@ -46,16 +43,13 @@ class FuncionarioController extends Controller
             'foto'           => ['nullable','image','mimes:jpg,jpeg,png,webp','max:4096'],
         ]);
 
-        // arquivo
         if ($r->hasFile('foto')) {
             $path = $r->file('foto')->store('avatars-func', 'public');
-            $data['foto'] = $path; // guardo o path; no front uso /storage/...
+            $data['foto'] = $path;
         } else {
-            // default opcional
             $data['foto'] = $data['foto'] ?? 'avatars/user.png';
         }
 
-        // valores padrão
         $data['status'] = $data['status'] ?? 'ativo';
 
         $func = Funcionario::create($data);
@@ -63,7 +57,6 @@ class FuncionarioController extends Controller
         return response()->json($func, 201);
     }
 
-    // PUT /funcionarios/{funcionario}
     public function update(Request $r, Funcionario $funcionario)
     {
         $data = $r->validate([
@@ -79,7 +72,6 @@ class FuncionarioController extends Controller
         ]);
 
         if ($r->hasFile('foto')) {
-            // apaga antiga se não for a padrão
             if ($funcionario->foto && $funcionario->foto !== 'avatars/user.png') {
                 Storage::disk('public')->delete($funcionario->foto);
             }
@@ -91,7 +83,6 @@ class FuncionarioController extends Controller
         return $funcionario->refresh();
     }
 
-    // DELETE /funcionarios/{funcionario}
     public function destroy(Funcionario $funcionario)
     {
         if ($funcionario->foto && $funcionario->foto !== 'avatars/user.png') {

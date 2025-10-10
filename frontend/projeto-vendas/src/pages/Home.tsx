@@ -66,8 +66,8 @@ export default function Home() {
         await carregar();
     };
 
-    const onRemoverProduto = async (produtoId: number) => {
-        await api.delete(`/produtos/${produtoId}`);
+    const onRemoverProduto = async (produto: number) => {
+        await api.delete(`/produtos/${produto}`);
         await carregar();
     };
 
@@ -162,7 +162,7 @@ return (
                         <tr key={p.id}>
                             <td>
                             {p.imagem ? (
-                                <img src={p.imagem} width={60} height={60} style={{objectFit: "cover",borderRadius: 8,cursor: "pointer", }} onClick={() => abrirImagem(p.imagem!)} />
+                                <img src={"http://localhost:8000/storage/" + p.imagem} width={60} height={60} style={{objectFit: "cover",borderRadius: 8,cursor: "pointer", }} onClick={() => abrirImagem(p.imagem!)} />
                             ) : (
                                 <span className="text-muted">—</span>
                             )}

@@ -8,10 +8,10 @@ services:
       MYSQL_USER: vendas
       MYSQL_PASSWORD: vendas
       MYSQL_ROOT_PASSWORD: root
-      TZ: America/Sao_Paulo           # <<< importante
-    command: ["mysqld","--default-time-zone=-03:00"]  # ou use o IANA: America/Sao_Paulo
+      TZ: America/Sao_Paulo
+    command: ["mysqld","--default-time-zone=-03:00"]
     ports:
-      - "3307:3306"    # <- HOST:CONTAINER
+      - "3307:3306"            # HOST:CONTAINER
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
@@ -23,10 +23,14 @@ services:
   pma:
     image: phpmyadmin:5
     container_name: vendas-pma
-    ports:
-      - "8080:80"
+    restart: always
+    depends_on:
+      - db
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
+    ports:
+      - "8080:80"
+
 volumes:
   db_data:

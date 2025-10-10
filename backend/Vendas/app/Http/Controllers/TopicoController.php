@@ -6,7 +6,7 @@ use App\Models\Topico;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Storage;
 class TopicoController extends Controller
 {
 public function index(Request $r)
@@ -59,7 +59,10 @@ public function store(Request $r)
 
 public function destroy(Request $r, Topico $topico) {
     abort_unless($topico->usuario_id === $r->user()->id, 403);
-    $topico->produtos()->delete();
+
+    // Não é mais necessário apagar os produtos manualmente.
+    // Ao apagar o tópico, o banco de dados se encarregará de apagar os produtos
+    // em cascata, que por sua vez apagarão os itens de venda/simulação.
     $topico->delete();
     return response()->noContent();
     }

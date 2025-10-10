@@ -142,7 +142,7 @@ return (
                         <button type="button" className="btn-close" onClick={() => hide(rNovo.current)} />
                     </div>
 
-                    <form onSubmit={salvarProdutoNovo}>
+                    <form key={formNovoKey} onSubmit={salvarProdutoNovo}>
                         <div className="modal-body">
                             <div className="row g-2">
                                 <div className="col-md-6">
@@ -189,7 +189,7 @@ return (
                         <button type="button" className="btn-close" onClick={() => hide(rEdit.current)} />
                     </div>
 
-                    <form onSubmit={salvarEdicaoProduto}>
+                    <form key={editProduto?.id} onSubmit={salvarEdicaoProduto}>
                         <div className="modal-body">
                             <div className="row g-2">
                                 <div className="col-md-6">
@@ -199,12 +199,12 @@ return (
 
                                 <div className="col-md-3">
                                     <label htmlFor="precoProduto" className="form-label">Preço</label>
-                                    <input name="preco" id="precoProduto" type="number" step="0.01" defaultValue={editProduto?.preco ?? 0} className={`form-control ${styles.formControl}`} />
+                                    <input name="preco" id="precoProduto" type="number" step="0.01" defaultValue={String(editProduto?.preco ?? 0)} className={`form-control ${styles.formControl}`} />
                                 </div>
 
                                 <div className="col-md-3">
                                     <label htmlFor="quantidadeProduto" className="form-label">Quantidade</label>
-                                    <input name="quantidade" id="quantidadeProduto" type="number" defaultValue={editProduto?.quantidade ?? 1} className={`form-control ${styles.formControl}`} />
+                                    <input name="quantidade" id="quantidadeProduto" type="number" defaultValue={String(editProduto?.quantidade ?? 1)} className={`form-control ${styles.formControl}`} />
                                 </div>
 
                                 <div className="col-12">
@@ -272,7 +272,7 @@ return (
         <div className="modal fade" ref={rImg} tabIndex={-1}>
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
-                    {imgUrl && ( <img src={imgUrl} alt="preview" style={{ maxHeight: "80vh", objectFit: "contain" }} /> )}
+                    {imgUrl && ( <img src={`${import.meta.env.VITE_IMAGE_BASE_URL}${imgUrl}`} alt="preview" style={{ maxHeight: "80vh", objectFit: "contain" }} /> )}
                 </div>
             </div>
         </div>

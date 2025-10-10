@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import styles from "./Analytics.module.css";
 import { Bar } from "react-chartjs-2";
-import { api } from "../api"; // ajuste o caminho conforme seu projeto
+import { api } from "../api";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from "chart.js";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -16,7 +16,7 @@ export default function Analytics() {
     useEffect(() => {
         async function fetchData() {
             setLoading(true);
-            const { data } = await api.get("/analytics"); // Seu endpoint Laravel
+            const { data } = await api.get("/analytics");
             setDias(data.dias);
             setQtds(data.qtds);
             setResumo({ total: data.total, valor: data.valor });

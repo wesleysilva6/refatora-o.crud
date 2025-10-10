@@ -11,7 +11,6 @@ class ProdutoController extends Controller
 {
 public function store(Request $r)
 {
-    // Aceita 'topico_id' ou 'id_topico'
     if (!$r->filled('topico_id') && $r->filled('id_topico')) {
         $r->merge(['topico_id' => $r->input('id_topico')]);
     }
@@ -28,6 +27,7 @@ public function store(Request $r)
     $path = null;
     if ($r->hasFile('imagem')) {
         $path = $r->file('imagem')->store('produtos', 'public');
+        $data['imagem'] = Storage::url($path);
     }
 
     $produto = Produto::create([
@@ -37,6 +37,7 @@ public function store(Request $r)
         'preco'        => $data['preco'],
         'quantidade'   => $data['quantidade'],
         'descricao'    => $data['descricao'] ?? null,
+        'imagem'       => $path ?? null
     ]);
 
     return response()->json($produto, 201);
@@ -55,12 +56,15 @@ public function store(Request $r)
         ]);
 
         if ($r->hasFile('imagem')) {
+            // Deleta a antiga (normaliza caso esteja em URL ou com /storage/)
             if ($produto->imagem) {
-                $old = str_replace('/storage/', '', $produto->imagem);
+                $old = $produto->imagem;
+                $old = preg_replace('#^https?://[^/]+/storage/#', '', $old);
+                $old = preg_replace('#^/??storage/#', '', $old);
                 Storage::disk('public')->delete($old);
             }
             $path = $r->file('imagem')->store('produtos', 'public');
-            $data['imagem'] = Storage::url($path);
+            $data['imagem'] = $path; // salva SÓ o path
         }
 
         $produto->update($data);
