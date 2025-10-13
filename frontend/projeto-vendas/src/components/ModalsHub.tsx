@@ -20,7 +20,6 @@ export type Topico = {
 };
 
 type Props = {
-    // callbacks executados pela página após submit/confirm
     onCriarTopico: (nome: string) => Promise<void> | void;
     onSalvarProdutoNovo: (form: FormData) => Promise<void> | void;
     onSalvarEdicaoProduto: (form: FormData, produtoId: number) => Promise<void> | void;
@@ -42,7 +41,6 @@ const ModalsHub = forwardRef<ModalsHandle, Props>(function ModalsHub(
     { onCriarTopico, onSalvarProdutoNovo, onSalvarEdicaoProduto, onRemoverProduto, onRemoverTopico },
     ref
 ) {
-    // refs dos modais
     const rTopico = useRef<HTMLDivElement>(null);
     const rNovo   = useRef<HTMLDivElement>(null);
     const rEdit   = useRef<HTMLDivElement>(null);
@@ -51,6 +49,7 @@ const ModalsHub = forwardRef<ModalsHandle, Props>(function ModalsHub(
     const rImg    = useRef<HTMLDivElement>(null);
 
     // estados “contexto” dos modais
+    const caminhoImg = import.meta.env.VITE_IMAGE_BASE_URL
     const [topicoNome, setTopicoNome] = useState("");
     const [ctxTopicoId, setCtxTopicoId] = useState<number | null>(null);
     const [editProduto, setEditProduto] = useState<Produto | null>(null);
@@ -71,7 +70,7 @@ const ModalsHub = forwardRef<ModalsHandle, Props>(function ModalsHub(
         closeAll: () => [rTopico,rNovo,rEdit,rDelP,rDelT,rImg].forEach(x => hide(x.current)),
     }), []);
 
-    // submits/confirm
+
     const criarTopico = async () => {
         const nome = topicoNome.trim();
             if (!nome) return;
@@ -142,7 +141,7 @@ return (
                         <button type="button" className="btn-close" onClick={() => hide(rNovo.current)} />
                     </div>
 
-                    <form key={formNovoKey} onSubmit={salvarProdutoNovo}>
+                    <form onSubmit={salvarProdutoNovo}>
                         <div className="modal-body">
                             <div className="row g-2">
                                 <div className="col-md-6">
@@ -272,7 +271,7 @@ return (
         <div className="modal fade" ref={rImg} tabIndex={-1}>
             <div className="modal-dialog modal-dialog-centered">
                 <div className="modal-content">
-                    {imgUrl && ( <img src={`${import.meta.env.VITE_IMAGE_BASE_URL}${imgUrl}`} alt="preview" style={{ maxHeight: "80vh", objectFit: "contain" }} /> )}
+                    {imgUrl && ( <img src={ caminhoImg + imgUrl } alt="preview" style={{ maxHeight: "80vh", objectFit: "contain" }} /> )}
                 </div>
             </div>
         </div>

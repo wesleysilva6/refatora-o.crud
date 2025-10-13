@@ -43,17 +43,13 @@ label {
   background: #0a51bb;
 }
 
-/* Para realmente colorir as células (Bootstrap estiliza os <th>/<td>) */
+.btnExcluir:hover,
+.btnExcluir:focus,
+.btnExcluir:active:focus {
+  background: #ac2331;
+}
+
 :global(.table).tableCustom > :not(caption) > * > * {
     background: var(--color--card-vendas);
     color: var(--color--text-card);
-}
-
-/* Se usar .table-striped, sobrescreva as listras também */
-:global(.table.table-striped).tableCustom > tbody > tr:nth-of-type(odd) > * {
-    background: #f9fbff;
-}
-
-:global(.table.table-striped).tableCustom > tbody > tr:nth-of-type(even) > * {
-    background: #fff;
 }

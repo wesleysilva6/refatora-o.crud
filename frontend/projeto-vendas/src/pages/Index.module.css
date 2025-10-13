@@ -5,5 +5,5 @@
 .btnLogin:hover,
 .btnLogin:focus,
 .btnLogin:active:focus { 
-    background: #0a51bb;
+    background: #0a51bb !important;
 }

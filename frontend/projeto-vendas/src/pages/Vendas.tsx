@@ -308,7 +308,7 @@ return (
                                 <td>{fmtBRL(it.preco)}</td>
                                 <td>{fmtBRL(it.subtotal)}</td>
                                 <td>
-                                    <button type="button" className="btn btn-sm btn-danger" onClick={() => removerItem(it.id)} title="Remover" >
+                                    <button type="button" className={`btn btn-danger btn-sm ${styles.btnExcluir}`} onClick={() => removerItem(it.id)} title="Remover" >
                                         <i className="bi bi-trash3" />
                                     </button>
                                 </td>
@@ -320,7 +320,7 @@ return (
 
                     <tfoot>
                         <tr className="table-dark">
-                            <th colSpan={3} className="text-end text-white">Total:</th>
+                            <th colSpan={3} className={`text-end`}>Total:</th>
                             <th>{fmtBRL(total)}</th>
                             <th />
                         </tr>

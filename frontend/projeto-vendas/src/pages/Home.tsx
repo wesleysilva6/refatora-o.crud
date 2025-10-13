@@ -26,7 +26,6 @@ export default function Home() {
     const modalsRef = useRef<ModalsHandle>(null);
 
     async function carregar() {
-        setLoading(true);
         setErro(null);
         try {
         const { data } = await api.get<any[]>("/topicos-with-produtos");
@@ -76,7 +75,6 @@ export default function Home() {
         await carregar();
     };
 
-    // atalhos para abrir modais
     const abrirCriarTopico = () => modalsRef.current?.openTopico();
     const abrirNovoProduto = (t: Topico) => modalsRef.current?.openNovoProduto(t);
     const abrirEditarProduto = (p: Produto) =>
@@ -86,7 +84,6 @@ export default function Home() {
     const confirmarRemoverTopico = (t: Topico) =>
         modalsRef.current?.openRemoverTopico(t.id);
     const abrirImagem = (url: string) => modalsRef.current?.openImagem(url);
-
 
 async function exportarTudo() {
     const res = await api.get(`/exports/produtos`, { responseType: "blob" });

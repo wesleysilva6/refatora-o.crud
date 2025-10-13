@@ -14,7 +14,7 @@ type Funcionario = {
     cargo: Cargo;
     status: Status;
     foto?: string | null;
-    data_admissao?: string | null; // ISO
+    data_admissao?: string | null;
 };
 
 const CARGOS: Cargo[] = ["Vendedor", "Estoquista", "Gerente"];
