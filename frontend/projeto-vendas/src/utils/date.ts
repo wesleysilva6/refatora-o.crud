@@ -1,4 +1,3 @@
-// utils/date.ts
 export function fmtDate(input?: string | null) {
   if (!input) return '—';
   const d = new Date(input);

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { api } from "../api";
 import Sidebar from "../components/Sidebar";
 import { fmtDate } from "../utils/date";
-import ModalsHub, { type Produto as ProdutoBase, type Topico as TopicoBase, } from "../components/ModalsHub";
+import ModalsHub, { type ModalsHandle, type Produto as ProdutoBase, type Topico as TopicoBase, } from "../components/ModalsHub";
 import styles from "./Home.module.css";
 
 type Produto = ProdutoBase;
@@ -18,11 +18,11 @@ type Topico = TopicoBase & { produtos: Produto[] };
     };
 
 export default function Home() {
+    const caminhoImg = import.meta.env.VITE_IMAGE_BASE_URL
     const [topicos, setTopicos] = useState<Topico[]>([]);
     const [loading, setLoading] = useState(false);
     const [erro, setErro] = useState<string | null>(null);
 
-    // Hub de modais (API imperativa)
     const modalsRef = useRef<ModalsHandle>(null);
 
     async function carregar() {
@@ -45,7 +45,6 @@ export default function Home() {
         carregar();
     }, []);
 
-    // handlers usados pelo ModalsHub
     const onCriarTopico = async (nome: string) => {
         await api.post("/topicos", { nome_topico: nome });
         await carregar();
@@ -159,7 +158,7 @@ return (
                         <tr key={p.id}>
                             <td>
                             {p.imagem ? (
-                                <img src={"http://localhost:8000/storage/" + p.imagem} width={60} height={60} style={{objectFit: "cover",borderRadius: 8,cursor: "pointer", }} onClick={() => abrirImagem(p.imagem!)} />
+                                <img src={caminhoImg + p.imagem} width={60} height={60} style={{objectFit: "cover",borderRadius: 8,cursor: "pointer", }} onClick={() => abrirImagem(p.imagem!)} />
                             ) : (
                                 <span className="text-muted">—</span>
                             )}
@@ -187,7 +186,7 @@ return (
                     ))}
                     {(t.produtos ?? []).length === 0 && (
                         <tr>
-                            <td colSpan={9} className="text-center text-muted py-4">
+                            <td colSpan={9} className="text-center py-4">
                                 Nenhum produto neste tópico.
                             </td>
                         </tr>

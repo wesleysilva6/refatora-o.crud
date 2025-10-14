@@ -36,8 +36,7 @@ async function onSubmit(e: React.FormEvent) {
         return;
     }
 
-    // confirmação sweetalert
-    const r = await confirmacao({
+    const modalConfirmacao = await confirmacao({
         title: "Você deseja realmente cadastrar esse funcionário?",
         text: "Essa ação não poderá ser desfeita!",
         icon: "warning",
@@ -46,7 +45,7 @@ async function onSubmit(e: React.FormEvent) {
         confirmColor: "#157347",
         cancelColor: "#d33",
     });
-    if (!r.isConfirmed) return;
+    if (!modalConfirmacao.isConfirmed) return;
 
     setSending(true);
     try {

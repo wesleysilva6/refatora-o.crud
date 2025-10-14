@@ -28,7 +28,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastrar" element={<Cadastrar />} />
         <Route path="/verificar" element={<Verificar />} />
-          <Route path="/resetar" element={<Resetar />} />
+        <Route path="/resetar" element={<Resetar />} />
 
         {/* privadas */}
         <Route element={<PrivateRoute />}>

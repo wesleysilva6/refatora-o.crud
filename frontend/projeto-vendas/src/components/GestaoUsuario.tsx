@@ -60,35 +60,25 @@ const visible = useMemo(() => {
 }, [list, q, cargo, status]);
 
 async function toggleStatus(f: Funcionario) {
-    const vaiDesligar = f.status === "ativo";
     const res = await confirmacao({
-        title: vaiDesligar ? "Demitir funcionário?" : "Reativar funcionário?",
-        text: vaiDesligar
-            ? `${f.nome} permanecerá no histórico, mas ficará inativo.`
-            : `Reativar ${f.nome} como ${f.cargo}?`,
-        icon: vaiDesligar ? "warning" : "question",
-        confirmText: vaiDesligar ? "Confirmar demissão" : "Reativar",
-        confirmColor: vaiDesligar ? "#dc3545" : "#198754",
+        title: "Demitir funcionário?",
+        text: `${f.nome} será demitido, deseja mesmo confirmar a ação?.`,
+        icon: "warning",
+        confirmText: "Confirmar demissão",
+        confirmColor: "#dc3545",
     });
     if (!res.isConfirmed) return;
 
     try {
-    const novo = vaiDesligar ? "inativo" : "ativo";
-    await api.patch(`/funcionarios/${f.id}`, { status: novo }); // ajuste no seu backend
-        setList((old) => old.map((x) => (x.id === f.id ? { ...x, status: novo as Status } : x)));
-        toast.fire({ icon: "success", title: vaiDesligar ? "Demitido" : "Reativado" });
+        await api.delete(`/funcionarios/${f.id}`);
+        setList((old) => old.filter((x) => x.id !== f.id));
+        toast.fire({ icon: "success", title: "Funcionário demitido!" });
     } catch (e: any) {
         toast.fire({
             icon: "error",
-            title: e?.response?.data?.message ?? "Falha ao atualizar status",
+            title: e?.response?.data?.message ?? "Falha ao demitir funcionário",
         });
     }
-}
-
-    function onEdit(f: Funcionario) {
-    // aqui você pode abrir um modal de edição ou navegar para outra página
-    // ex.: navigate(`/sistema/usuarios/${f.id}/editar`)
-    toast.fire({ icon: "info", title: "Abrir modal de edição (implantar)" });
 }
 
 async function toggleFerias(f: Funcionario) {
@@ -166,7 +156,6 @@ return (
                     key={f.id} 
                     data={f} 
                     onToggleStatus={() => toggleStatus(f)} 
-                    onEdit={() => onEdit(f)} 
                     onToggleFerias={() => toggleFerias(f)} />
                 ))}
             </div>
@@ -179,12 +168,10 @@ return (
     function FuncionarioCard({
         data,
         onToggleStatus,
-        onEdit,
         onToggleFerias,
     }: {
         data: Funcionario;
         onToggleStatus: () => void;
-        onEdit: () => void;
         onToggleFerias: () => void;
     }) {
         const { nome, email, telefone, cargo, status, foto } = data;
@@ -212,10 +199,6 @@ return (
         </div>
 
     <div className={styles.actions}>
-        <button className={`btn btn-sm ${styles.iconBtn}`} onClick={onEdit} title="Editar">
-            <i className="bi bi-pencil-square" />
-        </button>
-
         <button className={`btn btn-sm ${styles.iconBtn}`} onClick={onToggleStatus} title={status === "ativo" ? "Demitir" : "Reativar"} > {status === "ativo" ? <i className="bi bi-person-x" /> : <i className="bi bi-person-check" />}
         </button>
 

@@ -24,7 +24,6 @@ class SimulacaoController extends Controller
         return $simulacao->load('itens');
     }
 
-    // POST /simulacao/finalizar
     public function finalizar(Request $r)
     {
         $data = $r->validate([
@@ -62,9 +61,6 @@ class SimulacaoController extends Controller
                     'preco'        => $produto->preco,
                     'subtotal'     => $subtotal,
                 ];
-
-                // baixa de estoque
-                //$produto->decrement('quantidade', $qtd);
             }
 
             $sim = Simulacao::create([

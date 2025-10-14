@@ -11,7 +11,6 @@ class TopicoController extends Controller
 {
 public function index(Request $r)
 {
-    // era: orderBy('id','desc')
     return Topico::where('usuario_id', $r->user()->id)
         ->orderBy('id_topico', 'desc')
         ->get();
@@ -22,7 +21,6 @@ public function indexWithProdutos(Request $r)
     $topicos = Topico::with('produtos')
         ->where('usuario_id', $r->user()->id)
         ->orderBy('id_topico', 'desc')
-        // >>> Importante: inclua a coluna real 'id_topico'
         ->get(['id_topico', 'nome_topico']);
 
     return response()->json($topicos);
@@ -59,10 +57,6 @@ public function store(Request $r)
 
 public function destroy(Request $r, Topico $topico) {
     abort_unless($topico->usuario_id === $r->user()->id, 403);
-
-    // Não é mais necessário apagar os produtos manualmente.
-    // Ao apagar o tópico, o banco de dados se encarregará de apagar os produtos
-    // em cascata, que por sua vez apagarão os itens de venda/simulação.
     $topico->delete();
     return response()->noContent();
     }

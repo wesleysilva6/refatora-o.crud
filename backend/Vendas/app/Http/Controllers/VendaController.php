@@ -9,33 +9,27 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use Illuminate\Validation\Rule;
 class VendaController extends Controller
 {
     public function index(Request $r)
     {
-        $perPage = (int) $r->integer('per_page', 10);
+        $perPage = max(1, (int) $r->integer('per_page', 10));
         $q       = trim((string) $r->get('q', ''));
-        $from    = $r->get('from'); // YYYY-MM-DD
-        $to      = $r->get('to');   // YYYY-MM-DD
+        $from    = $r->get('from');
+        $to      = $r->get('to');  
 
         $query = Venda::query()
             ->with(['funcionario:id,nome'])
+            ->where('usuario_id', $r->user()->id)
             ->orderByDesc('realizada_em');
 
         if ($from) {
-            try {
-                $ini = Carbon::parse($from)->startOfDay();
-                $query->where('realizada_em', '>=', $ini);
-            } catch (\Throwable $e) {}
+            try { $query->where('realizada_em', '>=', Carbon::parse($from)->startOfDay()); } catch (\Throwable $e) {}
         }
-
         if ($to) {
-            try {
-                $fim = Carbon::parse($to)->endOfDay();
-                $query->where('realizada_em', '<=', $fim);
-            } catch (\Throwable $e) {}
+            try { $query->where('realizada_em', '<=', Carbon::parse($to)->endOfDay()); } catch (\Throwable $e) {}
         }
-
         if ($q !== '') {
             $query->where(function ($sub) use ($q) {
                 $sub->where('cliente', 'like', "%{$q}%")
@@ -48,18 +42,29 @@ class VendaController extends Controller
 
     public function store(Request $request)
     {
+        $uid = $request->user()->id;
+
         $data = $request->validate([
             'cliente'        => ['required','string','max:255'],
             'telefone'       => ['nullable','string','max:50'],
-            'funcionario_id' => ['required','integer','exists:funcionarios,id'],
-            'itens'          => ['required','array','min:1'],
-            'itens.*.produto_id'     => ['required','integer','exists:produtos,id'],
-            'itens.*.quantidade'     => ['required','integer','min:1'],
-            'itens.*.preco_unitario' => ['required','numeric','min:0'],
+
+            'funcionario_id' => [
+                'required','integer',
+                Rule::exists('funcionarios','id')->where('usuario_id', $uid),
+            ],
+
+            'itens'                      => ['required','array','min:1'],
+            'itens.*.produto_id'        => [
+                'required','integer',
+                Rule::exists('produtos','id')->where('usuario_id', $uid),
+            ],
+            'itens.*.quantidade'        => ['required','integer','min:1'],
+            'itens.*.preco_unitario'    => ['required','numeric','min:0'],
         ]);
 
-        return DB::transaction(function () use ($data) {
+        return DB::transaction(function () use ($data, $uid) {
             $venda = Venda::create([
+                'usuario_id'     => $uid,                    
                 'cliente'        => $data['cliente'],
                 'telefone'       => $data['telefone'] ?? null,
                 'funcionario_id' => $data['funcionario_id'],
@@ -68,24 +73,30 @@ class VendaController extends Controller
             ]);
 
             $total = 0;
+
             foreach ($data['itens'] as $it) {
-                $produto = Produto::findOrFail($it['produto_id']);
+                /** @var Produto $produto */
+                $produto = Produto::where('id', $it['produto_id'])
+                    ->where('usuario_id', $uid)
+                    ->lockForUpdate()
+                    ->firstOrFail();
+
                 if ($produto->quantidade < $it['quantidade']) {
-                    // Aborta a transação se não houver estoque suficiente
-                    
                     abort(422, "Estoque insuficiente para o produto '{$produto->nome_produto}'. Disponível: {$produto->quantidade}.");
                 }
 
                 $produto->decrement('quantidade', $it['quantidade']);
 
-                $subtotal = $it['quantidade'] * $it['preco_unitario'];
+                $precoUnit = (float) $it['preco_unitario'];
+
+                $subtotal = $it['quantidade'] * $precoUnit;
                 $total   += $subtotal;
 
                 ItemVenda::create([
                     'venda_id'       => $venda->id,
-                    'produto_id'     => $it['produto_id'],
+                    'produto_id'     => $produto->id,
                     'quantidade'     => $it['quantidade'],
-                    'preco_unitario' => $it['preco_unitario'],
+                    'preco_unitario' => $precoUnit,
                     'subtotal'       => $subtotal,
                 ]);
             }
@@ -96,13 +107,16 @@ class VendaController extends Controller
         });
     }
 
-    public function show(Venda $venda)
+    public function show(Request $request, Venda $venda)
     {
+        abort_if($venda->usuario_id !== $request->user()->id, 403);
         return $venda->load(['itens','funcionario']);
     }
 
-    public function destroy(Venda $venda)
+    public function destroy(Request $request, Venda $venda)
     {
+        abort_if($venda->usuario_id !== $request->user()->id, 403);
+
         return DB::transaction(function () use ($venda) {
             $venda->itens()->delete();
             $venda->delete();

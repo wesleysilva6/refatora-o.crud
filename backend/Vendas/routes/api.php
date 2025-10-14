@@ -70,8 +70,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/analytics', [AnalyticsController::class, 'index']);
 
-
-    // Exemplo de como as rotas deveriam estar no Laravel
     Route::delete('/produtos/{produto}', [ProdutoController::class, 'destroy']);
     Route::delete('/topicos/{topico}', [TopicoController::class, 'destroy']);
 });

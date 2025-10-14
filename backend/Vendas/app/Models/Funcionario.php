@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Funcionario extends Model
 {
     protected $table = 'funcionarios';
-    protected $fillable = ['nome','cargo','email','telefone','salario', 'status', 'foto', 'data_admissao' ,'data_demissao'];
+    protected $fillable = ['usuario_id', 'nome','cargo','email','telefone','salario', 'status', 'foto', 'data_admissao' ,'data_demissao'];
     public $timestamps = false;
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'usuario_id');
+    }
 
     public function vendas()
     {

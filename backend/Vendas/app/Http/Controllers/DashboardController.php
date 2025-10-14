@@ -8,18 +8,19 @@ use App\Models\Topico;
 use App\Models\Funcionario;
 use App\Models\Venda;
 use Illuminate\Routing\Controller;
-
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
+        $uid = $request->user()->id;
+
         return [
-            'produtos'     => Produto::count(),
-            'topicos'      => Topico::count(),
-            'funcionarios' => Funcionario::count(),
-            'vendas'       => Venda::count(),
+            'produtos'     => Produto::where('usuario_id', $uid)->count(),
+            'topicos'      => Topico::where('usuario_id', $uid)->count(),
+            'funcionarios' => Funcionario::where('usuario_id', $uid)->count(),
+            'vendas'       => Venda::where('usuario_id', $uid)->count(),
         ];
     }
 
@@ -27,35 +28,33 @@ class DashboardController extends Controller
     {
         $uid = $request->user()->id;
 
-        // Hoje / Ontem
-        $hoje = now()->timezone(config('app.timezone'))->toDateString();      // 'YYYY-MM-DD'
-        $ontem = now()->timezone(config('app.timezone'))->subDay()->toDateString();
+        $iniHoje   = now()->startOfDay();
+        $fimHoje   = now()->endOfDay();
+        $iniOntem  = now()->subDay()->startOfDay();
+        $fimOntem  = now()->subDay()->endOfDay();
 
-        $vendasHoje = DB::table('vendas')
-            ->where('realizada_em', '>=', $hoje.' 00:00:00')
-            ->where('realizada_em', '<=', $hoje.' 23:59:59')
+        $vendasHoje = Venda::where('usuario_id', $uid)
+            ->whereBetween('realizada_em', [$iniHoje, $fimHoje])
             ->sum('total');
 
-        $vendasOntem = DB::table('vendas')
-            ->where('realizada_em', '>=', $ontem.' 00:00:00')
-            ->where('realizada_em', '<=', $ontem.' 23:59:59')
+        $vendasOntem = Venda::where('usuario_id', $uid)
+            ->whereBetween('realizada_em', [$iniOntem, $fimOntem])
             ->sum('total');
 
         $varHoje = $vendasOntem > 0
             ? round((($vendasHoje - $vendasOntem) / $vendasOntem) * 100, 1)
-            : null; // null => sem base de comparação
+            : null; // sem base
 
-        // Mês atual / mês anterior
-        $iniMes = now()->startOfMonth()->toDateTimeString();
-        $fimMes = now()->endOfMonth()->toDateTimeString();
-        $iniMesAnt = now()->subMonth()->startOfMonth()->toDateTimeString();
-        $fimMesAnt = now()->subMonth()->endOfMonth()->toDateTimeString();
+        $iniMes     = now()->startOfMonth();
+        $fimMes     = now()->endOfMonth();
+        $iniMesAnt  = now()->subMonth()->startOfMonth();
+        $fimMesAnt  = now()->subMonth()->endOfMonth();
 
-        $vendasMes = DB::table('vendas')
+        $vendasMes = Venda::where('usuario_id', $uid)
             ->whereBetween('realizada_em', [$iniMes, $fimMes])
             ->sum('total');
 
-        $vendasMesAnterior = DB::table('vendas')
+        $vendasMesAnterior = Venda::where('usuario_id', $uid)
             ->whereBetween('realizada_em', [$iniMesAnt, $fimMesAnt])
             ->sum('total');
 
@@ -63,20 +62,19 @@ class DashboardController extends Controller
             ? round((($vendasMes - $vendasMesAnterior) / $vendasMesAnterior) * 100, 1)
             : null;
 
-        // Itens com baixo estoque (ex.: < 10)
         $limite = 10;
-        $estoqueBaixo = DB::table('produtos')
+        $estoqueBaixo = Produto::where('usuario_id', $uid)
             ->where('quantidade', '<', $limite)
             ->count();
 
         return response()->json([
             'hoje' => [
                 'total' => (float) $vendasHoje,
-                'diff_pct_vs_ontem' => $varHoje, // pode vir null
+                'diff_pct_vs_ontem' => $varHoje,
             ],
             'mes' => [
                 'total' => (float) $vendasMes,
-                'diff_pct_vs_mes_anterior' => $varMes, // pode vir null
+                'diff_pct_vs_mes_anterior' => $varMes,
             ],
             'estoque_baixo' => [
                 'qtd' => (int) $estoqueBaixo,

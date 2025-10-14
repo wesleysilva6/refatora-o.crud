@@ -56,7 +56,6 @@ public function store(Request $r)
         ]);
 
         if ($r->hasFile('imagem')) {
-            // Deleta a antiga (normaliza caso esteja em URL ou com /storage/)
             if ($produto->imagem) {
                 $old = $produto->imagem;
                 $old = preg_replace('#^https?://[^/]+/storage/#', '', $old);

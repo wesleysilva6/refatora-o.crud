@@ -20,10 +20,9 @@ type Paginacao<T> = {
 };
 
 export default function GerenciarVendas() {
-    const [collapsed, setCollapsed] = useState(false);
-    const [de, setDe] = useState<string>("");     // YYYY-MM-DD
-    const [ate, setAte] = useState<string>("");   // YYYY-MM-DD
-    const [q, setQ] = useState<string>("");       // busca por cliente/telefone
+    const [de, setDe] = useState<string>("");   
+    const [ate, setAte] = useState<string>(""); 
+    const [q, setQ] = useState<string>("");     
     const [page, setPage] = useState<number>(1);
     const [rows, setRows] = useState<number>(10);
     const [loading, setLoading] = useState(false);
@@ -59,13 +58,10 @@ async function carregar(resetPage = false) {
     }
 }
 
-    // carrega inicial
-    useEffect(() => { carregar(true); /* ao montar */ }, []);
+    useEffect(() => { carregar(true); }, []);
 
-    // refetch ao trocar de página/tamanho
     useEffect(() => { carregar(); }, [page, rows]);
 
-    // totais do período carregado
     const totalPeriodo = useMemo(
         () => (resp?.data ?? []).reduce((acc, v) => acc + Number(v.total || 0), 0),
         [resp]
@@ -132,7 +128,6 @@ return (
                 <table className={`table table-dark table-striped table-hover align-middle mb-0 ${styles?.table ?? ""}`} >
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Data/Hora</th>
                             <th>Cliente</th>
                             <th>Vendedor(a)</th>
@@ -148,13 +143,10 @@ return (
                         </td>
                         </tr>
                     ) : (
-                        resp!.data.map((v, i) => (
+                        resp!.data.map((v) => (
                         <tr key={v.id}>
-                            <td className="text-white">{v.id}</td>
                             <td className={styles.nowrap}>{fmtDateTime(v.realizada_em)}</td>
-                            <td className={styles.clientCell}>
-                            <span title={v.cliente}>{v.cliente}</span>
-                            </td>
+                            <td className={styles.clientCell}> <span title={v.cliente}>{v.cliente}</span> </td>
                             <td>{v.funcionario?.nome ?? "—"}</td>
                             <td className={styles.nowrap}>{v.telefone ?? "—"}</td>
                             <td className={`text-end fw-semibold ${styles.money}`}>

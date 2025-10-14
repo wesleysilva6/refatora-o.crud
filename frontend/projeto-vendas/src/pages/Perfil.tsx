@@ -22,7 +22,6 @@ export default function Perfil() {
         setTimeout(() => setTexts((a) => a.slice(1)), 3500);
     }
 
-    // Carrega usuário
     useEffect(() => {
         (async () => {
         try {
@@ -35,7 +34,6 @@ export default function Perfil() {
         })();
     }, []);
 
-    // Preview local da foto
     useEffect(() => {
         if (!file) return;
         const url = URL.createObjectURL(file);
@@ -105,18 +103,22 @@ export default function Perfil() {
         pushAlert("danger", "Preencha todos os campos.");
         return;
         }
+
         if (nova_senha !== confirmar_senha) {
         pushAlert("danger", "As novas senhas digitadas não coincidem.");
         return;
         }
+
         if (nova_senha.length < 8) {
             pushAlert("danger", "A nova senha deve ter no mínimo 8 caracteres.");
             return;
         }
+
         if (!/[A-Z]/.test(nova_senha)) {
             pushAlert("danger", "A nova senha deve conter pelo menos uma letra maiúscula.");
             return;
         }
+
         if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(nova_senha)) {
             pushAlert("danger", "A nova senha deve conter pelo menos um caractere especial.");
             return;
@@ -136,12 +138,6 @@ export default function Perfil() {
         } finally {
         setSending(false);
         }
-    }
-
-    function toggle(id: string) {
-        const el = document.getElementById(id) as HTMLInputElement | null;
-        if (!el) return;
-        el.type = el.type === "password" ? "text" : "password";
     }
 
 return (

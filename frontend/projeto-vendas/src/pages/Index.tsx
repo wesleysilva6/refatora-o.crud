@@ -8,7 +8,6 @@ import logoEstoque from "../assets/img/fundop.png";
 
 import styles from "./Index.module.css"; // << CSS Module
 import "../css/style.css";
-import ThemeToggle from "../components/ThemeToggle";
 
 export default function Home() {
   return (
@@ -19,9 +18,6 @@ export default function Home() {
           <Link to="/" className="navbar-brand d-flex align-items-center gap-2">
             <img src={logoHeader} width={65} alt="Estoque Aqui" />
             <img src={titleHeader} width={85} height={65} alt="Estoque Aqui" />
-              <div className="ms-auto">
-                  <ThemeToggle />
-              </div>
           </Link>
         </div>
       </nav>

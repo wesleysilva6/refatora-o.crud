@@ -14,7 +14,7 @@ type Produto = {
     quantidade: number;    
 };
 
-type Func = { 
+type Funcionario = { 
     id: number | string; 
     nome: string 
 };
@@ -33,7 +33,7 @@ export default function Vendas() {
     const [telefone, setTelefone] = useState("");
     const [funcionarioId, setFuncionarioId] = useState<string>("");
     const [produtos, setProdutos] = useState<Produto[]>([]);
-    const [funcionarios, setFuncionarios] = useState<Func[]>([]);
+    const [funcionarios, setFuncionarios] = useState<Funcionario[]>([]);
     const [produtoId, setProdutoId] = useState<string>("");
     const produtoSel = useMemo( () => produtos.find((p) => String(p.id) === produtoId), [produtos, produtoId]);
     const [quantidade, setQuantidade] = useState<number>(1);
@@ -236,9 +236,6 @@ return (
 
                 {produtoSel && (
                     <div id="detalhesProduto d-flex">
-                    {foto && (
-                        <img src={foto} alt={`Foto de ${produtoSel.nome_produto}`} style={{ maxWidth: 240, borderRadius: 8, display: "block", marginBottom: 8 }} onError={(e) => ((e.currentTarget as HTMLImageElement).style.display = "none")} />
-                    )}
 
                     <p className={`mb-1 ${styles.infoProduto}`}>
                         <strong>Preço: </strong> {fmtBRL(produtoSel.preco)}
@@ -282,8 +279,8 @@ return (
                     <thead>
                         <tr>
                             <th>Produto</th>
-                            <th style={{ width: 110 }}>Qtd</th>
-                            <th>Unitário</th>
+                            <th style={{ width: 110 }}>Quantidade</th>
+                            <th>Preço</th>
                             <th>Subtotal</th>
                             <th>Ações</th>
                         </tr>
@@ -335,7 +332,6 @@ return (
             </div>
             </div>
 
-            <div className="col-md-2" />
         </div>
     </div>
 </div>

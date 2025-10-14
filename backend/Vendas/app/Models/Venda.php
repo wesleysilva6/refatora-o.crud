@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Venda extends Model
 {
     protected $table = 'vendas';
-    protected $fillable = ['cliente','telefone','funcionario_id','total','realizada_em'];
+    protected $fillable = ['usuario_id','cliente','telefone','funcionario_id','total','realizada_em'];
     protected $casts = ['realizada_em' => 'datetime', 'total' => 'decimal:2']; 
     public $timestamps = false;
+
+    public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'usuario_id');
+    }
 
     public function funcionario()
     { 
