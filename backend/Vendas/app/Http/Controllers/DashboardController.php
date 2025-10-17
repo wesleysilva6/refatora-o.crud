@@ -43,7 +43,7 @@ class DashboardController extends Controller
 
         $varHoje = $vendasOntem > 0
             ? round((($vendasHoje - $vendasOntem) / $vendasOntem) * 100, 1)
-            : null; // sem base
+            : null;
 
         $iniMes     = now()->startOfMonth();
         $fimMes     = now()->endOfMonth();

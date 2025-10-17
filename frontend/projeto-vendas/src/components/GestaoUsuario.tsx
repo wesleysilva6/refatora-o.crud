@@ -96,7 +96,7 @@ async function toggleFerias(f: Funcionario) {
 
     try {
     const novo = estaDeFerias ? "ativo" : "ferias";
-    await api.patch(`/funcionarios/${f.id}`, { status: novo }); // ajuste no seu backend
+    await api.patch(`/funcionarios/${f.id}`, { status: novo });
         setList((old) => old.map((x) => (x.id === f.id ? { ...x, status: novo as Status } : x)));
         toast.fire({ icon: "success", title: estaDeFerias ? "Retornando de férias" : "Colocado em férias" });
     } catch (e: any) {

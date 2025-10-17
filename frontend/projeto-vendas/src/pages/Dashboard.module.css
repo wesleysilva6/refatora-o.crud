@@ -1,12 +1,16 @@
 .card {
-    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    background: linear-gradient(23deg, var(--color--card-dash), var(--color--card-dash2));
     color: #fff;
 }
 
 .cardBody {
-    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    background: linear-gradient(23deg, var(--color--card-dash), var(--color--card-dash2));
     color: #fff;
 }
+
+.icon {
+    color: var(--color--eyes);
+} 
 
 .formControl {
     color: var(--color--text-input);
@@ -30,7 +34,7 @@
     position: sticky;        /* header gruda no topo */
     top: 0;
     z-index: 1;
-    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    background: linear-gradient(23deg, var(--color--table-dash), var(--color--table-dash2));
     backdrop-filter: blur(2px);
 }
 

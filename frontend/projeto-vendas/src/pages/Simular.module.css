@@ -9,6 +9,10 @@
         border-bottom:1px solid var(--color--primary);
         }
 
+        .cardBody label {
+        color: var(--color--text);
+        }
+
         .formControl {
         color: var(--color--text-input);
         background: var(--color--input);

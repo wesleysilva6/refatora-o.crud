@@ -2,6 +2,14 @@
     :root {
     background-color: #f8fafc;
 
+    /* COR CARDS DASHBOARD */
+    --color--card-dash:#0d2c5c;
+    --color--card-dash2:#3071fc;
+
+    /* COR TABLE DASHBOARD */
+    --color--table-vendas: #063986;
+    --color--table-vendas1: #ffffff;
+
     /* COMPONENTS */
     --color--navbar: #0C0F16;
     --color--footer: #0C0F16;
@@ -62,11 +70,18 @@
     :root[data-theme="dark"] {
     color-scheme: dark;
 
+    /* COR CARDS DASHBOARD */
+    --color--card-dash:#1A202C;
+    --color--card-dash2:#2d3544;
+
+    /* COR TABLE DASHBOARD */
+    --color--table-impar: #1A202C;
+    --color--table-par: #2d3544;
+
     /* COMPONENTS */
     --color--navbar: #0C0F16;
     --color--footer: #0C0F16;
 
-    /* ICONS */
     --color--eyes: #ffffff;
     --color--icons: #ffffff;
 

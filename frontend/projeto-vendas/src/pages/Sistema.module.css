@@ -4,18 +4,22 @@
     padding: 0.5rem 1rem;
 }
 
-.navLink a {
-    color: #000 ;
-}
-
-.navLink .active {
-    color: #000;
-    font-weight: 600;
-}
-
 .tab-content {
     margin-top: 20px;
     padding: 20px;
     border-radius: 0.5rem;
     background-color: #fff;
+}
+
+.icon {
+    color: var(--color--eyes);
+}
+
+.nav {
+    color: var(--color--eyes) !important;
+}
+
+.navLink,
+.navLink:hover {
+    color: var(--color--eyes);
 }

@@ -131,7 +131,6 @@ return (
             <label htmlFor="statusFuncionario">Status do Funcionário</label>
             <select id="statusFuncionario" className={`form-select ${styles.formControl}`} value={status} onChange={(e) => setStatus(e.target.value as any)} >
                 <option value="ativo">Ativo</option>
-                <option value="inativo">Inativo</option>
                 <option value="ferias">Férias</option>
             </select>
         </div>

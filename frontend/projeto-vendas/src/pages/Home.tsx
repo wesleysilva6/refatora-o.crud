@@ -141,15 +141,15 @@ return (
                 <table className={`table table-striped align-middle mb-0 ${styles.table ?? ""}`} >
                     <thead>
                         <tr>
-                        <th>Imagem</th>
-                        <th>Produto</th>
-                        <th>Preço</th>
-                        <th>Quantidade</th>
-                        <th>Descrição</th>
-                        <th>Data de Criação</th>
-                        <th>Última atualização</th>
-                        <th>Editar</th>
-                        <th>Excluir</th>
+                            <th>Imagem</th>
+                            <th>Produto</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Descrição</th>
+                            <th>Data de Criação</th>
+                            <th>Última atualização</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
                         </tr>
                     </thead>
 

@@ -125,7 +125,7 @@ return (
             ) : (
             <>
             <div className={`table-responsive ${styles?.tableResponsive ?? ""}`}>
-                <table className={`table table-dark table-striped table-hover align-middle mb-0 ${styles?.table ?? ""}`} >
+                <table className={`table table-dark table-striped align-middle mb-0 ${styles?.table ?? ""}`} >
                     <thead>
                         <tr>
                             <th>Data/Hora</th>
@@ -161,7 +161,7 @@ return (
 
             <div className="d-flex justify-content-between align-items-center mt-2">
                 <div className="d-flex align-items-center gap-2">
-                    <span className="text-muted">Linhas:</span>
+                    <span>Linhas:</span>
                     <select value={rows} onChange={(e) => setRows(Number(e.target.value))} className="form-select form-select-sm" style={{ width: 90 }} >
                         <option value={10}>10</option>
                         <option value={20}>20</option>

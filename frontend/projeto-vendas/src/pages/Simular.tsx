@@ -12,7 +12,8 @@ type Produto = {
     topico: string 
 };
 
-type ItemSimulacao = { id: number; 
+type ItemSimulacao = { 
+    id: number; 
     nome_produto: string; 
     quantidade: number; 
     preco: number; 
@@ -103,7 +104,7 @@ export default function Simular() {
 
                 <form onSubmit={handleAdicionarSimulacao} className="spinnerForm">
                     <div className={`card-body ${styles.cardBody}`}>
-                        <label htmlFor="nomeCliente" className="form-label">Cliente</label>
+                        <label htmlFor="nomeCliente" className={`form-label ${styles.formLabel}`}>Cliente</label>
                         <input type="text" id="nomeCliente" className={`form-control w-25 mb-3 ${styles.formControl}`} placeholder="Nome do Cliente" required value={nomeCliente} onChange={e => setNomeCliente(e.target.value)}/>
                         <div className="mb-3 d-flex align-items-center gap-3 flex-wrap">
                             <div className={styles.prod}>

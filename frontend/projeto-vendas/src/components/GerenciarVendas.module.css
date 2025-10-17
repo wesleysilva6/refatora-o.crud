@@ -8,19 +8,31 @@
 }
 
 .cardBody {
-    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    background: linear-gradient(23deg, var(--color--card-dash), var(--color--card-dash2));
     border-radius: 0.5rem;
 }
 
 .cardFiltrar {
-    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    background: linear-gradient(23deg, var(--color--card-dash), var(--color--card-dash2));
+    border-radius: 0.5rem;
+}
+
+.cardVendas {
+    background: linear-gradient(23deg, var(--color--card-dash), var(--color--card-dash2));
+    color: var(--color--text);
+    border-radius: 0.5rem;
+}
+
+.cardVendasPeriodo {
+    background: linear-gradient(23deg, var(--color--card-dash), var(--color--card-dash2));
+    color: var(--color--text);
     border-radius: 0.5rem;
 }
 
 .btnFiltrar:hover,
 .btnFiltrar:focus,
 .btnFiltrar:active:focus {
-    background: #0a51bb;
+    background: #161616;
 }
 
 .label {
@@ -45,22 +57,10 @@
     color: var(--color--placeholder);
 }
 
-.cardVendas {
-    background: linear-gradient(23deg, #1A202C, #2d3544 );
-    color: var(--color--text);
-    border-radius: 0.5rem;
-}
-
-.cardVendasPeriodo {
-    background: linear-gradient(23deg, #1A202C, #2d3544 );
-    color: var(--color--text);
-    border-radius: 0.5rem;
-}
-
 .tableResponsive {
     border: 1px solid rgba(255,255,255,.08);
     border-radius: 12px;
-    background: #2d3544;
+    background: #fff;
     backdrop-filter: blur(4px);
     overflow: auto;
     max-height: 520px;
@@ -72,10 +72,15 @@
 }
 
 .table thead th {
+    background: linear-gradient(23deg, var(--color--card-dash), var(--color--card-dash2));
+    backdrop-filter: blur(2px);
     position: sticky;        /* header gruda no topo */
-    top: 0;
     z-index: 1;
-    background: linear-gradient(23deg, #1A202C, #2d3544 );
+    top: 0;
+}
+
+.table tbody tr th {
+    background: linear-gradient(23deg, var(--color--card-dash), var(--color--card-dash2));
     backdrop-filter: blur(2px);
 }
 

@@ -12,13 +12,6 @@ type Produto = {
     quantidade: number;
 };
 
-type DashboardData = {
-    total_produtos: number;
-    total_unidades: number;
-    produtos_estoque_baixo: number;
-    produtos: Produto[];
-};
-
 export default function Dashboard() {
     const [collapsed, setCollapsed] = useState(false);
     const [search, setSearch] = useState("");
@@ -61,7 +54,7 @@ return (
     <div className={`content ${collapsed ? "expanded" : ""}`} id="content" style={{ marginLeft: collapsed ? 150 : 250, transition: "margin-left 0.3s"}}>
         <div className="dash d-flex justify-content-between align-items-center mb-4">
             <button id="toggleSidebar" onClick={() => setCollapsed((c) => !c)}>
-                <i className={`bi ${collapsed ? "bi-arrow-bar-right" : "bi-arrow-bar-left"}`} />
+                <i className={`bi  ${styles.icon} ${collapsed ? "bi-arrow-bar-right" : "bi-arrow-bar-left"}`} />
             </button>
 
             <h2>Dashboard</h2>
@@ -118,7 +111,7 @@ return (
                         {loading ? (
                             <div className="text-center">Carregando...</div>
                         ) : produtosAlerta.length === 0 ? (
-                            <div className="text-center text-muted">Nenhum alerta de estoque baixo.</div>
+                            <div className="text-center">Nenhum alerta de estoque baixo.</div>
                         ) : (
                             <ul className={`list-group ${styles.ul}`}>
                                 {produtosAlerta.map(p => (
@@ -136,7 +129,6 @@ return (
                 </div>
             </div>
         </div>
-
         </div>
     </div>
     </div>

@@ -183,7 +183,7 @@ return (
 
         <div className="dash d-flex justify-content-between align-items-center mb-4">
             <button id="toggleSidebar" onClick={() => setCollapsed((c) => !c)}>
-                <i className={`bi ${collapsed ? "bi-arrow-bar-right" : "bi-arrow-bar-left"}`} />
+                <i className={`bi ${styles.icon} ${collapsed ? "bi-arrow-bar-right" : "bi-arrow-bar-left"}`} />
             </button>
         <h2>Realizar Venda</h2>
         <div />

@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/vendas', [VendaController::class, 'index']);
 
-    // Dados para a Home (GET somente)
+    // Dados para a Home 
     Route::get('/home',                [TopicoController::class, 'indexWithProdutos']);
     Route::get('/topicos-with-produtos',[TopicoController::class, 'indexWithProdutos']);
 

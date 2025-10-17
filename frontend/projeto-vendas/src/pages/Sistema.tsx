@@ -3,6 +3,7 @@ import SalesSidebar from "../components/SalesSidebar"
 import FormFuncionario from "../components/FormFuncionario";
 import GestaoUsuario from "../components/GestaoUsuario";
 import GerenciarVendas from "../components/GerenciarVendas";
+import styles from "../pages/Sistema.module.css"
 
 type TabKey =
     | "gestão"
@@ -36,7 +37,7 @@ return (
 
         <div className="dash d-flex justify-content-between align-items-center mb-4">
             <button id="toggleSidebar" onClick={() => setCollapsed((c) => !c)}>
-                <i className={`bi ${collapsed ? "bi-arrow-bar-right" : "bi-arrow-bar-left"}`} />
+                <i className={`bi ${styles.icon} ${collapsed ? "bi-arrow-bar-right" : "bi-arrow-bar-left"}`} />
             </button>
 
             <h2>Sistema</h2>
@@ -44,17 +45,17 @@ return (
         <div className="d-flex align-items-center"></div>
         </div>
 
-        <nav className="nav nav-underline custom-nav mb-3">
+        <nav className={`nav nav-underline custom-nav mb-3 ${styles.navUnderline}`}>
             {TABS.map(tab => (
-            <button key={tab.key} type="button" className={`nav-link ${active === tab.key ? "active" : ""}`} onClick={() => setActive(tab.key)} data-tab={tab.key} > {tab.label}
+            <button key={tab.key} type="button" className={`nav-link ${styles.navLink} ${active === tab.key ? "active" : ""}`} onClick={() => setActive(tab.key)} data-tab={tab.key} > {tab.label}
             </button>
             ))}
         </nav>
 
-        <div className="container mt-2">
+        <div className={`container mt-2`}>
 
         {active === "gestão" && (
-            <section id="usuarios" className="tab-section">
+            <section id="usuarios" className={`tab-section`}>
                 <GestaoUsuario/>
             </section>
         )}

@@ -25,7 +25,6 @@ export default function Cards() {
 
     useEffect(() => {
         load();
-        // opcional: auto-refresh a cada 60s
         const id = setInterval(load, 10000);
         return () => clearInterval(id);
     }, []);
